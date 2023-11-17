@@ -1,4 +1,5 @@
 import { Mapper } from '../bases/mappers';
+import { isProductEntity } from '../helpers/check-is-object';
 import { mocksProductsEntity, mocksProductsModel } from '../helpers/mocks-objects';
 import { ProductoEntity } from './../entities/producto-entity';
 import { ProductModel } from './../models/product.model';
@@ -18,13 +19,13 @@ describe('ProductMapper', () => {
 
     it('should map each property in ProductEntity to ProductModel', () => {
         const params: ProductoEntity[] = mocksProductsEntity
-    
-        const list : any[]=[];
 
         expect(params).toBeInstanceOf(Array<ProductoEntity>);
-        
+
+        expect(() => productMapper.mapTo([])).toThrow(new Error('Parameter is blank'));
+
         const result = productMapper.mapTo(params);
-    
+
         expect(result).toEqual(mocksProductsModel);
         expect(result[0].barcode_number).toEqual(mocksProductsModel[0].barcode_number);
         expect(result[0].barcode_formats).toEqual(mocksProductsModel[0].barcode_formats);
@@ -39,7 +40,7 @@ describe('ProductMapper', () => {
         expect(result[0].title).toEqual(mocksProductsModel[0].title);
 
     });
-    
+
 
 
 });

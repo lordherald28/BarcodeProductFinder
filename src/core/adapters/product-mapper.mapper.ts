@@ -8,6 +8,10 @@ export class ProductMapper extends Mapper<ProductoEntity[], ProductModel[]> {
 
     mapTo(params: ProductoEntity[]): ProductModel[] {
 
+        if (!params || params.length === 0) {
+            throw new Error('Parameter is blank');
+        }
+
         return params.map(p => {
             return {
                 barcode_number: p.barcode_number,
