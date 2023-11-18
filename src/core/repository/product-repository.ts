@@ -1,9 +1,7 @@
 import { Observable } from "rxjs";
 import { ProductModel } from "../models/product.model";
-import { Metadata } from "../helpers/metadata-products";
+import { Metadata, SearchParams } from "../helpers/metadata-products";
 
 export abstract class ProductRepository {
-    abstract searchProductByKeyword(params: {
-        meta_data: Metadata; searchParameters: string;  // Desde la vista o desde el componente el usuario debe de conformar los parametros.
-    }): Observable<ProductModel[]>;
+    abstract searchProductByKeyword(params: SearchParams): Observable<ProductModel[]>;
 }

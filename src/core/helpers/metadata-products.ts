@@ -6,3 +6,14 @@ export interface Metadata {
     current_cursor: string; // Current list products
     next_cursor: string;    // Next list products
 }
+
+export interface SearchParams {
+    meta_data:Metadata;
+    search?:string;
+    barcode?: string;
+    mpn?: string;
+    title?: string;
+    metadata?: string;
+    cursor?: string;
+    key?: string;
+}
