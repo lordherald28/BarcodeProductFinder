@@ -111,7 +111,4 @@ describe('Service: Products', () => {
     req.flush(mocksProductsEntity);
   });
 
-
-
-
 });

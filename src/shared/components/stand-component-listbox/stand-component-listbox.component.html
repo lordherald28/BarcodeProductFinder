@@ -1,0 +1,40 @@
+<ng-container>
+  <section class="g_wrap_list">
+    <ng-container *ngIf="isSearch">
+      <p-messages [(value)]="messages" [enableService]="false" class="absolute g__position"
+        [closable]="true"></p-messages>
+    </ng-container>
+    <form [formGroup]="formSearch">
+      <span class="p-input-icon-left w-full">
+        <i class="pi pi-search"></i>
+        <input type="search" pInputText formControlName="searchKeyWord" #inputSearch placeholder="Buscar..."
+          id="inputSearch" class="w-full" />
+      </span>
+    </form>
+    <!--         <ul class="listbox" *ngIf="listDataForTemplate.length>0" infiniteScroll [infiniteScrollDistance]="2" #listBoxRef
+      ng-disabled [ngClass]="{'isDisabled':disableListBox, 'g__fondo_deshabilitado':disableListBox}"
+      [scrollWindow]="false" [infiniteScrollThrottle]="50" (scrolled)="infiniryScrollerDown() ">
+
+      <li *ngFor="let item of listDataForTemplate; trackBy:trackByIdFn" tabindex="0" role="option" aria-label
+        class="item" (click)="sendPhotoId(item)">
+        <img [src]="item.url_image" [alt]="item.name" class="image" />
+        <div class="item-name">{{item.name}}</div>
+      </li>
+
+    </ul> -->
+    <ul class="listbox" #listBoxRef [ngClass]="{'isDisabled':disableListBox, 'g__fondo_deshabilitado':disableListBox}"
+      appInfinityScroll (onScrollDown)="loadTest()">
+
+      <li *ngFor="let item of listDataForTemplate;let  i=index; trackBy:trackByIdFn" class="item"
+        (click)="sendPhotoId(item)">
+        <div>{{i+1}}</div>
+        <img [src]="item.url_image" [alt]="item.name" class="image" />
+        <div class="item-name">{{item.name}}</div>
+      </li>
+      <li class="item" *ngIf="isLoading">
+        <span class="spinner"></span>
+      </li>
+
+    </ul>
+  </section>
+</ng-container>

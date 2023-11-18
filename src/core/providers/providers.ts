@@ -3,31 +3,23 @@
 
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ProductRepository } from '../repository/product-repository';
+import { ProductsService } from '../services/products.service';
+import { UseCaseSearchProducts } from '../use-case/use-case-search-products';
 // import { InterceptorError } from './../adapters/interceptors/interceptor-error';
 
-// import { PhotoRepository } from './../repository/IPhotoRepository';
-// import { FlickrPhotoService } from './../services/flickr-photo.service';
-// import { UseCaseFlickrPhotos } from './../use-case/flickr-photos/use-case-flickr-photos';
-// import { UseCaseFlickrGetPhotoInfo } from './../use-case/flickr-photos/use-case-flickr-getPhotoInfo';
 
-// const photoUseCaseSearchKeyWordFactory = (repo: PhotoRepository) => new UseCaseFlickrPhotos(repo);
-// const photoUseCaseGetInforFactory = (repo: PhotoRepository) => new UseCaseFlickrGetPhotoInfo(repo);
+const productFactoryUseCaseSearchProducts = (repo: ProductRepository) => new UseCaseSearchProducts(repo);
 
-// export const useCaseSearchPhotoProvider = {
-//     provide: UseCaseFlickrPhotos,
-//     useFactory: photoUseCaseSearchKeyWordFactory,
-//     deps: [PhotoRepository]
-// }
-
-// export const useCaseGetInfoPhotoProvider = {
-//     provide: UseCaseFlickrGetPhotoInfo,
-//     useFactory: photoUseCaseGetInforFactory,
-//     deps: [PhotoRepository]
-// }
+export const useCaseSearchProducts = {
+    provide: UseCaseSearchProducts,
+    useFactory: productFactoryUseCaseSearchProducts,
+    deps: [ProductRepository]
+}
 
 
 export const _providers = [
-    // { provide: PhotoRepository, useClass: FlickrPhotoService }, useCaseSearchPhotoProvider, useCaseGetInfoPhotoProvider,
+    { provide: ProductRepository, useClass: ProductsService }, useCaseSearchProducts,
     // {
     //     provide: HTTP_INTERCEPTORS,
     //     useClass: InterceptorError,

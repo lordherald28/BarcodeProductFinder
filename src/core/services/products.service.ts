@@ -41,9 +41,6 @@ export class ProductsService extends ProductRepository {
       )
   }
 
-
-
-
   private contructionParams(params: SearchParams, url: string) {
     if (params.barcode) {
       url += `barcode=${params.barcode}`;
@@ -74,5 +71,5 @@ export class ProductsService extends ProductRepository {
     }
     return url;
   }
-  
+
 }

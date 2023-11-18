@@ -1,0 +1,118 @@
+.listbox {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 350px !important;
+    height: calc(560px - 1rem);
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    overflow-x: auto;
+    z-index: 1;
+}
+
+.listbox li.item {
+    width: 100%;
+    height: calc(81px - 1rem);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    list-style: none;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-top: 1px solid #0000000f;
+    transition: all;
+    /* z-index: 2; */
+}
+
+.listbox li.item:hover {
+    cursor: pointer;
+    color: #16724f;
+    background-color: rgba(211, 211, 211, 0.6);
+}
+
+.listbox li.item .item-name {
+    font-size: 0.9rem;
+    margin-left: 1rem;
+    /* Añade espacio entre la imagen y el nombre */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 177px;
+    padding-right: 0.3em;
+
+}
+
+.image {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+}
+
+.g_wrap_list {
+    width: 100%;
+    /* min-height: 590px; */
+    height: 580px;
+    display: flex;
+    border: 0.1rem solid #0000000f;
+    border-radius: 2%;
+    padding: 1rem;
+    flex-flow: column nowrap;
+    margin-top: 1rem;
+}
+
+form {
+    margin-bottom: 1rem;
+}
+
+.g__position {
+    left: 0;
+    top: 50%;
+    transform: translate(45%, 78%);
+}
+
+/* Estilo para el fondo de deshabilitado */
+.g__fondo_deshabilitado {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.265);
+}
+
+.isDisabled {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.loading {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.spinner:not(hover) {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 34px !important;
+    height: 34px !important;
+    border: 2px solid rgb(11, 37, 169) !important;
+    border-radius: 50%;
+    border-bottom-color: rgb(255, 255, 255) !important;
+    animation: spin 1.0s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
