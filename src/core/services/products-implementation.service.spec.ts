@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, inject, waitForAsync } from '@angular/core/testing';
-import { ProductsService } from './products.service';
+import { ProductsService } from './products-implementation.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ProductRepository } from '../repository/product-repository';
 

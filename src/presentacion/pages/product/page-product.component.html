@@ -1,5 +1,4 @@
-<div class="wrapper">+
-    <!-- <h2>Update: 19-11-2023 v1</h2> -->
+<div class="wrapper">
     <!-- Header with logo and search box -->
     <div class="header">
         <a href="https://www.barcodelookup.com/" class="barcode-lookup-logo">
@@ -16,7 +15,7 @@
     <div class="main-content">
         <!-- Sidebar for filters -->
         <div class="sidebar">
-            <app-sidebar-filter></app-sidebar-filter>
+            <app-sidebar-filter *ngIf="productsList.length>0"></app-sidebar-filter>
         </div>
 
         <!-- Product content -->
@@ -26,6 +25,7 @@
                 <!-- <app-card-product /> -->
                 <app-card-product class="item-product" [product]="product"></app-card-product>
             </ng-container>
+            div.divisor
         </div>
     </div>
 </div>

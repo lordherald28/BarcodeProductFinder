@@ -36,7 +36,7 @@ export class ProductsService extends ProductRepository {
     return this.http.get<IReponseProductsResult>(url)
       .pipe(
         map((response) => {
-          console.log('response of service: ', response)
+          // console.log('response of service: ', response)
           return this.mapperProduct.mapTo(response.products)
         })
       )
