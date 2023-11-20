@@ -28,7 +28,8 @@ export class ProductsService extends ProductRepository {
 
   searchProductByKeyword(params: SearchParams): Observable<ProductModel[]> {
 
-    let url: string = 'https://api.barcodelookup.com/v3/products?';
+    let proxyUrlForCors: string = 'https://cors-anywhere.herokuapp.com/';
+    let url: string = proxyUrlForCors + 'https://api.barcodelookup.com/v3/products?';
 
     url = this.contructionParams(params, url);
 
