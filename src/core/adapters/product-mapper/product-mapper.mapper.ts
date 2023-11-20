@@ -1,7 +1,7 @@
-import { Mapper } from "../bases/mappers";
-import { ProductoEntity } from "../entities/producto-entity";
-import { isProductEntity } from "../helpers/check-is-object";
-import { ProductModel } from "../models/product.model";
+import { Mapper } from "../../bases/mappers";
+import { ProductoEntity } from "../../entities/producto-entity";
+import { isProductEntity } from "../../helpers/check-is-object";
+import { ProductModel } from "../../models/product.model";
 
 
 export class ProductMapper extends Mapper<ProductoEntity[], ProductModel[]> {

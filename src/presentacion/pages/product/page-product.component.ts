@@ -4,13 +4,14 @@ import { SearchBoxGeneralComponent } from 'src/shared/components/search-box-gene
 import { SidebarFilterComponent } from './components/sidebar-filter/sidebar-filter.component';
 import { CardProductComponent } from './components/card-product/card-product.component';
 import { ProductModel } from 'src/core/models/product.model';
+import { HeaderComponent } from 'src/shared/components/header/header.component';
 
 @Component({
   selector: 'app-product',
   templateUrl: './page-product.component.html',
   styleUrls: ['./page-product.component.css'],
   standalone: true,
-  imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, CardProductComponent],
+  imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, CardProductComponent, HeaderComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PageProductComponent implements OnInit {

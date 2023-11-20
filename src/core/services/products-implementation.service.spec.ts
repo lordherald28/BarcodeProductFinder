@@ -11,7 +11,7 @@ import { Metadata, SearchParams } from '../helpers/metadata-products';
 import { ProductoEntity } from '../entities/producto-entity';
 import { API_ProductBarcode, environment } from 'src/environments/environment';
 import { mocksProductsEntity, mocksProductsModel } from '../helpers/mocks-objects';
-import { ProductMapper } from '../adapters/product-mapper.mapper';
+import { ProductMapper } from '../adapters/product-mapper/product-mapper.mapper';
 import { ProductModel } from '../models/product.model';
 
 describe('Service: Products', () => {

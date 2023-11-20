@@ -1,52 +1,11 @@
 .wrapper {
     /* Main container with a column layout and a maximum width of 100% */
+    position: relative;
+    bottom: 0;
+    top: 173px;
     display: flex;
     flex-direction: column;
     max-width: 100%;
-}
-
-.header {
-    /* Header with logo and search box, with a column layout and centered items */
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    padding: 10px;
-    background-color: #484747;
-}
-
-.barcode-lookup-logo {
-    /* Logo container with a row layout and centered items */
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.lookup-logo {
-    /* Lookup logo with a specific color */
-    color: #cc2828;
-}
-
-.barcode-logo {
-    /* Barcode logo with a specific color */
-    color: #bcb9b9;
-}
-
-.search-container {
-    /* Search container with a specific width */
-    width: 70%;
-}
-
-.barcode-lookup-logo span {
-    /* Specific styles for the span within the logo container */
-    font-size: 24px;
-    font-weight: 600;
-    position: relative;
-    padding-left: 1rem;
 }
 
 .main-content {

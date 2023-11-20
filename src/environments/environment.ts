@@ -1,11 +1,11 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+// The list of file replacements can be found in `angular.json`. jc658byk0thrwivgp5es8d69pokb0z
 
 export const environment = {
   production: false,
   AuthenticationKey: {
-    key: 'nxwqjrjuojmtuse28ddekykuiaceid' //barcodeuno7
+    key: 'jc658byk0thrwivgp5es8d69pokb0z' //barcodeuno7  //nxwqjrjuojmtuse28ddekykuiaceid
   }
 };
 

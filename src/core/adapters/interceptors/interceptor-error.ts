@@ -13,8 +13,11 @@ export class InterceptorError implements HttpInterceptor {
         return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
                 //imprimir un log, mostrar una notificación, etc.
-                console.log('Error al hacer una petición a Flickr API:', error);
-                return throwError(() => new Error(error.message)); // Reenvía el error para manejarlos luego.
+                // console.log('Error API BarCode', error.error === null ? error.statusText : error.error);
+                if (error.status === 403) {
+                    return throwError(() => new Error(error.error === null ? error.statusText : error.error)); // Reenvía el error para manejarlos luego.                    
+                }
+                return throwError(() => new Error(error.error))
             })
         );
 

@@ -1,8 +1,8 @@
-import { Mapper } from '../bases/mappers';
-import { isProductEntity } from '../helpers/check-is-object';
-import { mocksProductsEntity, mocksProductsModel } from '../helpers/mocks-objects';
-import { ProductoEntity } from './../entities/producto-entity';
-import { ProductModel } from './../models/product.model';
+import { Mapper } from '../../bases/mappers';
+import { isProductEntity } from '../../helpers/check-is-object';
+import { mocksProductsEntity, mocksProductsModel } from '../../helpers/mocks-objects';
+import { ProductoEntity } from '../../entities/producto-entity';
+import { ProductModel } from '../../models/product.model';
 import { ProductMapper } from './product-mapper.mapper';
 
 describe('ProductMapper', () => {

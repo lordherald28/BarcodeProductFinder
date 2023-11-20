@@ -1,16 +1,8 @@
+<!-- Header with logo and search box -->
+<app-header>
+    <app-search-box-general (emitProducsList)="getProductsListEmitted($event)" />
+</app-header>
 <div class="wrapper">
-    <!-- Header with logo and search box -->
-    <div class="header">
-        <a href="https://www.barcodelookup.com/" class="barcode-lookup-logo">
-            <img src="https://www.barcodelookup.com/assets/images/barcode-lookup-logo.png" alt="Barcode Lookup logo">
-            <span class="barcode-logo visible">BARCODE</span>
-            <span class="lookup-logo">LOOKUP</span>
-        </a>
-        <div class="search-container">
-            <app-search-box-general (emitProducsList)="getProductsListEmitted($event)" />
-        </div>
-    </div>
-
     <!-- Main content -->
     <div class="main-content">
         <!-- Sidebar for filters -->
@@ -19,13 +11,17 @@
         </div>
 
         <!-- Product content -->
-        <div class="product-content">
-            <!-- Here would go your product cards -->
+        <div class="product-content" *ngIf="productsList.length > 0; else noProductsList">
+            <!-- Aquí irían tus tarjetas de producto -->
             <ng-container *ngFor="let product of productsList">
-                <!-- <app-card-product /> -->
                 <app-card-product class="item-product" [product]="product"></app-card-product>
             </ng-container>
-            div.divisor
+            <div class="divisor"></div>
         </div>
+
+        <ng-template #noProductsList>
+            <span>Aquí va un mensaje que no sé qué poner o poner texto</span>
+        </ng-template>
+
     </div>
 </div>
