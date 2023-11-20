@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Barcode Lookup | UPC, EAN &amp; ISBN Search</title>
+<meta name="description" content="Use Barcode Lookup to search any UPC, EAN and ISBN code to find product information including images, pricing, reviews and places to purchase online.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.barcodelookup.com/assets/stylesheets/style.css">
+<script src="https://www.barcodelookup.com/assets/javascript/jquery.min.js"></script>
+<script src="https://www.barcodelookup.com/assets/javascript/navbar.js"></script>
+
+<script nonce="47bd09f5b595d29091802918" async src="https://www.googletagmanager.com/gtag/js?id=G-6K9HJQ9YDK"></script>
+<script nonce="47bd09f5b595d29091802918">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6K9HJQ9YDK');
+</script>
+</head>
+<body>
+<header class="header">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<div class="logo-container">
+<button type="button" class="menu-toggle" aria-label="Menu toggle">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a href="https://www.barcodelookup.com/" class="barcode-lookup-logo"><img src="https://www.barcodelookup.com/assets/images/barcode-lookup-logo.png" alt="Barcode Lookup logo" /><span class="barcode-logo visible">&nbsp;BARCODE</span><span class="lookup-logo">&nbsp;LOOKUP</span></a>
+</div>
+<div id="header-menu" class="menu-collapse">
+<ul class="nav">
+<li class="barcode-lookup-logo-mobile"><a href="/" class="barcode-lookup-logo"><span class="barcode-logo">&nbsp;BARCODE</span><span class="lookup-logo">&nbsp;LOOKUP</span></a><button type="button" class="menu-toggle close-menu" aria-label="Menu toggle"><span></span><span></span></button></li>
+<li><a href="https://www.barcodelookup.com/add-a-barcode">Add a Barcode</a></li>
+<li><a href="https://www.barcodelookup.com/mobile-app">Mobile App</a></li>
+<li><a href="https://www.barcodelookup.com/api">API</a></li>
+<li><a href="https://www.barcodelookup.com/bulk-lookup">Bulk Lookup</a></li>
+<li><a href="https://www.barcodelookup.com/support">Support</a></li>
+<li><a href="#log-in" id="login"><i class="fa fa-lock"></i><span id="login-text"> Log in</span></a></li> </ul>
+</div>
+</div>
+</div>
+</div>
+</header>
+<section class="banner stripes-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h1 id="banner-title">Product information and images<br/>
+for millions of items worldwide</h1>
+<p id="banner-subtitle">Total current barcode entries: 824,861,686</p>
+<form action="https://www.barcodelookup.com/search" class="search-bar" method="post" accept-charset="utf-8">
+<input type="hidden" name="csrf_token" value="7b9fb07bcb475b7fada35088371756b8"> <input type="text" placeholder="Enter a barcode number or search term" class="search-input" name="search-input" />
+<button type="submit" class="btn-search" aria-label="Search">
+<i class="fa fa-search"></i>
+<span class="btn-seach-text">Search</span>
+</button>
+</form> </div>
+</div>
+</div>
+</section>
+<section>
+<div class="light-grey-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2>Find info on any product in seconds</h2>
+<p>Barcode Lookup gives you product information, photos and store pricing for millions of items worldwide. All you need to do is type in any item's barcode number or enter a search term. Our huge database of barcodes is sourced from thousands of manufacturers, distributors and retailers around the globe. We use our proprietary technology to filter, organize and format this data, which is then presented to you in a clear, easy-to-read format.</p>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-100">
+<div class="barcode-count-container">
+<div class="vertical-align">
+<img class="barcode-count-logo" src="https://www.barcodelookup.com/assets/images/barcode-count.png" alt="Barcode count" />
+</div>
+<div class="vertical-align">
+<div class="barcode-count-header">824,861,686</div>
+<div class="barcode-count-caption">BARCODES IN OUR DATABASE</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="white-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2>What is a barcode?</h2>
+<p>A barcode is a one-of-a-kind code composed of numbers, along with a specific pattern of stripes that represents a particular product. These codes are designed to be scanned by optical readers, just like the ones you see at checkout counters in retail stores. But since the lines correspond to a list of numbers, it's easy to look up any product with a barcode simply by matching those numbers to an entry in a database.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="barcode-red-circle"></div>
+<div id="barcode-types-and-formats" class="dark-grey-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2>Barcode types and formats</h2>
+<p>There are five barcode types you'll find on our platform. They're known as Global Trade Item Numbers (GTINs), which are product identifiers represented in the following barcode formats:</p>
+</div>
+</div>
+<div class="row-flex-permanent">
+<div class="barcode-type">
+<div class="col-25">
+<div class="barcode-type-heading">UPC</div>
+<div class="barcode-type-subheading">UNIVERSAL PRODUCT CODE</div>
+</div>
+<div class="col-75">
+<p>The United States, Canada, the United Kingdom, Australia, New Zealand and many other countries generally use Universal Product Codes (UPCs), also known as the GTIN-12 barcode format, because they have 12 digits.</p>
+</div>
+</div>
+<div class="barcode-type">
+<div class="col-25">
+<div class="barcode-type-heading">EAN</div>
+<div class="barcode-type-subheading">INTERNATIONAL ARTICLE NUMBER</div>
+</div>
+<div class="col-75">
+<p>Merchants in Europe and other areas around the world often use an International Article Number (EAN, since it was formerly known as European Article Number). There are EAN-8 and EAN-13 barcode types.</p>
+</div>
+</div>
+</div>
+<div class="row-flex-permanent">
+<div class="barcode-type">
+<div class="col-25">
+<div class="barcode-type-heading">ISBN</div>
+<div class="barcode-type-subheading">INTERNATIONAL STANDARD BOOK NUMBER</div>
+</div>
+<div class="col-75">
+<p>Books use the International Standard Book Number (ISBN) barcode format, which is compatible with EAN barcodes. Every book edition and variation has its own ISBN, which can be either an ISBN-10 or ISBN-13.</p>
+</div>
+</div>
+<div class="barcode-type">
+<div class="col-25">
+<div class="barcode-type-heading">JAN</div>
+<div class="barcode-type-subheading">JAPANESE ARTICLE NUMBER</div>
+</div>
+<div class="col-75">
+<p>This type of barcode is used in Japan, and can either be an 8 or 13-digit number. An EAN prefix, which starts with 45 or 49 as the first two digits, indicates a Japanese Article Number (JAN).</p>
+</div>
+</div>
+</div>
+<div class="row-flex-permanent">
+<div class="barcode-type margin-auto">
+<div class="col-25">
+<div class="barcode-type-heading">ITF-14</div>
+<div class="barcode-type-subheading">INTERLEAVED 2 OF 5 (I2OF5 OR ITF)</div>
+</div>
+<div class="col-75">
+<p>You'll find ITF-14 (also known as GTIN-14) barcodes on products sold in multipacks, such as shipping boxes. They're often used to identify different packaging levels and configurations.</p>
+</div>
+</div>
+</div>
+<div class="row-flex">
+<div class="col-100">
+<p class="center">To learn more about the wide variety of barcode types, visit our <a class="underlined-white-link" href="symbology">Symbologies</a> page.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="who-uses-barcode-lookup" class="white-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2>Who uses Barcode Lookup</h2>
+</div>
+</div>
+<div class="row-flex clear-both">
+<div class="col-20 vertical-align-bottom">
+<img src="https://www.barcodelookup.com/assets/images/consumers-arrow-small.png" alt="Consumers arrow" id="consumers-arrow-small">
+<img src="https://www.barcodelookup.com/assets/images/consumers.png" alt="Consumers" id="consumers" class="center-img-responsive">
+<h3>Consumers</h3>
+<img src="https://www.barcodelookup.com/assets/images/consumers-arrow.png" alt="Consumers arrow" id="consumers-arrow">
+</div>
+<div id="consumers-text" class="col-80 float-order">
+<p>A product's packaging may not tell you everything you need to know — for example, where it comes from, how well it works or its price at other stores. Enter any product's barcode number and find all kinds of information including name, manufacturer, description, photos and customer reviews. Get links to online stores where you can buy the same item at competitive prices. We're here to make it as easy as possible for you to find what you're looking for, so you can make smart buying decisions.</p>
+</div>
+</div>
+<div class="row-flex clear-both">
+<div class="col-100 vertical-align inline-flex">
+<h3 id="logo-title"><span class="barcode-logo visible">&nbsp;WHO</span><span class="lookup-logo">&nbsp;USES&nbsp;&nbsp;</span><img src="https://www.barcodelookup.com/assets/images/barcode-lookup-logo.png" alt="Barcode Lookup logo" /><span class="barcode-logo visible">&nbsp;&nbsp;BARCODE</span><span class="lookup-logo">&nbsp;LOOKUP</span></h3>
+</div>
+</div>
+<div class="row-flex clear-both">
+<div class="col-20 flex-order-two vertical-align">
+<img src="https://www.barcodelookup.com/assets/images/businesses-arrow.png" alt="Businesses arrow" id="businesses-arrow">
+<img src="https://www.barcodelookup.com/assets/images/businesses-arrow-small.png" alt="Businesses arrow" id="businesses-arrow-small">
+<img src="https://www.barcodelookup.com/assets/images/businesses.png" alt="Businesses" id="businesses" class="center-img-responsive">
+<h3>Businesses</h3>
+</div>
+<div id="businesses-text" class="col-80 vertical-align-bottom">
+<p>Find and retrieve the product data you need, quickly and efficiently. Integrate the Barcode Lookup <a class="bold-link" href="api">API</a> with your own application and get real-time access to product information. Our non-technical <a class="bold-link" href="bulk-lookup">Bulk Lookup</a> service allows you to receive product data in a conveniently formatted spreadsheet file for thousands of items. Leverage our product data so you can scale, empower and advance your business.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="light-grey-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2>Trusted by Fortune 100 companies, educational institutions and government agencies</h2>
+<p>We're thrilled to have the opportunity to work with incredible companies of all types and sizes across a wide range of industries. From logistics to e-commerce, from retail to tech, clients find our data valuable for a variety of reasons. Over the last decade, Barcode Lookup has become the product search engine of choice for leading organizations around the world including Fortune 500 and 100, educational institutions, and even provincial, state and federal governments.</p>
+<div id="company-logos">
+<div class="company-logo">
+<img src="https://www.barcodelookup.com/assets/images/walmart-logo.webp" alt="Walmart logo">
+</div>
+<div class="company-logo">
+<img src="https://www.barcodelookup.com/assets/images/procter-and-gamble-logo.webp" alt="P &amp; G logo">
+</div>
+<div class="company-logo">
+<img src="https://www.barcodelookup.com/assets/images/microsoft-logo.webp" alt="Microsoft logo">
+</div>
+<div class="company-logo">
+<img src="https://www.barcodelookup.com/assets/images/amazon-logo.webp" alt="Amazon logo">
+</div>
+<div class="company-logo">
+<img src="https://www.barcodelookup.com/assets/images/doordash-logo.webp" alt="Doordash logo">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="white-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2>Adding value for e-commerce and brick-and-mortar retail</h2>
+</div>
+</div>
+<div class="row-flex clear-both">
+<div class="col-20 vertical-align left-padding">
+<img src="https://www.barcodelookup.com/assets/images/brick-and-mortar-and-e-commerce.png" alt="Brick and mortar and e-commerce" class="center-img-responsive margin-right-auto">
+</div>
+<div class="col-80 vertical-align">
+<p>In many countries, large marketplaces such as Amazon, Walmart, Google Shopping and eBay require online sellers to include GTINs in their product data feeds. The majority of online merchants need to include product UPC, EAN, ISBN, JAN and ITF-14 barcodes in their e-commerce back-end systems.</p>
+<p>Barcode Lookup fills in the gaps and provides missing product data, which includes internationally accepted GTINs. Online retailers then have the ability to identify products in a way that other customers and businesses can recognize.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="integrate-the-barcode-lookup-api" class="light-grey-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2>Integrate the Barcode Lookup API with your own app or website</h2>
+<p>Whether you're building a shopping application, a barcode scanner, a product information search tool, or any other web or mobile app using barcode lookup technology, our API is easy to integrate. Make an API call by sending us a barcode number or search term and our service will return that product's name, category, description, retail price, photos and more.</p>
+<h3>Every day our API service helps companies:</h3>
+<ul id="api-service-helps-companies">
+<li><img src="https://www.barcodelookup.com/assets/images/red-arrow.png" class="red-arrow-bullet" alt="Red arrow bullet">Gather missing product data</li>
+<li><img src="https://www.barcodelookup.com/assets/images/red-arrow.png" class="red-arrow-bullet" alt="Red arrow bullet">Improve inventory management systems</li>
+<li><img src="https://www.barcodelookup.com/assets/images/red-arrow.png" class="red-arrow-bullet" alt="Red arrow bullet">Populate e-commerce backends</li>
+<li><img src="https://www.barcodelookup.com/assets/images/red-arrow.png" class="red-arrow-bullet" alt="Red arrow bullet">Obtain critical data analytics</li>
+<li><img src="https://www.barcodelookup.com/assets/images/red-arrow.png" class="red-arrow-bullet" alt="Red arrow bullet">Conduct competitor analyses</li>
+<li><img src="https://www.barcodelookup.com/assets/images/red-arrow.png" class="red-arrow-bullet" alt="Red arrow bullet">Build product lookup tools and apps</li>
+</ul>
+<p>The industries we serve include e-commerce and product catalog management, IT and application development, logistics and warehousing, freight and packaging. Discover how our API can automate your product data lookup needs.</p>
+<div class="cta-centered">
+<a href="api" class="cta-btn"><span class="icon-holder"><i class="cta-btn-icon order-icon"></i></span><span class="cta-btn-text">Sign up for the API</span></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="order-a-one-time-bulk-lookup" class="white-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2>Order a one-time Bulk Lookup to retrieve product data for thousands of items</h2>
+<p>Need to gather product data for a large number of barcodes quickly? Don't want to type barcode numbers into our search engine one at a time? Use our convenient Bulk Lookup service to obtain information for the products in your list – all at once with a fast turnaround.</p>
+<h3 class="center">Here's how it works.</h3>
+</div>
+<div id="send-bulk-lookup-data" class="col-100">
+<p class="center red-text bold-text">Send us your list of:</p>
+<div class="horizontal-align">
+<div class="col right">
+<p>Barcodes or GTINs (UPC, EAN, ISBN, JAN or ITF-14 codes)</p>
+<img src="https://www.barcodelookup.com/assets/images/send-your-barcodes.webp" alt="Send your barcodes">
+<img src="https://www.barcodelookup.com/assets/images/bulk-lookup-arrow-down.webp" id="bulk-lookup-arrow-down" alt="Down arrow">
+</div>
+<div class="col center">
+<img src="https://www.barcodelookup.com/assets/images/bulk-lookup-arrow-right.webp" id="bulk-lookup-arrow-right" alt="Right arrow">
+<p>OR</p>
+<img src="https://www.barcodelookup.com/assets/images/bulk-lookup-arrow-left.webp" id="bulk-lookup-arrow-left" alt="Left arrow">
+</div>
+<div class="col left">
+<img src="https://www.barcodelookup.com/assets/images/bulk-lookup-arrow-up.webp" id="bulk-lookup-arrow-up" alt="Up arrow">
+<img src="https://www.barcodelookup.com/assets/images/send-your-mpns.webp" alt="Send your MPNs">
+<p>Manufacturer part numbers (MPNs) with their associated brands and product names</p>
+</div>
+</div>
+</div>
+<div id="send-back-formatted-spreadsheet" class="col-75 col-75-offset center">
+<p>Barcode Lookup sends back a formatted spreadsheet (CSV file) with all the data we can have including product names, descriptions, categories, images and store pricing.</p>
+<img src="https://www.barcodelookup.com/assets/images/formatted-spreadsheet-file.webp" alt="Formatted spreadsheet file">
+</div>
+<div class="col-100">
+<div class="cta-centered">
+<a href="bulk-lookup" class="cta-btn"><span class="icon-holder"><i class="cta-btn-icon order-icon"></i></span><span class="cta-btn-text">Order a Bulk Lookup</span></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="dark-grey-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2 class="white-h2">Search products on the go with our free mobile app</h2>
+<p class="white-text">All the product info you can retrieve from our website is also available through the Barcode Lookup mobile app on <a class="bolded-white-link" target="_blank" href="https://play.google.com/store/apps/details?id=com.barcodelookup">Android</a> and <a class="bolded-white-link" target="_blank" href="https://itunes.apple.com/us/app/barcode-lookup/id953488535">iOS</a> devices. Our app gives you instant access to the millions of barcodes in our system, along with product info, descriptions, manufacturers and brands, customer reviews, photos and links to online stores. With the mobile app, you can scan and lookup any barcode while you shop — for FREE!</p>
+</div>
+</div>
+<div class="row">
+<div class="app-stores">
+<div class="col-50">
+<a href="https://itunes.apple.com/us/app/barcode-lookup/id953488535" target="_blank">
+<img src="https://www.barcodelookup.com/assets/images/app-store.webp" alt="App Store" class="app-store-image" />
+</a>
+</div>
+<div class="col-50">
+<a href="https://play.google.com/store/apps/details?id=com.barcodelookup" target="_blank">
+<img src="https://www.barcodelookup.com/assets/images/google-play.webp" alt="Google Play" class="app-store-image" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="white-background">
+<div class="container">
+<div class="row">
+<div class="col-80 left-padding">
+<h2>A continuously growing database</h2>
+</div>
+</div>
+<div class="row-flex clear-both">
+<div class="col-20 vertical-align">
+<img src="https://www.barcodelookup.com/assets/images/growing-database.png" alt="Growing database" class="center-img-responsive margin-left-auto">
+</div>
+<div class="col-80 left-padding vertical-align">
+<p>Currently, our product database is in the hundreds of millions — and we're constantly working to acquire more. As soon as we get new barcode data, we import it into our database so it's instantly available to you. At Barcode Lookup, we analyze, check and re-check all our product information on a regular basis to ensure that it's accurate and up to date.</p>
+<p>By adding a new barcode or editing an existing product listing, you can contribute to our growth and also make sure your additions are found by thousands of daily Barcode Lookup users. <a class="bold-link" href="add-a-barcode">Add a barcode</a> today!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="light-grey-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2>Get your own barcode numbers</h2>
+</div>
+</div>
+<div class="row-flex clear-both">
+<div class="col-30 vertical-align left-padding">
+<img src="https://www.barcodelookup.com/assets/images/barcode-types.png" alt="Barcode types" class="center-img-responsive margin-right-auto">
+</div>
+<div class="col-70 vertical-align">
+<p>You don't have to be a large corporation to get your very own barcode numbers for the products you manufacture. All you need to do is order them! Run a quick search online and you'll find numerous websites that can set you up with your own GTIN codes. It's fast, easy and affordable — and it's worth doing if you plan to sell your product in retail stores or on e-commerce websites.</p>
+<p>There are different types of GTIN codes for different types of products and selling situations, so be sure to check the rules with the company you're buying from before you make a purchase.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="latest-barcode-entries" class="white-background">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<h2 class="no-text-decoration">Latest Barcode Entries</h2>
+</div>
+<div class="col-100">
+<div class="slider">
+<div class="slider-images">
+<div class="slider-image">
+<a href="https://www.barcodelookup.com/0196521332932" aria-label="0196521332932">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="270" height="120" viewBox="0 0 270 120"><g><rect x="0" y="0" width="270" height="120" fill="white" /><g transform="translate(31 10)"><g><text x="3" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">0</text></g><g><rect x="9" y="0" width="2" height="100" fill="black" /><rect x="13" y="0" width="2" height="100" fill="black" /></g><g><rect x="19" y="0" width="4" height="91" fill="black" /><rect x="27" y="0" width="2" height="91" fill="black" /><text x="27" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="35" y="0" width="2" height="91" fill="black" /><rect x="39" y="0" width="4" height="91" fill="black" /><text x="39" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">9</text></g><g><rect x="45" y="0" width="2" height="91" fill="black" /><rect x="49" y="0" width="8" height="91" fill="black" /><text x="51" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">6</text></g><g><rect x="59" y="0" width="4" height="91" fill="black" /><rect x="69" y="0" width="2" height="91" fill="black" /><text x="63" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">5</text></g><g><rect x="75" y="0" width="2" height="91" fill="black" /><rect x="81" y="0" width="4" height="91" fill="black" /><text x="75" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="89" y="0" width="4" height="91" fill="black" /><rect x="97" y="0" width="2" height="91" fill="black" /><text x="87" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="101" y="0" width="2" height="100" fill="black" /><rect x="105" y="0" width="2" height="100" fill="black" /></g><g><rect x="109" y="0" width="2" height="91" fill="black" /><rect x="119" y="0" width="2" height="91" fill="black" /><text x="121" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="123" y="0" width="2" height="91" fill="black" /><rect x="133" y="0" width="2" height="91" fill="black" /><text x="133" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="137" y="0" width="4" height="91" fill="black" /><rect x="143" y="0" width="4" height="91" fill="black" /><text x="145" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="151" y="0" width="6" height="91" fill="black" /><rect x="159" y="0" width="2" height="91" fill="black" /><text x="157" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">9</text></g><g><rect x="165" y="0" width="2" height="91" fill="black" /><rect x="175" y="0" width="2" height="91" fill="black" /><text x="169" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="179" y="0" width="4" height="91" fill="black" /><rect x="185" y="0" width="4" height="91" fill="black" /><text x="181" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="193" y="0" width="2" height="100" fill="black" /><rect x="197" y="0" width="2" height="100" fill="black" /></g><g><text x="205" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black"></text></g></g></g></svg>
+</a>
+</div>
+<div class="slider-image">
+<a href="https://www.barcodelookup.com/0196521332925" aria-label="0196521332925">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="270" height="120" viewBox="0 0 270 120"><g><rect x="0" y="0" width="270" height="120" fill="white" /><g transform="translate(31 10)"><g><text x="3" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">0</text></g><g><rect x="9" y="0" width="2" height="100" fill="black" /><rect x="13" y="0" width="2" height="100" fill="black" /></g><g><rect x="19" y="0" width="4" height="91" fill="black" /><rect x="27" y="0" width="2" height="91" fill="black" /><text x="27" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="35" y="0" width="2" height="91" fill="black" /><rect x="39" y="0" width="4" height="91" fill="black" /><text x="39" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">9</text></g><g><rect x="45" y="0" width="2" height="91" fill="black" /><rect x="49" y="0" width="8" height="91" fill="black" /><text x="51" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">6</text></g><g><rect x="59" y="0" width="4" height="91" fill="black" /><rect x="69" y="0" width="2" height="91" fill="black" /><text x="63" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">5</text></g><g><rect x="75" y="0" width="2" height="91" fill="black" /><rect x="81" y="0" width="4" height="91" fill="black" /><text x="75" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="89" y="0" width="4" height="91" fill="black" /><rect x="97" y="0" width="2" height="91" fill="black" /><text x="87" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="101" y="0" width="2" height="100" fill="black" /><rect x="105" y="0" width="2" height="100" fill="black" /></g><g><rect x="109" y="0" width="2" height="91" fill="black" /><rect x="119" y="0" width="2" height="91" fill="black" /><text x="121" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="123" y="0" width="2" height="91" fill="black" /><rect x="133" y="0" width="2" height="91" fill="black" /><text x="133" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="137" y="0" width="4" height="91" fill="black" /><rect x="143" y="0" width="4" height="91" fill="black" /><text x="145" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="151" y="0" width="6" height="91" fill="black" /><rect x="159" y="0" width="2" height="91" fill="black" /><text x="157" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">9</text></g><g><rect x="165" y="0" width="4" height="91" fill="black" /><rect x="171" y="0" width="4" height="91" fill="black" /><text x="169" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="179" y="0" width="2" height="91" fill="black" /><rect x="185" y="0" width="6" height="91" fill="black" /><text x="181" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">5</text></g><g><rect x="193" y="0" width="2" height="100" fill="black" /><rect x="197" y="0" width="2" height="100" fill="black" /></g><g><text x="205" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black"></text></g></g></g></svg>
+</a>
+</div>
+<div class="slider-image">
+<a href="https://www.barcodelookup.com/8434483831165" aria-label="8434483831165">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="270" height="120" viewBox="0 0 270 120"><g><rect x="0" y="0" width="270" height="120" fill="white" /><g transform="translate(31 10)"><g><text x="3" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="9" y="0" width="2" height="100" fill="black" /><rect x="13" y="0" width="2" height="100" fill="black" /></g><g><rect x="17" y="0" width="2" height="91" fill="black" /><rect x="25" y="0" width="4" height="91" fill="black" /><text x="27" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="31" y="0" width="2" height="91" fill="black" /><rect x="41" y="0" width="2" height="91" fill="black" /><text x="39" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="45" y="0" width="2" height="91" fill="black" /><rect x="53" y="0" width="4" height="91" fill="black" /><text x="51" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="61" y="0" width="6" height="91" fill="black" /><rect x="69" y="0" width="2" height="91" fill="black" /><text x="63" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="77" y="0" width="2" height="91" fill="black" /><rect x="83" y="0" width="2" height="91" fill="black" /><text x="75" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="87" y="0" width="8" height="91" fill="black" /><rect x="97" y="0" width="2" height="91" fill="black" /><text x="87" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="101" y="0" width="2" height="100" fill="black" /><rect x="105" y="0" width="2" height="100" fill="black" /></g><g><rect x="109" y="0" width="2" height="91" fill="black" /><rect x="115" y="0" width="2" height="91" fill="black" /><text x="121" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="123" y="0" width="2" height="91" fill="black" /><rect x="133" y="0" width="2" height="91" fill="black" /><text x="133" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="137" y="0" width="4" height="91" fill="black" /><rect x="145" y="0" width="4" height="91" fill="black" /><text x="145" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="151" y="0" width="4" height="91" fill="black" /><rect x="159" y="0" width="4" height="91" fill="black" /><text x="157" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="165" y="0" width="2" height="91" fill="black" /><rect x="169" y="0" width="2" height="91" fill="black" /><text x="169" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">6</text></g><g><rect x="179" y="0" width="2" height="91" fill="black" /><rect x="185" y="0" width="6" height="91" fill="black" /><text x="181" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">5</text></g><g><rect x="193" y="0" width="2" height="100" fill="black" /><rect x="197" y="0" width="2" height="100" fill="black" /></g><g><text x="205" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black"></text></g></g></g></svg>
+</a>
+</div>
+<div class="slider-image">
+<a href="https://www.barcodelookup.com/8434483831226" aria-label="8434483831226">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="270" height="120" viewBox="0 0 270 120"><g><rect x="0" y="0" width="270" height="120" fill="white" /><g transform="translate(31 10)"><g><text x="3" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="9" y="0" width="2" height="100" fill="black" /><rect x="13" y="0" width="2" height="100" fill="black" /></g><g><rect x="17" y="0" width="2" height="91" fill="black" /><rect x="25" y="0" width="4" height="91" fill="black" /><text x="27" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="31" y="0" width="2" height="91" fill="black" /><rect x="41" y="0" width="2" height="91" fill="black" /><text x="39" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="45" y="0" width="2" height="91" fill="black" /><rect x="53" y="0" width="4" height="91" fill="black" /><text x="51" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="61" y="0" width="6" height="91" fill="black" /><rect x="69" y="0" width="2" height="91" fill="black" /><text x="63" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="77" y="0" width="2" height="91" fill="black" /><rect x="83" y="0" width="2" height="91" fill="black" /><text x="75" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="87" y="0" width="8" height="91" fill="black" /><rect x="97" y="0" width="2" height="91" fill="black" /><text x="87" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="101" y="0" width="2" height="100" fill="black" /><rect x="105" y="0" width="2" height="100" fill="black" /></g><g><rect x="109" y="0" width="2" height="91" fill="black" /><rect x="115" y="0" width="2" height="91" fill="black" /><text x="121" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="123" y="0" width="2" height="91" fill="black" /><rect x="133" y="0" width="2" height="91" fill="black" /><text x="133" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="137" y="0" width="4" height="91" fill="black" /><rect x="145" y="0" width="4" height="91" fill="black" /><text x="145" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="151" y="0" width="4" height="91" fill="black" /><rect x="157" y="0" width="4" height="91" fill="black" /><text x="157" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="165" y="0" width="4" height="91" fill="black" /><rect x="171" y="0" width="4" height="91" fill="black" /><text x="169" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="179" y="0" width="2" height="91" fill="black" /><rect x="183" y="0" width="2" height="91" fill="black" /><text x="181" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">6</text></g><g><rect x="193" y="0" width="2" height="100" fill="black" /><rect x="197" y="0" width="2" height="100" fill="black" /></g><g><text x="205" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black"></text></g></g></g></svg>
+</a>
+</div>
+<div class="slider-image">
+<a href="https://www.barcodelookup.com/8434483831202" aria-label="8434483831202">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="270" height="120" viewBox="0 0 270 120"><g><rect x="0" y="0" width="270" height="120" fill="white" /><g transform="translate(31 10)"><g><text x="3" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="9" y="0" width="2" height="100" fill="black" /><rect x="13" y="0" width="2" height="100" fill="black" /></g><g><rect x="17" y="0" width="2" height="91" fill="black" /><rect x="25" y="0" width="4" height="91" fill="black" /><text x="27" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="31" y="0" width="2" height="91" fill="black" /><rect x="41" y="0" width="2" height="91" fill="black" /><text x="39" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="45" y="0" width="2" height="91" fill="black" /><rect x="53" y="0" width="4" height="91" fill="black" /><text x="51" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="61" y="0" width="6" height="91" fill="black" /><rect x="69" y="0" width="2" height="91" fill="black" /><text x="63" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="77" y="0" width="2" height="91" fill="black" /><rect x="83" y="0" width="2" height="91" fill="black" /><text x="75" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="87" y="0" width="8" height="91" fill="black" /><rect x="97" y="0" width="2" height="91" fill="black" /><text x="87" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="101" y="0" width="2" height="100" fill="black" /><rect x="105" y="0" width="2" height="100" fill="black" /></g><g><rect x="109" y="0" width="2" height="91" fill="black" /><rect x="115" y="0" width="2" height="91" fill="black" /><text x="121" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="123" y="0" width="2" height="91" fill="black" /><rect x="133" y="0" width="2" height="91" fill="black" /><text x="133" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="137" y="0" width="4" height="91" fill="black" /><rect x="145" y="0" width="4" height="91" fill="black" /><text x="145" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="151" y="0" width="4" height="91" fill="black" /><rect x="157" y="0" width="4" height="91" fill="black" /><text x="157" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="165" y="0" width="6" height="91" fill="black" /><rect x="175" y="0" width="2" height="91" fill="black" /><text x="169" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">0</text></g><g><rect x="179" y="0" width="4" height="91" fill="black" /><rect x="185" y="0" width="4" height="91" fill="black" /><text x="181" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="193" y="0" width="2" height="100" fill="black" /><rect x="197" y="0" width="2" height="100" fill="black" /></g><g><text x="205" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black"></text></g></g></g></svg>
+</a>
+</div>
+<div class="slider-image">
+<a href="https://www.barcodelookup.com/8434483831189" aria-label="8434483831189">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="270" height="120" viewBox="0 0 270 120"><g><rect x="0" y="0" width="270" height="120" fill="white" /><g transform="translate(31 10)"><g><text x="3" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="9" y="0" width="2" height="100" fill="black" /><rect x="13" y="0" width="2" height="100" fill="black" /></g><g><rect x="17" y="0" width="2" height="91" fill="black" /><rect x="25" y="0" width="4" height="91" fill="black" /><text x="27" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="31" y="0" width="2" height="91" fill="black" /><rect x="41" y="0" width="2" height="91" fill="black" /><text x="39" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="45" y="0" width="2" height="91" fill="black" /><rect x="53" y="0" width="4" height="91" fill="black" /><text x="51" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="61" y="0" width="6" height="91" fill="black" /><rect x="69" y="0" width="2" height="91" fill="black" /><text x="63" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="77" y="0" width="2" height="91" fill="black" /><rect x="83" y="0" width="2" height="91" fill="black" /><text x="75" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="87" y="0" width="8" height="91" fill="black" /><rect x="97" y="0" width="2" height="91" fill="black" /><text x="87" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="101" y="0" width="2" height="100" fill="black" /><rect x="105" y="0" width="2" height="100" fill="black" /></g><g><rect x="109" y="0" width="2" height="91" fill="black" /><rect x="115" y="0" width="2" height="91" fill="black" /><text x="121" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="123" y="0" width="2" height="91" fill="black" /><rect x="133" y="0" width="2" height="91" fill="black" /><text x="133" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="137" y="0" width="4" height="91" fill="black" /><rect x="145" y="0" width="4" height="91" fill="black" /><text x="145" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="151" y="0" width="4" height="91" fill="black" /><rect x="159" y="0" width="4" height="91" fill="black" /><text x="157" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="165" y="0" width="2" height="91" fill="black" /><rect x="171" y="0" width="2" height="91" fill="black" /><text x="169" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="179" y="0" width="6" height="91" fill="black" /><rect x="187" y="0" width="2" height="91" fill="black" /><text x="181" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">9</text></g><g><rect x="193" y="0" width="2" height="100" fill="black" /><rect x="197" y="0" width="2" height="100" fill="black" /></g><g><text x="205" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black"></text></g></g></g></svg>
+</a>
+</div>
+<div class="slider-image">
+<a href="https://www.barcodelookup.com/8434483831172" aria-label="8434483831172">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="270" height="120" viewBox="0 0 270 120"><g><rect x="0" y="0" width="270" height="120" fill="white" /><g transform="translate(31 10)"><g><text x="3" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="9" y="0" width="2" height="100" fill="black" /><rect x="13" y="0" width="2" height="100" fill="black" /></g><g><rect x="17" y="0" width="2" height="91" fill="black" /><rect x="25" y="0" width="4" height="91" fill="black" /><text x="27" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="31" y="0" width="2" height="91" fill="black" /><rect x="41" y="0" width="2" height="91" fill="black" /><text x="39" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="45" y="0" width="2" height="91" fill="black" /><rect x="53" y="0" width="4" height="91" fill="black" /><text x="51" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="61" y="0" width="6" height="91" fill="black" /><rect x="69" y="0" width="2" height="91" fill="black" /><text x="63" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="77" y="0" width="2" height="91" fill="black" /><rect x="83" y="0" width="2" height="91" fill="black" /><text x="75" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="87" y="0" width="8" height="91" fill="black" /><rect x="97" y="0" width="2" height="91" fill="black" /><text x="87" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="101" y="0" width="2" height="100" fill="black" /><rect x="105" y="0" width="2" height="100" fill="black" /></g><g><rect x="109" y="0" width="2" height="91" fill="black" /><rect x="115" y="0" width="2" height="91" fill="black" /><text x="121" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="123" y="0" width="2" height="91" fill="black" /><rect x="133" y="0" width="2" height="91" fill="black" /><text x="133" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="137" y="0" width="4" height="91" fill="black" /><rect x="145" y="0" width="4" height="91" fill="black" /><text x="145" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="151" y="0" width="4" height="91" fill="black" /><rect x="159" y="0" width="4" height="91" fill="black" /><text x="157" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="165" y="0" width="2" height="91" fill="black" /><rect x="173" y="0" width="2" height="91" fill="black" /><text x="169" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">7</text></g><g><rect x="179" y="0" width="4" height="91" fill="black" /><rect x="185" y="0" width="4" height="91" fill="black" /><text x="181" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="193" y="0" width="2" height="100" fill="black" /><rect x="197" y="0" width="2" height="100" fill="black" /></g><g><text x="205" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black"></text></g></g></g></svg>
+</a>
+</div>
+<div class="slider-image">
+<a href="https://www.barcodelookup.com/8434483831219" aria-label="8434483831219">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="270" height="120" viewBox="0 0 270 120"><g><rect x="0" y="0" width="270" height="120" fill="white" /><g transform="translate(31 10)"><g><text x="3" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="9" y="0" width="2" height="100" fill="black" /><rect x="13" y="0" width="2" height="100" fill="black" /></g><g><rect x="17" y="0" width="2" height="91" fill="black" /><rect x="25" y="0" width="4" height="91" fill="black" /><text x="27" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="31" y="0" width="2" height="91" fill="black" /><rect x="41" y="0" width="2" height="91" fill="black" /><text x="39" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="45" y="0" width="2" height="91" fill="black" /><rect x="53" y="0" width="4" height="91" fill="black" /><text x="51" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="61" y="0" width="6" height="91" fill="black" /><rect x="69" y="0" width="2" height="91" fill="black" /><text x="63" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">4</text></g><g><rect x="77" y="0" width="2" height="91" fill="black" /><rect x="83" y="0" width="2" height="91" fill="black" /><text x="75" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="87" y="0" width="8" height="91" fill="black" /><rect x="97" y="0" width="2" height="91" fill="black" /><text x="87" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="101" y="0" width="2" height="100" fill="black" /><rect x="105" y="0" width="2" height="100" fill="black" /></g><g><rect x="109" y="0" width="2" height="91" fill="black" /><rect x="115" y="0" width="2" height="91" fill="black" /><text x="121" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">8</text></g><g><rect x="123" y="0" width="2" height="91" fill="black" /><rect x="133" y="0" width="2" height="91" fill="black" /><text x="133" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">3</text></g><g><rect x="137" y="0" width="4" height="91" fill="black" /><rect x="145" y="0" width="4" height="91" fill="black" /><text x="145" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="151" y="0" width="4" height="91" fill="black" /><rect x="157" y="0" width="4" height="91" fill="black" /><text x="157" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">2</text></g><g><rect x="165" y="0" width="4" height="91" fill="black" /><rect x="173" y="0" width="4" height="91" fill="black" /><text x="169" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">1</text></g><g><rect x="179" y="0" width="6" height="91" fill="black" /><rect x="187" y="0" width="2" height="91" fill="black" /><text x="181" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black">9</text></g><g><rect x="193" y="0" width="2" height="100" fill="black" /><rect x="197" y="0" width="2" height="100" fill="black" /></g><g><text x="205" y="109" text-anchor="middle" font-family="monospace" font-size="15" fill="black"></text></g></g></g></svg>
+</a>
+</div>
+</div>
+</div>
+<button class="slider-btn slider-btn-prev" type="button" aria-label="Previous" aria-disabled="true">Previous</button>
+<button class="slider-btn slider-btn-next" type="button" aria-label="Next" aria-disabled="true">Next</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script src="https://www.barcodelookup.com/assets/javascript/home.js"></script>
+<footer class="footer">
+<div class="footer-menu-bar">
+<div class="container">
+<div class="row">
+<div class="col-100">
+<div class="footer-col footer-logo-container">
+<a href="https://www.barcodelookup.com/" class="footer-heading desktop-hide">
+<span>BARCODE LOOKUP</span>
+<img id="footer-logo" src="https://www.barcodelookup.com/assets/images/barcode-lookup-logo-white-large.webp" alt="Barcode Lookup logo icon">
+</a>
+<a href="https://www.barcodelookup.com/" class="footer-heading mobile-hide">
+<img id="footer-logo" src="https://www.barcodelookup.com/assets/images/barcode-lookup-logo-white.webp" alt="Barcode Lookup logo icon">
+<span>BARCODE LOOKUP</span>
+</a>
+</div>
+<div class="footer-col footer-menu-col">
+<span class="footer-heading">SERVICES</span>
+<div class="dropdown-menu">
+<a href="https://www.barcodelookup.com/api">API</a>
+<a href="https://www.barcodelookup.com/bulk-lookup">Bulk Lookup</a>
+<a href="https://www.barcodelookup.com/mobile-app">Mobile App</a>
+</div>
+</div>
+<div class="footer-col footer-menu-col">
+<span class="footer-heading">SUBMIT DATA</span>
+<div class="dropdown-menu">
+<a href="https://www.barcodelookup.com/add-a-barcode">Add a Barcode</a>
+<a href="https://www.barcodelookup.com/add-a-barcode">Add a Store</a>
+<a href="https://www.barcodelookup.com/data-submission-guidelines">Guidelines</a>
+</div>
+</div>
+<div class="footer-col footer-menu-col">
+<span class="footer-heading">RESOURCES</span>
+<div class="dropdown-menu">
+<a href="https://www.barcodelookup.com/api-documentation">API Documentation</a>
+<a href="https://www.barcodelookup.com/symbology">Symbology</a>
+<a href="https://www.barcodelookup.com/faq">FAQ</a>
+</div>
+</div>
+<div class="footer-col footer-menu-col">
+<span class="footer-heading">SUPPORT</span>
+<div class="dropdown-menu">
+<div class="column-50 footer-support">
+<a href="https://www.barcodelookup.com/support">Contact</a>
+<a href="https://www.barcodelookup.com/terms-and-conditions">Terms</a>
+<a href="https://www.barcodelookup.com/privacy-policy">Privacy</a>
+</div>
+<div class="column-50 footer-social-icons">
+<a href="https://www.facebook.com/barcodelookup" aria-label="Facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+<a href="https://x.com/barcodelookup" aria-label="X" target="_blank"><i class="fa fa-twitter"></i></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="copyright">
+<div class="container">
+<div class="row">
+<div class="col-100">
+&copy; 2023 barcodelookup.com. all rights reserved.
+</div>
+</div>
+</div>
+</div>
+</footer>
+
+<div class="modal" id="loginModal">
+<div class="modal-dialog">
+<div class="modal-header">
+<h4 class="modal-title bold center">Log in to Your API Account</h4>
+<button class="close" title="close">&times;</button>
+</div>
+<div class="modal-body">
+<form action="https://www.barcodelookup.com/" id="userAccountLogin" class="form" method="post" accept-charset="utf-8">
+<input type="hidden" name="csrf_token" value="7b9fb07bcb475b7fada35088371756b8">
+<input type="hidden" name="timestamp" value="1700369467">
+<div id="badLogin"></div>
+<div class="input-wrapper">
+<input placeholder="Username" type="text" name="username" id="username" autocomplete="username" required="required" />
+<i class="fa fa-user input-icon"></i>
+</div>
+<div class="input-wrapper">
+<input placeholder="Password" type="password" name="password" id="password" autocomplete="current-password" required="required" />
+<i class="fa fa-unlock-alt input-icon"></i>
+</div>
+<button type="submit" id="userAccountLoginSubmit" name="userAccountLoginSubmit" class="form-btn">
+Log in <i class="fa fa-key"></i>
+</button>
+</form>
+<div class="center"><a href="https://account.barcodelookup.com/forgot-password" class="forgot-password">Forgot password?</a></div>
+</div>
+<div id="login-modal-footer">
+<span id="create-an-account-link">Don't have an account yet? &nbsp;<a href="https://www.barcodelookup.com/api/#sign-up">Sign-up today!</a></span>
+</div>
+</div>
+</div>
+<script src="https://www.barcodelookup.com/assets/javascript/login.js"></script>
+<script nonce="47bd09f5b595d29091802918">(function(){var js = "window['__CF$cv$params']={r:'8285d6128a0e6394',t:'MTcwMDM2OTQ2Ny40MTgwMDA='};_cpo=document.createElement('script');_cpo.nonce='47bd09f5b595d29091802918',_cpo.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.nonce = '47bd09f5b595d29091802918';_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317" integrity="sha512-euoFGowhlaLqXsPWQ48qSkBSCFs3DPRyiwVu3FjR96cMPx+Fr+gpWRhIafcHwqwCqWS42RZhIudOvEI+Ckf6MA==" nonce="47bd09f5b595d29091802918" data-cf-beacon='{"rayId":"8285d6128a0e6394","version":"2023.10.0","token":"9551c9bd914c4ad5b34fc56b6573df5b"}' crossorigin="anonymous"></script>
+</body>
+</html>
+</body>
+</html>

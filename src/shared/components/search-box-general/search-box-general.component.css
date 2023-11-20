@@ -1,0 +1,118 @@
+/* Style of the main container */
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    /* White background or the color you prefer */
+    padding: 10px 0;
+    /* Spacing around the navbar */
+    width: 100%;
+
+}
+
+/* Style of the dropdown menu */
+.dropdown {
+    position: relative;
+    flex: 0 0 30%;
+    /* 30% of the available space is assigned */
+}
+
+/* Button style */
+.dropbtn {
+    background-color: #f8f8f8;
+    color: black;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Style of the dropdown content when it's not displayed */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    width: 100%;
+}
+
+/* Style of the links in the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Style of the dropdown content when hovered */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Styles for the search box */
+.search-box-container {
+    display: flex;
+    border: 1px solid #ccc;
+    flex: 0 0 70%;
+    /* 70% of the available space is assigned */
+}
+
+/* Style of the search box */
+.search-box {
+    flex-grow: 1;
+    padding: 12px 20px;
+    border: none;
+    outline: none;
+}
+
+/* Style of the search button */
+.search-button {
+    padding: 12px 16px;
+    background: #f0f0f0;
+    border: none;
+    cursor: pointer;
+}
+
+/* Style of the search icon */
+.search-button i {
+    font-size: 20px;
+}
+
+/* Style of the barcode logo */
+.barcode-logo {
+    flex: 1;
+    width: 100%;
+}
+
+/* Styles for the button and search box when hovered and focused */
+.search-box:focus,
+.dropbtn:focus,
+.search-button:hover,
+.dropbtn:hover {
+    /* Change background color when hovered or focused */
+    background-color: #e7e7e7;
+}
+
+/* Media query to adjust the layout on smaller screens */
+@media (max-width: 600px) {
+    .navbar-container {
+        flex-direction: column;
+    }
+
+    /* Change direction to column on small screens */
+    .dropdown,
+    .search-box-container {
+        /* Both elements take 100% of the available space on mobile devices */
+        flex: 0 0 100%;
+        width: 100%;
+        /* Ensure they occupy all the available width */
+    }
+
+    .dropdown-content {
+        /* The dropdown content adjusts to the normal flow of the document on small screens */
+        position: static;
+    }
+}

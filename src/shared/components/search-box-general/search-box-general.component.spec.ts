@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ProductComponent } from './product.component';
+import { SearchBoxGeneralComponent } from './search-box-general.component';
 
-describe('ProductComponent', () => {
-  let component: ProductComponent;
-  let fixture: ComponentFixture<ProductComponent>;
+describe('VercelComponent', () => {
+  let component: SearchBoxGeneralComponent;
+  let fixture: ComponentFixture<SearchBoxGeneralComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductComponent ]
+      declarations: [ SearchBoxGeneralComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProductComponent);
+    fixture = TestBed.createComponent(SearchBoxGeneralComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

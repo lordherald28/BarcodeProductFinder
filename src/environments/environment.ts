@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   AuthenticationKey: {
-    key: 'ujtlb9rzit30jkgqxur3tbba7emmlv'
+    key: 'gd3s7jjw3n9qzyf6yt31jstvgwd4k3'
   }
 };
 

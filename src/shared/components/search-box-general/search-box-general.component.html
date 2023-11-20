@@ -1,0 +1,27 @@
+<div class="navbar-container">
+
+ <!--   <div class="dropdown">
+    <button class="dropbtn">All</button>
+    <div class="dropdown-content">
+      <a>All</a>
+      <a>Barcode</a>
+      <a>Partial Barcode </a>
+      <a>Batch Barcode </a>
+      <a>Brand </a>
+      <a>Manufacture </a>
+      <a>Title </a>
+      <a>MNP </a>
+      <a>Tolete </a>
+      <a>Exact Match </a>
+     más enlaces aquí
+    </div>
+  </div> -->
+
+  <form class="search-box-container" [formGroup]="formSearch">
+    <input type="text" class="search-box" placeholder="Search products" formControlName="searchKeyWord" >
+    <button class="search-button">
+      <i class="fa fa-search"></i> 
+    </button>
+  </form>
+
+</div>

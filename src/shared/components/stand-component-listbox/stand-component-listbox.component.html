@@ -1,9 +1,9 @@
 <ng-container>
   <section class="g_wrap_list">
-    <ng-container *ngIf="isSearch">
+    <!-- <ng-container *ngIf="isSearch">
       <p-messages [(value)]="messages" [enableService]="false" class="absolute g__position"
         [closable]="true"></p-messages>
-    </ng-container>
+    </ng-container> -->
     <form [formGroup]="formSearch">
       <span class="p-input-icon-left w-full">
         <i class="pi pi-search"></i>
@@ -28,8 +28,8 @@
       <li *ngFor="let item of listDataForTemplate;let  i=index; trackBy:trackByIdFn" class="item"
         (click)="sendPhotoId(item)">
         <div>{{i+1}}</div>
-        <img [src]="item.url_image" [alt]="item.name" class="image" />
-        <div class="item-name">{{item.name}}</div>
+        <!-- <img [src]="item.url_image" [alt]="item.name" class="image" />
+        <div class="item-name">{{item.name}}</div> -->
       </li>
       <li class="item" *ngIf="isLoading">
         <span class="spinner"></span>

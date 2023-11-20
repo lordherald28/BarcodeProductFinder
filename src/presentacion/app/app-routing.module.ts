@@ -4,13 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path:'',
-    redirectTo:'',
+    redirectTo:'product-finder',
     pathMatch:'full'
   },
   {
     path:'product-finder',
     title:'Products',
-    loadComponent:()=> import('./../pages/product/product.component')
+    loadComponent:()=> import('../pages/product/page-product.component')
   }
 ];
 

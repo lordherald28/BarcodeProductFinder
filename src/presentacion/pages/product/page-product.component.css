@@ -1,0 +1,108 @@
+.wrapper {
+    /* Main container with a column layout and a maximum width of 100% */
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.header {
+    /* Header with logo and search box, with a column layout and centered items */
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 10px;
+    background-color: #484747;
+}
+
+.barcode-lookup-logo {
+    /* Logo container with a row layout and centered items */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.lookup-logo {
+    /* Lookup logo with a specific color */
+    color: #cc2828;
+}
+
+.barcode-logo {
+    /* Barcode logo with a specific color */
+    color: #bcb9b9;
+}
+
+.search-container {
+    /* Search container with a specific width */
+    width: 70%;
+}
+
+.barcode-lookup-logo span {
+    /* Specific styles for the span within the logo container */
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.main-content {
+    /* Main content with a row layout */
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    /* Sidebar with a specific width */
+    width: 76%;
+}
+
+.product-content {
+    /* Product content with a wrap layout, specific gap and padding, and items aligned to the start */
+    display: flex;
+    flex-wrap: wrap;
+    /* Allows product cards to adjust and wrap onto the next line */
+    gap: 10px;
+    /* Sets a gap between the cards */
+    padding: 10px;
+    justify-content: flex-start;
+    /* Aligns the products at the start of the container */
+}
+
+.app-card-product {
+    /* Product card with specific flex properties, margin, shadow, and rounded borders */
+    /* Initially set to have 5 cards in a row, this will be adjusted with media queries */
+    flex: 1 1 20%;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Soft shadow for the card */
+    border-radius: 8px;
+    /* Rounded borders for the card */
+}
+
+.item-product {
+    /* Specific bottom margin for the product item */
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+
+    /* Styles for smaller screens */
+    .header {
+        /* Change header layout to column on small screens */
+        flex-direction: column;
+    }
+
+    .main-content {
+        /* Change main content layout to column on small screens */
+        flex-direction: column;
+    }
+
+    .sidebar {
+        /* Sidebar takes 100% width on small screens */
+        width: 100%;
+    }
+}

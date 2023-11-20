@@ -3,7 +3,7 @@ import { ProductRepository } from '../repository/product-repository';
 
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, EMPTY } from 'rxjs';
+import { Observable, EMPTY, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { ProductModel } from '../models/product.model';
 import { Metadata, SearchParams } from '../helpers/metadata-products';
@@ -19,14 +19,13 @@ export class ProductsService extends ProductRepository {
   constructor(private readonly http: HttpClient) { super() }
 
   private mapperProduct = new ProductMapper();
-
   private paramsArray: string[] = [];
 
   getParamsArray() {
     return this.paramsArray;
   }
 
-  
+
   searchProductByKeyword(params: SearchParams): Observable<ProductModel[]> {
 
     let url: string = 'https://api.barcodelookup.com/v3/products?';
@@ -58,12 +57,12 @@ export class ProductsService extends ProductRepository {
       url += `&title=${params.title}`;
     }
 
-    if (params.metadata) {
-      url += `&metadata=${params.metadata}`;
+    if (params.meta_data.metadata) {
+      url += `&metadata=${params.meta_data.metadata}`;
     }
 
-    if (params.cursor) {
-      url += `&cursor=${params.cursor}`;
+    if (params.meta_data.cursor) {
+      url += `&cursor=${params.meta_data.cursor}`;
     }
 
     if (params.key) {

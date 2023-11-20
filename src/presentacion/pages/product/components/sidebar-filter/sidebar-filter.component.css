@@ -1,0 +1,116 @@
+.accordion {
+  width: 75%;
+  margin: auto;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #ccc;
+}
+
+.accordion-button {
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.accordion-button:hover {
+  text-decoration: underline;
+}
+
+.accordion-content {
+  padding: 0 10px;
+  height: 0; /* Configura la altura inicial a 0 */
+  overflow: hidden;
+  transition: height 0.3s ease-out; /* Cambia la transición a 'height' en lugar de 'max-height' */
+}
+
+
+.accordion-button.active + .accordion-content {
+  max-height: 200px; /* Ajusta según el contenido */
+}
+
+
+
+/* Estilos para la caja de búsqueda */
+input[type="search"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para el dropdown */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: #f0f0f0;
+}
+/* dropdown.component.css */
+.dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Alta prioridad en la pila de capas */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  overflow: visible; /* Asegúrate de que el contenido no esté oculto */
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f6f6f6;
+}
+
+input[readonly] {
+  cursor: pointer;
+}
+
+
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background-color: #f6f6f6;
+}
+
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px; /* Espacio entre el input y las opciones del dropdown */
+  box-sizing: border-box; /* Asegura que el padding no aumente el ancho del input */
+}
+
+.dropdown-menu {
+  max-height: 200px; /* Limita la altura máxima del dropdown */
+  overflow-y: auto; /* Permite desplazarse por las opciones si son muchas */
+}

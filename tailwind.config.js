@@ -1,9 +1,17 @@
-/** @type {import('tailwindcss').Config} */
+// /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 export const content = [
   "./src/**/*.{html,ts}",
 ];
 export const theme = {
-  extend: {},
+  extend: {
+    fontFamily: {
+      sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+    },
+  },
 };
-export const plugins = [];
+export const plugins = [
+  
+];
 
