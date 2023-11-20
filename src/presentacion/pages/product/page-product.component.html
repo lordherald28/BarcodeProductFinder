@@ -1,5 +1,5 @@
 <div class="wrapper">+
-    <h2>Update: 19-11-2023 v1</h2>
+    <!-- <h2>Update: 19-11-2023 v1</h2> -->
     <!-- Header with logo and search box -->
     <div class="header">
         <a href="https://www.barcodelookup.com/" class="barcode-lookup-logo">
@@ -23,6 +23,7 @@
         <div class="product-content">
             <!-- Here would go your product cards -->
             <ng-container *ngFor="let product of productsList">
+                <!-- <app-card-product /> -->
                 <app-card-product class="item-product" [product]="product"></app-card-product>
             </ng-container>
         </div>

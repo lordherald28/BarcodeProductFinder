@@ -40,7 +40,7 @@ export class SearchBoxGeneralComponent implements OnInit, OnDestroy {
     meta_data: {
       pages: 1,
       products: 0,
-      cursor:'y',
+      cursor: 'y',
       metadata: 'y'
     }
   }
@@ -87,6 +87,7 @@ export class SearchBoxGeneralComponent implements OnInit, OnDestroy {
 
     this.subs$.push(
       this.filterValueChange$.subscribe(response => {
+        console.log('response from search box-general:', response)
         this.emitProducsList.emit(response);
         this.cdr.markForCheck();
       })

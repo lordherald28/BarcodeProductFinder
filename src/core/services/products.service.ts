@@ -33,10 +33,11 @@ export class ProductsService extends ProductRepository {
 
     url = this.contructionParams(params, url);
 
-    return this.http.get<ProductoEntity[]>(url)
+    return this.http.get<IReponseProductsResult>(url)
       .pipe(
         map((response) => {
-          return this.mapperProduct.mapTo(response)
+          console.log('response of service: ', response)
+          return this.mapperProduct.mapTo(response.products)
         })
       )
   }

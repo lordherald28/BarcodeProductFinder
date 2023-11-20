@@ -85,7 +85,7 @@
 
 .item-product {
     /* Specific bottom margin for the product item */
-    margin-bottom: 2rem;
+    /* margin-bottom: 2rem; */
 }
 
 @media (max-width: 768px) {

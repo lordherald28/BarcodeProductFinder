@@ -2,14 +2,14 @@
   <div class="product-image">
     <!-- Imagen del producto aquí -->
     <!-- <img src="./../../../../../assets/notProducto.webp" alt="Product Name"> -->
-    <img [src]="product.images[0]" alt="Product Name">
+    <img [src]="(product.images[0]) " alt="Product Name">
   </div>
   <div class="product-info">
     <h2 class="product-title">{{product.title}}</h2>
-    <p class="product-price">{{product.barcode_number}}</p>
-    <p class="product-description">{{product.description}}</p>
-    <p class="product-description">{{product.barcode_formats}}</p>
-    <p class="product-description">{{product.category}}</p>
+    <p class="product-barcode"><span>Bardcode</span> {{product.barcode_number}}</p>
+    <!-- <p class="product-description">{{product.description}}</p> -->
+    <p class="product-description"><span>Barformats</span> {{product.barcode_formats}}</p>
+    <p class="product-description"><span>Category</span> {{product.category}}</p>
     <button class="buy-now-btn">View detail</button>
   </div>
 </div>
