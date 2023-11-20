@@ -7,7 +7,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         const clonedRequest = req.clone({
             headers: req.headers.set('Accept', 'application/json')
-                .set('Origin', 'localhost')
+                // .set('Origin', '*')
                 // .set('Accept', '*/*').
                 // set('Accept-Encoding', 'gzip, deflate, br')
                 // .set('User-Agent', 'PostmanRuntime/7.35.0    ')
