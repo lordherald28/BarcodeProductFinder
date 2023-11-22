@@ -11,7 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class PaginatorComponent {
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
   @Input() currentPage: number = 1;
-  @Input() totalPages: number = 15;
+  @Input() totalPages: number = 129589;
   @Input() maxVisiblePages: number = 5;
 
   get disableNext(): boolean {

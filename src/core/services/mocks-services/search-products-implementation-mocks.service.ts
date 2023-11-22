@@ -24,14 +24,17 @@ export class SearchProductsMocksService extends ProductRepository {
   private facetFilter$ = new BehaviorSubject<IFilterFacetList>(Object.assign({}));
 
   searchProductByKeyword(params: SearchParams): Observable<ProductModel[]> {
-
+    let page: number = 0;
     let url: string = '/assets/json/mocks-response-products.json';
-
+    console.log(params)
     return this.http.get<IReponseProductsResult>(url)
       .pipe(
         map((response) => {
+          if (params.meta_data.pages !== 1) {
+            page = params.meta_data.pages * 10
+          }
           this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(response.products)));
-          return this.mapperProduct.mapTo(response.products)
+          return this.mapperProduct.mapTo(response.products.slice(page, 10))
         })
       )
   }
@@ -45,7 +48,7 @@ export class SearchProductsMocksService extends ProductRepository {
     let proxyUrlForCors: string = 'https://cors-anywhere.herokuapp.com/';
     let url: string = proxyUrlForCors + 'https://api.barcodelookup.com/v3/products?';
     let resp: any = {};
-   let _url = contructionParams(params, url);
+    let _url = contructionParams(params, url);
 
     url = '/assets/json/mocks-response-products.json';
     // console.log('url mockeada para producccion: ', url)
@@ -60,7 +63,7 @@ export class SearchProductsMocksService extends ProductRepository {
           if (params.category) {
             resp = this.searchByCategory(this.mapperProduct.mapTo(response.products), params);
           }
-          if(params.barcode){
+          if (params.barcode) {
             resp = this.searchBybarcode(this.mapperProduct.mapTo(response.products), params);
           }
           return resp

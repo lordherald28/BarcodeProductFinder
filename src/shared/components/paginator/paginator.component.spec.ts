@@ -51,7 +51,7 @@ describe('PaginatorComponent', () => {
 
   it('should disable "Next" button when currentPage is at the maximum page', () => {
     // Set currentPage to the maximum page (in this case, 10)
-    component.currentPage = 15;
+    component.currentPage = 129589;
 
     // Detect changes to update the view
     fixture.detectChanges();

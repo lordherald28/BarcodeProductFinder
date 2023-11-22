@@ -38,7 +38,11 @@ describe('Service Mock: SearchProductsMocks', () => {
     const expectedProducts: ProductModel[] = mocksProductsModel;
 
     service.searchProductByKeyword(mockSearchParamsForsearchProductByKeyword).subscribe(products => {
-      expect(products).toEqual(expectedProducts); // Checks if the returned products match the expected results.
+      let page: number = 0;
+      if (mockSearchParamsForsearchProductByKeyword.meta_data.pages !== 1) {
+        page = mockSearchParamsForsearchProductByKeyword.meta_data.pages * 10
+      }
+      expect(products).toEqual(expectedProducts.slice(page, 10)); // Checks if the returned products match the expected results.
     });
 
     const req = httpMock.expectOne('/assets/json/mocks-response-products.json');
