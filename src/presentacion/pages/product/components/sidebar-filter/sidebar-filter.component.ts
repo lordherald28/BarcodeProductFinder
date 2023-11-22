@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IAccordionItemModel } from './models/accordion.model';
 import { IFilterFacetList } from 'src/core/models/filter-facet.models';
@@ -9,6 +9,7 @@ import { eNameFacetFilter } from 'src/shared/models/facet-filter-name';
 import { CheckBoxComponent } from 'src/shared/components/check-box/check-box.component';
 
 import { map } from 'rxjs/operators';
+import { PROVIDERS_TOKENS, SYSTEM_CONFIG, config_system } from 'src/presentacion/config/system.config';
 
 @Component({
   selector: 'app-sidebar-filter',
@@ -16,6 +17,12 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./sidebar-filter.component.css', './stand-component-listbox.component.css'],
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, DropDownFilterFacetComponent, CheckBoxComponent],
+  providers: [
+    {
+      provide: PROVIDERS_TOKENS.CONFIG_SYSTEM,
+      useValue: SYSTEM_CONFIG
+    }
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarFilterComponent implements OnInit {
@@ -35,6 +42,7 @@ export class SidebarFilterComponent implements OnInit {
 
   constructor(
     private useCaseFacetFilters: UseCaseGetFacetFilter,
+    @Inject(PROVIDERS_TOKENS.CONFIG_SYSTEM) public config_system: config_system,
     private readonly cdr: ChangeDetectorRef
   ) { }
 
@@ -119,9 +127,11 @@ export class SidebarFilterComponent implements OnInit {
   }
 
   applyFacetFilters() {
-    console.log(this.filterSearchParamsList)
     this.emitFacetFiltersParams.emit(this.filterSearchParamsList);
-    this.cdr.markForCheck()
+    if (this.config_system.filterState.isMustClear) {
+      localStorage.removeItem(this.config_system.filterState.filterState)
+    }
+    this.cdr.markForCheck();
   }
 
   updateListAccordionItems(nameAccordionItem: string) {

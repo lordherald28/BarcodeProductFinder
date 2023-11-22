@@ -117,7 +117,7 @@ form {
 
 /*** Estilos para botones **/
 
-.buy-now-btn {
+.btn-standar-primary {
     background-color: #008cba;
     /* Color del botón */
     color: white;
@@ -133,7 +133,7 @@ form {
     /* Texto en mayúsculas */
 }
 
-.buy-now-btn:hover {
+.btn-standar-primary:hover {
     background-color: #007ba7;
     /* Color del botón al pasar el mouse */
 }

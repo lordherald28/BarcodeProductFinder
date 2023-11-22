@@ -14,6 +14,7 @@ import { catchError, debounceTime, switchMap } from 'rxjs/operators';
 import { EMPTY, Subscription, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UseCasesearcProductByFacetFilter } from 'src/core/use-case/use-case-search-facet';
+import { PaginationComponent } from 'src/shared/components/paginator/paginator.component';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { UseCasesearcProductByFacetFilter } from 'src/core/use-case/use-case-sea
   templateUrl: './page-product.component.html',
   styleUrls: ['./page-product.component.css'],
   standalone: true,
-  imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, CardProductComponent, HeaderComponent, CoreModule],
+  imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, CardProductComponent, HeaderComponent, CoreModule,PaginationComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PageProductComponent implements OnInit {

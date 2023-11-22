@@ -46,6 +46,7 @@
 .item-product {
     /* Specific bottom margin for the product item */
     /* margin-bottom: 2rem; */
+    width: auto;
 }
 
 @media (max-width: 768px) {
@@ -67,6 +68,10 @@
         margin: auto;
         align-items: center;
 
+    }
+    .item-product{
+        width: 80%;
+        margin: 0 auto;
     }
 
 }

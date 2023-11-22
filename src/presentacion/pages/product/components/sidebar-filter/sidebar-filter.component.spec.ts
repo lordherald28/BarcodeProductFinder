@@ -2,6 +2,7 @@ import {  ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
 import { SidebarFilterComponent } from './sidebar-filter.component';
 import { By } from '@angular/platform-browser';
 import { CoreModule } from 'src/core/core.module';
+import { PROVIDERS_TOKENS, SYSTEM_CONFIG } from 'src/presentacion/config/system.config';
 
 describe('SidebarFilterComponent', () => {
   let component: SidebarFilterComponent;
@@ -9,7 +10,11 @@ describe('SidebarFilterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports:[CoreModule]
+      imports:[CoreModule],
+      providers: [{
+        provide: PROVIDERS_TOKENS.CONFIG_SYSTEM,
+        useValue: SYSTEM_CONFIG
+      }],
     })
     .compileComponents();
   }));
