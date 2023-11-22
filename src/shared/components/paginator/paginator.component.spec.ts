@@ -1,18 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PaginationComponent } from './paginator.component';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { PaginatorComponent } from './paginator.component';
 
-describe('PaginationComponent', () => {
-  let component: PaginationComponent;
-  let fixture: ComponentFixture<PaginationComponent>;
+describe('PaginatorComponent', () => {
+  let component: PaginatorComponent;
+  let fixture: ComponentFixture<PaginatorComponent>;
 
-  beforeEach(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-
+      // declarations: [PaginatorComponent],
     });
-    fixture = TestBed.createComponent(PaginationComponent);
+    fixture = TestBed.createComponent(PaginatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -51,19 +51,18 @@ describe('PaginationComponent', () => {
 
   it('should disable "Next" button when currentPage is at the maximum page', () => {
     // Set currentPage to the maximum page (in this case, 10)
-    component.currentPage = 10;
-  
+    component.currentPage = 15;
+
     // Detect changes to update the view
     fixture.detectChanges();
-  
+
     // Find the "Next" button in the DOM
-    const nextButton = fixture.nativeElement.querySelector('button:nth-child(3)');
-    component.disableNext=true
+    const nextButton = fixture.nativeElement.querySelector('button#nextButton');
     fixture.detectChanges();
+
     // Expect the "Next" button to be disabled when currentPage is at the maximum page
     expect(nextButton.disabled).toBe(true);
   });
-  
 
   it('should not decrement currentPage below 1', () => {
     const previousButton = fixture.nativeElement.querySelector('button:nth-child(1)');

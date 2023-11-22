@@ -1,5 +1,7 @@
 <div class="pagination">
-  <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn-standar-primary ">Previous</button>
-  <span class="page-number">Page {{ currentPage }}</span>
-  <button (click)="nextPage()" [disabled]="disableNext" class="btn-standar-primary ">Next</button>
+  <button (click)="previousPage()" [disabled]="disablePrevious" class="btn-icon"><</button>
+  <ng-container *ngFor="let pageNumber of getPageNumbers()">
+    <button (click)="goToPage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+  </ng-container>
+  <button (click)="nextPage()" [disabled]="disableNext" class="btn-icon"  id="nextButton">></button>
 </div>

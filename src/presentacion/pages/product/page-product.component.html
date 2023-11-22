@@ -4,9 +4,9 @@
 </app-header>
 
 
-<div class="wrapper" >
+<div class="wrapper">
     <!-- Main content -->
-    <div class="main-content" >
+    <div class="main-content">
         <!-- Sidebar for filters -->
         <div class="sidebar">
             <app-sidebar-filter *ngIf="productsList.length>0"
@@ -14,7 +14,7 @@
         </div>
 
         <!-- Product content -->
-        <div class="product-content" *ngIf="productsList.length > 0; else noProductsList" >
+        <div class="product-content" *ngIf="productsList.length > 0; else noProductsList">
             <!-- Aquí irían tus tarjetas de producto -->
             <ng-container *ngFor="let product of productsList">
                 <app-card-product class="item-product" [product]="product"></app-card-product>
@@ -27,5 +27,5 @@
         </ng-template>
 
     </div>
-    <app-paginator></app-paginator>
+    <app-paginator (pageChange)="OnEventPage($event)" style="width: 50%; margin: 0 auto;"></app-paginator>
 </div>

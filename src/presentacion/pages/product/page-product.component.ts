@@ -14,7 +14,8 @@ import { catchError, debounceTime, switchMap } from 'rxjs/operators';
 import { EMPTY, Subscription, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UseCasesearcProductByFacetFilter } from 'src/core/use-case/use-case-search-facet';
-import { PaginationComponent } from 'src/shared/components/paginator/paginator.component';
+import { PaginatorComponent } from 'src/shared/components/paginator/paginator.component';
+import { EventPage } from 'src/shared/models/paginator.models';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { PaginationComponent } from 'src/shared/components/paginator/paginator.c
   templateUrl: './page-product.component.html',
   styleUrls: ['./page-product.component.css'],
   standalone: true,
-  imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, CardProductComponent, HeaderComponent, CoreModule,PaginationComponent],
+  imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, CardProductComponent, HeaderComponent, CoreModule,PaginatorComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PageProductComponent implements OnInit {
@@ -141,5 +142,8 @@ export default class PageProductComponent implements OnInit {
     }
   }
 
+  OnEventPage(event:number):void{
+    console.log(event)
+  }
 
 }
