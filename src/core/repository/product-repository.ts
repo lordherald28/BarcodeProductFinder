@@ -5,5 +5,6 @@ import { IFilterFacetList } from "../models/filter-facet.models";
 
 export abstract class ProductRepository {
     abstract searchProductByKeyword(params: SearchParams): Observable<ProductModel[]>;
-    abstract getFacetListForSearch(params: ProductModel[]): Observable<IFilterFacetList>;
+    abstract getFacetListForSearch(): Observable<IFilterFacetList>;
+    abstract searcProductByFacetFilter(params: SearchParams): Observable<ProductModel[]>;
 }

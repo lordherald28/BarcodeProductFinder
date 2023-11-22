@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { UrlImgNotFoundPipe } from './pipes/url-img-not-found.pipe';
+import { DefaultImagePipe } from './pipes/url-img-not-found.pipe';
+
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    
   ],
-  declarations: [UrlImgNotFoundPipe],
-  exports: [UrlImgNotFoundPipe]
+  declarations: [DefaultImagePipe],
+  exports: [DefaultImagePipe]
 })
 export class SharedModule { }

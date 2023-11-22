@@ -11,7 +11,7 @@ import { IReponseProductsResult, ProductoEntity } from '../entities/producto-ent
 import { API_ProductBarcode, environment } from 'src/environments/environment';
 import { ProductMapper } from '../adapters/product-mapper/product-mapper.mapper';
 import { IFilterFacetList } from '../models/filter-facet.models';
-import { contructionParams } from '../helpers/functions-for-searchImplementations.service';
+import { contructionParams, TransformProductModelToFacetList } from '../adapters/product-facet-filters/functions-for-searchImplementations.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +21,13 @@ export class ProductsService extends ProductRepository {
   constructor(private readonly http: HttpClient) { super() }
 
   private mapperProduct = new ProductMapper();
+  private transformProductListToFacet = new TransformProductModelToFacetList();
   private paramsArray: string[] = [];
+  private facetFilter$ = new BehaviorSubject<IFilterFacetList>(Object.assign({}));
 
   getParamsArray() {
     return this.paramsArray;
   }
-
 
   searchProductByKeyword(params: SearchParams): Observable<ProductModel[]> {
 
@@ -38,22 +39,29 @@ export class ProductsService extends ProductRepository {
     return this.http.get<IReponseProductsResult>(url)
       .pipe(
         map((response) => {
-          // console.log('response of service: ', response)
+          this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(response.products)));
           return this.mapperProduct.mapTo(response.products)
         })
       )
   }
 
 
-  getFacetListForSearch(params: ProductModel[]): Observable<IFilterFacetList> {
-    let filterFacetList: IFilterFacetList = { barcodeList: [], categories: [], titleList: [] };
-
-    if (params && params.length > 0) {
-      return of(filterFacetList)
-    }
-    return of(filterFacetList)
+  getFacetListForSearch(): Observable<IFilterFacetList> {
+    return this.facetFilter$.asObservable();
   }
 
+  searcProductByFacetFilter(params: SearchParams): Observable<ProductModel[]> {
+    let proxyUrlForCors: string = 'https://cors-anywhere.herokuapp.com/';
+    let url: string = proxyUrlForCors + 'https://api.barcodelookup.com/v3/products?';
 
-
+    url = contructionParams(params, url);
+    console.log(url)
+    return this.http.get<IReponseProductsResult>(url)
+      .pipe(
+        map((response) => {
+          this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(response.products)));
+          return this.mapperProduct.mapTo(response.products)
+        })
+      )
+  }
 }

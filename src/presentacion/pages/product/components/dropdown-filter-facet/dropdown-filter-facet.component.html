@@ -1,0 +1,19 @@
+<ng-container>
+  <section class="g_wrap_list">
+    <!-- <form [formGroup]="formSearch">
+      <span class="p-input-icon-left w-full">
+        <i class="pi pi-search"></i>
+        <input type="search" pInputText formControlName="searchKeyWord" #inputSearch placeholder="Buscar..."
+          id="inputSearch" class="w-full" />
+      </span>
+    </form> -->
+    <app-search-box-general (emitValueChangeInput)="getValueChangeInput($event)"
+      [setDebounceTime]="120"></app-search-box-general>
+    <ul class="listbox">
+      <li *ngFor="let facetFilter of filteredFacetList" class="item" (click)="emitFacetFilterSelected(facetFilter)"
+        [class.active]="isItemActive[facetFilter]">
+        <div class="item-name">{{facetFilter}}</div>
+      </li>
+    </ul>
+  </section>
+</ng-container>

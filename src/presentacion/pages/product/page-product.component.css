@@ -16,7 +16,8 @@
 
 .sidebar {
     /* Sidebar with a specific width */
-    width: 76%;
+    width: 100%;
+    max-width: 400px;
 }
 
 .product-content {
@@ -62,6 +63,10 @@
 
     .sidebar {
         /* Sidebar takes 100% width on small screens */
-        width: 100%;
+        width: 80%;
+        margin: auto;
+        align-items: center;
+
     }
+
 }

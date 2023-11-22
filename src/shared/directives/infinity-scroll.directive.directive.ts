@@ -10,9 +10,6 @@ export class GeraInfinityScrollDirective implements OnInit {
 
   constructor(/* private readonly element: ElementRef */) { }
 
-  private scrollEvent = new Subject<Event>();
-  private clientScroll: number = 0;
-
   @Output('onScrollDown') onScrollDown: EventEmitter<any> = new EventEmitter();
   @Input('execEvent') execEvent: boolean = false;
   private lastScrollTop = 0; // Variable para guardar la última posición de scroll

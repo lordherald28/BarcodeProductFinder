@@ -1,17 +1,20 @@
 <!-- Header with logo and search box -->
 <app-header>
-    <app-search-box-general (emitProducsList)="getProductsListEmitted($event)" />
+    <app-search-box-general (emitValueChangeInput)="getValueChangeInput($event || '')" [setDebounceTime]="500" />
 </app-header>
-<div class="wrapper">
+
+
+<div class="wrapper" >
     <!-- Main content -->
-    <div class="main-content">
+    <div class="main-content" >
         <!-- Sidebar for filters -->
         <div class="sidebar">
-            <app-sidebar-filter *ngIf="productsList.length>0"></app-sidebar-filter>
+            <app-sidebar-filter *ngIf="productsList.length>0"
+                (emitFacetFiltersParams)="getProductListByFacetFilters($event)"></app-sidebar-filter>
         </div>
 
         <!-- Product content -->
-        <div class="product-content" *ngIf="productsList.length > 0; else noProductsList">
+        <div class="product-content" *ngIf="productsList.length > 0; else noProductsList" >
             <!-- Aquí irían tus tarjetas de producto -->
             <ng-container *ngFor="let product of productsList">
                 <app-card-product class="item-product" [product]="product"></app-card-product>

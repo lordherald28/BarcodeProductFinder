@@ -7,7 +7,7 @@ import { ProductModel } from "../../models/product.model";
 export class ProductMapper extends Mapper<ProductoEntity[], ProductModel[]> {
 
     mapTo(params: ProductoEntity[]): ProductModel[] {
-
+        // console.log(params)
         if (!params || params.length === 0) {
             throw new Error('Parameter is blank');
         }

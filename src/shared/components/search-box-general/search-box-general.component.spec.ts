@@ -1,17 +1,17 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 import { SearchBoxGeneralComponent } from './search-box-general.component';
 
-describe('VercelComponent', () => {
+describe('SearchBoxGeneralComponent', () => {
   let component: SearchBoxGeneralComponent;
   let fixture: ComponentFixture<SearchBoxGeneralComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchBoxGeneralComponent ]
+      // declarations: [SearchBoxGeneralComponent],
+      imports: [ReactiveFormsModule],
+      providers: [FormBuilder]
     })
     .compileComponents();
   }));
@@ -25,4 +25,18 @@ describe('VercelComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit value when search input changes', waitForAsync(() => {
+    spyOn(component.emitValueChangeInput, 'emit');
+
+    const input = fixture.debugElement.query(By.css('input')).nativeElement;
+    input.value = 'test';
+    input.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+      expect(component.emitValueChangeInput.emit).toHaveBeenCalledWith('test');
+    });
+  }));
+
 });

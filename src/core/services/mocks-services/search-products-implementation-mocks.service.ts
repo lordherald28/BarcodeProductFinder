@@ -1,35 +1,78 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import {map} from  'rxjs/operators';
+import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { ProductMapper } from 'src/core/adapters/product-mapper/product-mapper.mapper';
-import { IReponseProductsResult } from 'src/core/entities/producto-entity';
+import { IReponseProductsResult, ProductoEntity } from 'src/core/entities/producto-entity';
+import { TransformProductModelToFacetList, contructionParams } from 'src/core/adapters/product-facet-filters/functions-for-searchImplementations.service';
 import { SearchParams } from 'src/core/helpers/metadata-products';
+import { IFilterFacetList } from 'src/core/models/filter-facet.models';
 import { ProductModel } from 'src/core/models/product.model';
+import { ProductRepository } from 'src/core/repository/product-repository';
 
 @Injectable()
-export class SearchProductsMocksService {
+export class SearchProductsMocksService extends ProductRepository {
 
-constructor(
-  private readonly http : HttpClient
-) { }
+  constructor(
+    private readonly http: HttpClient
+  ) { super() }
 
-private mapperProduct = new ProductMapper();
+  private mapperProduct = new ProductMapper();
+  private transformProductListToFacet = new TransformProductModelToFacetList();
+  private facetFilter$ = new BehaviorSubject<IFilterFacetList>(Object.assign({}));
 
-searchProductByKeyword(params: SearchParams): Observable<ProductModel[]> {
+  searchProductByKeyword(params: SearchParams): Observable<ProductModel[]> {
 
-  let url: string = '/assets/json/mocks-response-products.json';
+    let url: string = '/assets/json/mocks-response-products.json';
 
-  return this.http.get<IReponseProductsResult>(url)
-    .pipe(
-      map((response) => {
-        // console.log('response of service: ', response)
-        return this.mapperProduct.mapTo(response.products)
-      })
-    )
-}
+    return this.http.get<IReponseProductsResult>(url)
+      .pipe(
+        map((response) => {
+          this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(response.products)));
+          return this.mapperProduct.mapTo(response.products)
+        })
+      )
+  }
 
+  getFacetListForSearch(): Observable<IFilterFacetList> {
+    return this.facetFilter$.asObservable();
+  }
 
+  searcProductByFacetFilter(params: SearchParams): Observable<ProductModel[]> {
+
+    let proxyUrlForCors: string = 'https://cors-anywhere.herokuapp.com/';
+    let url: string = proxyUrlForCors + 'https://api.barcodelookup.com/v3/products?';
+    let resp: any = {};
+   let _url = contructionParams(params, url);
+
+    url = '/assets/json/mocks-response-products.json';
+    // console.log('url mockeada para producccion: ', url)
+
+    // console.log(params);
+    // console.log(_url)
+
+    return this.http.get<IReponseProductsResult>(url)
+      .pipe(
+        map((response) => {
+          this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(response.products)));
+          if (params.category) {
+            resp = this.searchByCategory(this.mapperProduct.mapTo(response.products), params);
+          }
+          if(params.barcode){
+            resp = this.searchBybarcode(this.mapperProduct.mapTo(response.products), params);
+          }
+          return resp
+        })
+      )
+  }
+
+  private searchByCategory(listProducts: ProductModel[], serachParams: SearchParams): ProductModel[] {
+    return listProducts.filter(product => product.category.includes(serachParams.category?.toString() as string));
+  }
+
+  private searchBybarcode(listProducts: ProductModel[], serachParams: SearchParams): ProductModel[] {
+    return listProducts.filter(product => product.barcode_number.includes(serachParams.barcode?.toString() as string));
+  }
 }

@@ -1,8 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .listbox {
     position: relative;
     display: flex;
@@ -10,7 +5,7 @@
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
-    /* height: calc(560px - 1rem); */
+    height: calc(560px - 1rem);
     margin: 0;
     padding: 0;
     overflow-y: scroll;
@@ -46,7 +41,7 @@
     /* overflow: hidden; */
     /* text-overflow: ellipsis; */
     width: 100%;
-    /* max-width: 177px; */
+    max-width: 177px;
     padding-right: 0.3em;
 
 }
@@ -67,7 +62,6 @@
     padding: 1rem;
     flex-flow: column nowrap;
     margin-top: 1rem;
-    margin-bottom: 1rem;
 }
 
 form {
@@ -113,51 +107,6 @@ form {
     border-bottom-color: rgb(255, 255, 255) !important;
     animation: spin 1.0s linear infinite;
 }
-
-
-/*** Estilos para botones **/
-
-.buy-now-btn {
-    background-color: #008cba;
-    /* Color del botón */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 5px;
-    /* Bordes redondeados para el botón */
-    margin-top: auto;
-    /* Espacio encima del botón */
-    text-transform: uppercase;
-    /* Texto en mayúsculas */
-}
-
-.buy-now-btn:hover {
-    background-color: #007ba7;
-    /* Color del botón al pasar el mouse */
-}
-
-.center-content {
-    display: grid;
-    place-content: center;
-}
-
-.p-2 {
-    padding: 2rem;
-}
-
-/**Margin generals**/
-.mb-3 {
-    margin-bottom: 3em !important;
-}
-
-/** custom width**/
-
-.w-4 {
-    width: 40% !important;
-}
-
 
 @keyframes spin {
     from {

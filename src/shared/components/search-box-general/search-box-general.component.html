@@ -18,7 +18,7 @@
   </div> -->
 
   <form class="search-box-container" [formGroup]="formSearch">
-    <input type="text" class="search-box" placeholder="Search products" formControlName="searchKeyWord" >
+    <input type="text" class="search-box" [placeholder]="placeHolder" formControlName="searchKeyWord" >
     <button class="search-button">
       <i class="fa fa-search"></i> 
     </button>

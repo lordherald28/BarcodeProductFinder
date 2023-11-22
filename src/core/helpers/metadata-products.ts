@@ -5,16 +5,20 @@ export interface Metadata {
     products: number; // total products
     current_cursor?: string; // Current list products
     next_cursor?: string;    // Next list products
-    cursor?:string;
-    metadata?:string
+    cursor?: string;
+    metadata?: string
 }
 
 export interface SearchParams {
-    meta_data:Metadata;
-    search?:string;
-    barcode?: string;
+    meta_data: Metadata;
+    search?: string;
+    barcode?: string | string[];
     mpn?: string;
     title?: string;
+    manufacture?: string;
+    brand?: string;
+    asin?: string;
+    category?: string;
     metadata?: string;
     cursor?: string;
     key?: string;

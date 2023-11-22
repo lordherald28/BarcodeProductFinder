@@ -1,19 +1,23 @@
 
 
-interface ICategoryFilterFacet {
+export interface ICategoryFilterFacet {
     nameCategory: string;
 }
 
-interface IBarcodeFilterFacet {
+export interface IBarcodeFilterFacet {
     barcodeNumber: string;
 }
 
-interface ITitleFilterFacet {
+export interface ITitleFilterFacet {
     nameProduct: string;
 }
 
 export interface IFilterFacetList {
-    categories: ICategoryFilterFacet[];
-    barcodeList: IBarcodeFilterFacet[];
-    titleList: ITitleFilterFacet[];
+    categories:Set<string>;
+    barcodeList: Set<string>;
+    nameProductList: Set<string>;
+    brandList: Set<string>;
+    manufactureList: Set<string>;
+    mnpList: Set<string>;
+    asinList: Set<string>;
 }

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProductModel } from 'src/core/models/product.model';
-import { UrlImgNotFoundPipe } from 'src/shared/pipes/url-img-not-found.pipe';
+import { PROVIDERS_TOKENS, config_system } from 'src/presentacion/config/system.config';
 import { SharedModule } from 'src/shared/shared.module';
 
 @Component({
@@ -14,8 +14,11 @@ import { SharedModule } from 'src/shared/shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardProductComponent implements OnInit {
+  // component: { images: never[]; };
 
-  constructor() { }
+  constructor(
+    @Inject(PROVIDERS_TOKENS.CONFIG_SYSTEM) public sysonfig: config_system
+  ) { }
 
   @Input('product') product !: ProductModel;
 

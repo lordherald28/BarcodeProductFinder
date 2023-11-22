@@ -1,0 +1,60 @@
+import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { Component, DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { GeraInfinityScrollDirective } from './infinity-scroll.directive.directive';
+
+@Component({
+  template: `
+    <div id="scrollable" style="height: 200px; overflow: auto;">
+      <div style="height: 400px;"></div>
+      <div id="trigger" appInfinityScroll [execEvent]="execEvent" (onScrollDown)="onScroll()"></div>
+    </div>
+  `,
+})
+class TestComponent {
+  execEvent = true;
+  onScroll() {}
+}
+
+describe('GeraInfinityScrollDirective', () => {
+  let fixture: ComponentFixture<TestComponent>;
+  let component: TestComponent;
+  let directiveElement: DebugElement;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [TestComponent],
+    });
+
+    fixture = TestBed.createComponent(TestComponent);
+    component = fixture.componentInstance;
+    directiveElement = fixture.debugElement.query(By.directive(GeraInfinityScrollDirective));
+    fixture.detectChanges();
+  });
+
+  it('should create an instance', () => {
+    const directive = new GeraInfinityScrollDirective();
+    expect(directive).toBeTruthy();
+  });
+
+  it('should emit onScrollDown event when scrolled to the bottom', fakeAsync(() => {
+    spyOn(component, 'onScroll');
+    const scrollableElement = fixture.debugElement.query(By.css('#scrollable')).nativeElement;
+    scrollableElement.scrollTop = 0; // Scroll to top
+    scrollableElement.dispatchEvent(new Event('scroll'));
+
+    tick(1); // Wait for debounceTime
+
+    scrollableElement.scrollTop = 300; // Scroll down
+    scrollableElement.dispatchEvent(new Event('scroll'));
+
+    tick(1); // Wait for debounceTime
+
+    scrollableElement.scrollTop = 400; // Scroll to the bottom
+    scrollableElement.dispatchEvent(new Event('scroll'));
+
+    tick(1); // Wait for debounceTime
+
+    expect(component.onScroll).toHaveBeenCalled();
+  }));
+});

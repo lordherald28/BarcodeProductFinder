@@ -9,19 +9,37 @@ import { UseCaseSearchProducts } from '../use-case/use-case-search-products';
 import { CustomHttpInterceptor } from './../adapters/interceptors/interceptor';
 import { SearchProductsMocksService } from '../services/mocks-services/search-products-implementation-mocks.service';
 import { InterceptorError } from '../adapters/interceptors/interceptor-error';
+import { UseCaseGetFacetFilter } from '../use-case/use-case-get-facet-filter';
+import { UseCasesearcProductByFacetFilter } from '../use-case/use-case-search-facet';
 
 
 const productFactoryUseCaseSearchProducts = (repo: ProductRepository) => new UseCaseSearchProducts(repo);
+const productFactoryUseCaseGetFacetFilters = (repo: ProductRepository) => new UseCaseGetFacetFilter(repo);
+const productFactoryUseCaseSearchFacetFilters = (repo: ProductRepository) => new UseCasesearcProductByFacetFilter(repo);
 
-export const useCaseSearchProducts = {
+const useCaseSearchProducts = {
     provide: UseCaseSearchProducts,
     useFactory: productFactoryUseCaseSearchProducts,
     deps: [ProductRepository]
 }
 
+const useCaseGetFacetFilter = {
+    provide: UseCaseGetFacetFilter,
+    useFactory: productFactoryUseCaseGetFacetFilters,
+    deps: [ProductRepository]
+}
+
+const useCaseSearchFacetFilter = {
+    provide: UseCasesearcProductByFacetFilter,
+    useFactory: productFactoryUseCaseSearchFacetFilters,
+    deps: [ProductRepository]
+}
 
 export const _providers = [
-    { provide: ProductRepository, useClass: SearchProductsMocksService }, useCaseSearchProducts,
+    { provide: ProductRepository, useClass: SearchProductsMocksService },
+    useCaseSearchProducts,
+    useCaseGetFacetFilter,
+    useCaseSearchFacetFilter,
     {
         provide: HTTP_INTERCEPTORS,
         useClass: CustomHttpInterceptor,

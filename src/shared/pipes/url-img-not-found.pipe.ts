@@ -1,13 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'hasUrlImage'
+  name: 'defaultImage'
 })
-export class UrlImgNotFoundPipe implements PipeTransform {
+export class DefaultImagePipe implements PipeTransform {
 
-  transform(value: any, args?: any): any {
-    console.log(value)
-    return null;
+  transform(value: string | string[], defaultImage: string): string {
+    if (Array.isArray(value)) {
+      return value.length > 0 ? value[0] : defaultImage;
+    }
+    return value || defaultImage;
   }
-
 }
