@@ -4,8 +4,8 @@
 </app-header>
 
 <div class="wrapper">
-    <app-paginator (pageChange)="OnEventPage($event)" style="width: 50%; margin: 0 auto;" [totalPages]="totalPageNumber"></app-paginator>
-    <span>Total de paginas: {{totalPageNumber}} </span>
+    <app-paginator (pageChange)="OnEventPage($event)" style="width: 50%; margin: 0 auto;" [totalRow]="metaDataState.products"
+        [maxVisiblePages]="10" [totalPages]="metaDataState.pages"></app-paginator>
     <!-- Main content -->
     <div class="main-content">
         <!-- Sidebar for filters -->

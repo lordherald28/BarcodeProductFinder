@@ -5,25 +5,30 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
   selector: 'app-paginator',
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.css'],
-  standalone:true,
-  imports:[CommonModule],
+  standalone: true,
+  imports: [CommonModule],
   // changeDetection:ChangeDetectionStrategy.OnPush
 })
-export class PaginatorComponent implements OnChanges{
+export class PaginatorComponent implements OnChanges {
 
-  constructor(private cdr : ChangeDetectorRef){}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
   @Input() currentPage: number = 1;
   @Input() totalPages: number = 1000;
   @Input() maxVisiblePages: number = 10;
-
+  @Input() totalRow: number = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
-    
+
   }
+
   get disableNext(): boolean {
-    return this.currentPage === this.totalPages;
+    return this.currentPage === this.totalPages || this.totalPages === 0;
+  }
+
+  get disableLastPage(): boolean {
+    return this.currentPage === this.totalPages || this.totalPages === 0;
   }
 
   get disablePrevious(): boolean {
@@ -40,6 +45,20 @@ export class PaginatorComponent implements OnChanges{
   nextPage() {
     if (!this.disableNext) {
       this.currentPage++;
+      this.emitPageChange();
+    }
+  }
+
+  lastPage() {
+    if (!this.disableNext) {
+      this.currentPage = this.totalPages;
+      this.emitPageChange();
+    }
+  }
+
+  firstPage() {
+    if (!this.disablePrevious) {
+      this.currentPage = 1;
       this.emitPageChange();
     }
   }
