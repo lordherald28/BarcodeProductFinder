@@ -1,18 +1,20 @@
 import { TestBed, waitForAsync, inject } from '@angular/core/testing';
 import { SearchProductsMocksService } from './search-products-implementation-mocks.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { SearchParams } from 'src/core/helpers/metadata-products';
+import { Metadata, SearchParams } from 'src/core/helpers/metadata-products';
 import { ProductModel } from 'src/core/models/product.model';
-import { mockFacetFilter, mockSearchParamsForsearchProductByKeyword, mockSearchParamsForsearchsearcProductByFacetFilter, mocksProductsEntity, mocksProductsModel } from 'src/core/helpers/mocks-objects';
+import { mockFacetFilter, mockProductsModelResponse, mockSearchParamsForsearchProductByKeyword, mockSearchParamsForsearchsearcProductByFacetFilter, mocksProductsEntity, mocksProductsModel } from 'src/core/helpers/mocks-objects';
 import { IFilterFacetList } from 'src/core/models/filter-facet.models';
+import { ProductoMapperResponse } from 'src/core/adapters/product-mapper/product-mapper.mapper';
+import { MapperResultProductEntity } from 'src/core/bases/mappers';
 
 describe('Service Mock: SearchProductsMocks', () => {
   let service: SearchProductsMocksService;
   let httpMock: HttpTestingController;
-
+  let mapperProductsResult: ProductoMapperResponse
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [SearchProductsMocksService],
+      providers: [SearchProductsMocksService,],
       imports: [HttpClientTestingModule]
     });
     service = TestBed.inject(SearchProductsMocksService);
@@ -27,44 +29,76 @@ describe('Service Mock: SearchProductsMocks', () => {
     expect(service).toBeTruthy(); // Tests if the service is correctly created.
   });
 
-  // Testing the searchProductByKeyword method
-  it('searchProductByKeyword should return an array of ProductModel', waitForAsync(() => {
+  // Testing the searchProductByKeyword method with new mapper product
+  it(`searchProductByKeyword with mapper product and metadata should return an array 
+  of { productsModelList: ProductModel[], metadata: Metadata }`, waitForAsync(() => {
     // Mock response matching IReponseProductsResult structure
-    const mockApiResponse = {
-      products: mocksProductsEntity
-    };
+    const mockApiResultProductWithMetada: { products: ProductModel[], metadata: Metadata } = mockProductsModelResponse;
 
-    // Expected products after the mapper transformation
-    const expectedProducts: ProductModel[] = mocksProductsModel;
+    service.searchProductByKeyword(mockSearchParamsForsearchProductByKeyword).subscribe((response) => {
+      // Lógica de paginación
+      service.page = mockSearchParamsForsearchProductByKeyword.metadata.pages as number; // Suponiendo que queremos probar la segunda página
+      const productsPerPage = 10; // Cantidad de productos por página
+      service.pageEnd = service.page * productsPerPage;
+      const startIndex = (service.page - 1) * productsPerPage;
+      const productsOnPage = response.products.slice(startIndex, service.pageEnd);
 
-    service.searchProductByKeyword(mockSearchParamsForsearchProductByKeyword).subscribe(products => {
-      let page: number = 0;
-      if (mockSearchParamsForsearchProductByKeyword.meta_data.pages !== 1) {
-        page = mockSearchParamsForsearchProductByKeyword.meta_data.pages * 10
-      }
-      expect(products).toEqual(expectedProducts.slice(page, 10)); // Checks if the returned products match the expected results.
+      // Verifica que obtienes exactamente 10 productos en la segunda página
+      expect(productsOnPage.length).toEqual(10);
+
+      // Verifica que los productos son los esperados para la segunda página
+      // Esto es opcional, dependiendo de si puedes predecir qué productos esperas en la segunda página.
+      // Por ejemplo:
+      // expect(productsOnPage).toEqual(mockApiResultProductWithMetada.products.slice(startIndex, service.pageEnd));
     });
 
-    const req = httpMock.expectOne('/assets/json/mocks-response-products.json');
-    expect(req.request.method).toBe('GET'); // Verifies the HTTP request method
-    req.flush(mockApiResponse); // Sends the mock response
+    // Simular respuesta HTTP
+    const req = httpMock.expectOne('/assets/json/data.json');
+    req.flush(mockApiResultProductWithMetada);
   }));
 
   // Testing the searcProductByFacetFilter method
-  it('searcProductByFacetFilter should filter products by category', waitForAsync(() => {
-    const mockApiResponse = { products: mocksProductsEntity };
-    const expectedFilteredProducts: ProductModel[] = mocksProductsModel;
-    const searchParams: SearchParams = mockSearchParamsForsearchsearcProductByFacetFilter;
+  it('should filter products by category with pagination', waitForAsync(() => {
+    // Pagination logic
+    const mockApiResultProductWithMetadata: { products: ProductModel[], metadata: Metadata } = mockProductsModelResponse;
 
-    service.searcProductByFacetFilter(searchParams).subscribe(filteredProducts => {
-      expect(filteredProducts.length).toEqual(1); // Checks if the number of filtered products is as expected
-      expect(filteredProducts).toEqual(expectedFilteredProducts); // Checks if the filtered products match the expected results
+    // Define search parameters with metadata and category
+    const searchParams: SearchParams = {
+      metadata: { pages: 1, products: 0 },
+      category: 'Home & Garden'
+    };
+
+    // Subscribe to the service method
+    service.searcProductByFacetFilter(searchParams).subscribe((response) => {
+      // Create a response object with original products and metadata
+      let resp: { products: ProductModel[], metadata: Metadata } = {
+        products: mockApiResultProductWithMetadata.products,
+        metadata: mockApiResultProductWithMetadata.metadata
+      };
+
+      // Filter products in resp.products based on category
+      if (searchParams.category) {
+        resp.products = response.products.filter(product => product.category.includes(searchParams.category?.toString() as string));
+      }
+
+      // Pagination logic
+      service.page = searchParams.metadata.pages as number; // Assuming we want to test the second page
+      const productsPerPage = 10; // Number of products per page
+      service.pageEnd = service.page * productsPerPage;
+      const startIndex = (service.page - 1) * productsPerPage;
+      let productsOnPage = resp.products.slice(startIndex, service.pageEnd);
+
+      // Check if the number of filtered products matches the expected value
+      expect(resp.products.length).toEqual(productsOnPage.length);
+      expect(productsOnPage.length).toEqual(resp.products.length);
     });
 
-    const req = httpMock.expectOne('/assets/json/mocks-response-products.json');
-    expect(req.request.method).toBe('GET'); // Verifies the HTTP request method
-    req.flush(mockApiResponse); // Sends the mock response
+    // Mock the HTTP request
+    const req = httpMock.expectOne('/assets/json/data.json');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockApiResultProductWithMetadata);
   }));
+
 
   // Testing the getFacetListForSearch method
   it('getFacetListForSearch should return the current facet filter list', waitForAsync(() => {

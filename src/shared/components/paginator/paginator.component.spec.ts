@@ -49,9 +49,9 @@ describe('PaginatorComponent', () => {
     expect(component.currentPage).toBe(1);
   });
 
-  it('should disable "Next" button when currentPage is at the maximum page', () => {
-    // Set currentPage to the maximum page (in this case, 10)
-    component.currentPage = 129589;
+  it('should disable "Next" button when currentPage is at the maximum page, Note: maximum let for API barcode 1000 total pages', () => {
+    // Set currentPage to the maximum page (in this case, 1000)
+    component.currentPage = 1000;
 
     // Detect changes to update the view
     fixture.detectChanges();
@@ -60,6 +60,7 @@ describe('PaginatorComponent', () => {
     const nextButton = fixture.nativeElement.querySelector('button#nextButton');
     fixture.detectChanges();
 
+    console.log(component.currentPage)
     // Expect the "Next" button to be disabled when currentPage is at the maximum page
     expect(nextButton.disabled).toBe(true);
   });

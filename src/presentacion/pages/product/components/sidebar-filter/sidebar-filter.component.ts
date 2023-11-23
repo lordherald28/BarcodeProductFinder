@@ -77,17 +77,13 @@ export class SidebarFilterComponent implements OnInit {
    * @param nameFacet 
    */
   getFilterFacet(event: any, nameFacet: string) {
-    console.log(event)
     if (nameFacet === eNameFacetFilter.BARCODE) {
       // se crea el search params
-      // console.log('barcode: ', event)
-      // this.emitFacetFiltersParams.emit(e)
       this.filterSearchParamsList = {
         ...this.filterSearchParamsList,
         barcodeList: event
       }
     } else if (nameFacet === eNameFacetFilter.CATEGORY) {
-      // console.log('CATEGORY: ', event)
       this.filterSearchParamsList = {
         ...this.filterSearchParamsList,
         categories: event
@@ -122,7 +118,6 @@ export class SidebarFilterComponent implements OnInit {
   }
 
   onCheckClick(activar: boolean) {
-    // console.log(activar)
     this.hasCheckedMultipleSelection = activar
   }
 

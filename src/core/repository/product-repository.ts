@@ -4,7 +4,7 @@ import { Metadata, SearchParams } from "../helpers/metadata-products";
 import { IFilterFacetList } from "../models/filter-facet.models";
 
 export abstract class ProductRepository {
-    abstract searchProductByKeyword(params: SearchParams): Observable<ProductModel[]>;
+    abstract searchProductByKeyword(params: SearchParams): Observable<{products:ProductModel[], metadata:Metadata}>;
+    abstract searcProductByFacetFilter(params: SearchParams): Observable<{products:ProductModel[], metadata:Metadata}>
     abstract getFacetListForSearch(): Observable<IFilterFacetList>;
-    abstract searcProductByFacetFilter(params: SearchParams): Observable<ProductModel[]>;
 }

@@ -1,19 +1,27 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-paginator',
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.css'],
   standalone:true,
-  imports:[CommonModule]
+  imports:[CommonModule],
+  // changeDetection:ChangeDetectionStrategy.OnPush
 })
-export class PaginatorComponent {
+export class PaginatorComponent implements OnChanges{
+
+  constructor(private cdr : ChangeDetectorRef){}
+
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
   @Input() currentPage: number = 1;
-  @Input() totalPages: number = 129589;
-  @Input() maxVisiblePages: number = 5;
+  @Input() totalPages: number = 1000;
+  @Input() maxVisiblePages: number = 10;
 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    
+  }
   get disableNext(): boolean {
     return this.currentPage === this.totalPages;
   }
@@ -54,10 +62,12 @@ export class PaginatorComponent {
     for (let i = firstVisiblePage; i <= lastVisiblePage; i++) {
       visiblePages.push(i);
     }
+    this.cdr.markForCheck();
     return visiblePages;
   }
 
   private emitPageChange() {
     this.pageChange.emit(this.currentPage);
+    this.cdr.markForCheck();
   }
 }

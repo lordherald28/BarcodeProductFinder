@@ -86,12 +86,12 @@ export const contructionParams = (params: SearchParams, url: string) => {
         url += `&brand=${params.brand}`;
     }
 
-    if (params.meta_data && params.meta_data.metadata) {
-        url += `&metadata=${params.meta_data.metadata}`;
+    if (params.metadata && params.metadata.metadata) {
+        url += `&metadata=${params.metadata.metadata}`;
     }
 
-    if (params.meta_data && params.meta_data.cursor) {
-        url += `&cursor=${params.meta_data.cursor}`;
+    if (params.metadata && params.metadata.cursor) {
+        url += `&cursor=${params.metadata.cursor}`;
     }
 
     if (params.key) {

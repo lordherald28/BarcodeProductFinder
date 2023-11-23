@@ -3,8 +3,9 @@
     <app-search-box-general (emitValueChangeInput)="getValueChangeInput($event || '')" [setDebounceTime]="500" />
 </app-header>
 
-
 <div class="wrapper">
+    <app-paginator (pageChange)="OnEventPage($event)" style="width: 50%; margin: 0 auto;" [totalPages]="totalPageNumber"></app-paginator>
+    <span>Total de paginas: {{totalPageNumber}} </span>
     <!-- Main content -->
     <div class="main-content">
         <!-- Sidebar for filters -->
@@ -27,5 +28,6 @@
         </ng-template>
 
     </div>
-    <app-paginator (pageChange)="OnEventPage($event)" style="width: 50%; margin: 0 auto;"></app-paginator>
+
+    <!-- <span>Total de productos: {{metaDataState.products}} </span> -->
 </div>

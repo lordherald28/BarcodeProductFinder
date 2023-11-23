@@ -10,7 +10,7 @@ export interface Metadata {
 }
 
 export interface SearchParams {
-    meta_data: Metadata;
+    metadata: Metadata;
     search?: string;
     barcode?: string | string[];
     mpn?: string;
@@ -19,7 +19,7 @@ export interface SearchParams {
     brand?: string;
     asin?: string;
     category?: string;
-    metadata?: string;
+    hasMetadata?: string;
     cursor?: string;
     key?: string;
 }
