@@ -40,26 +40,36 @@ export class SearchProductsMocksService extends ProductRepository {
     const productsPerPage = 10; // Cantidad de productos por página
     this.pageEnd = this.page * productsPerPage;
     const startIndex = (this.page - 1) * productsPerPage;
-    // const productsOnPage = response.products.slice(startIndex, service.pageEnd);
-
-
     let url: string = '/assets/json/data.json';
 
     return this.http.get<IReponseProductsResult>(url)
       .pipe(
         map((response) => {
-          const productsOnPage = response.products.slice(startIndex, this.pageEnd);
+          // console.log(params.search)
+          // response.products.filter(product => product.title..includes(params.search?.toLocaleLowerCase().trim()?.toString() as string))
+
+          let resp = {
+            ...response,
+            products: response.products.filter(product => product.title.toLocaleLowerCase().trim().includes(params.search?.toLocaleLowerCase().trim()?.toString() as string))
+          }
+          const productsOnPage = resp.products.slice(startIndex, this.pageEnd);
           this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(productsOnPage)));
-          this.metaData$.next(response.metadata);
-          return this.mapperProductsResult.mapTo({ products: productsOnPage, metadata: response.metadata })
+          this.metaData$.next(resp.metadata);
+          return this.mapperProductsResult.mapTo({
+            products: productsOnPage, metadata: {
+              ...resp.metadata,
+              pages: Math.ceil(resp.products.length / productsPerPage),
+              products: resp.products.length
+            }
+          })
         })
       )
   }
 
   /**
-   * 
-   * @param params 
-   * @returns 
+   * Busca un producto por varios filtros o en este caso parametros lo cuales estan limitados por la API Barcode
+   * @param params SearchParams
+   * @returns Observable<{ products: ProductModel[], metadata: Metadata }> 
    */
   searcProductByFacetFilter(params: SearchParams): Observable<{ products: ProductModel[], metadata: Metadata }> {
 
@@ -78,7 +88,7 @@ export class SearchProductsMocksService extends ProductRepository {
     return this.http.get<IReponseProductsResult>(url)
       .pipe(
         map((response) => {
- 
+
           const productsOnPage = response.products.slice(startIndex, this.pageEnd);
           this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(productsOnPage)));
 
@@ -97,7 +107,7 @@ export class SearchProductsMocksService extends ProductRepository {
             ...resp,
             metadata: {
               ...resp.metadata,
-              pages: Math.ceil(resp.products.length/productsPerPage),
+              pages: Math.ceil(resp.products.length / productsPerPage),
               products: resp.products.length
             }
           };

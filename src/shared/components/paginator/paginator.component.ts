@@ -18,6 +18,7 @@ export class PaginatorComponent implements OnChanges {
   @Input() totalPages: number = 1000;
   @Input() maxVisiblePages: number = 10;
   @Input() totalRow: number = 0;
+  @Input() resultTextSearch: string = '';
 
   ngOnChanges(changes: SimpleChanges): void {
 

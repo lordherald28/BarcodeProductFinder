@@ -54,49 +54,50 @@ import { SearchParams } from "../../helpers/metadata-products";
 
 export const contructionParams = (params: SearchParams, url: string) => {
     
-    if (params.search) {
-        url += `search=${params.search}`;
-    }
-    
+    let paramsArray: string[] = [];
+ 
     if (params.barcode) {
-        url += `barcode=${params.barcode}`;
-    }
+        paramsArray.push(`barcode=${params.barcode}`);
+      }
+  
+      if (params.search) {
+        paramsArray.push(`search=${params.search}`);
+      }
+  
+      if (params.mpn) {
+        paramsArray.push(`mpn=${params.mpn}`);
+      }
+  
+      if (params.title) {
+        paramsArray.push(`title=${params.title}`);
+      }
+  
+      if (params.hasMetadata) {
+        paramsArray.push(`metadata=${params.hasMetadata}`);
+      }
+  
+      if (params.asin) {
+        paramsArray.push(`asin=${params.asin}`);
+      }
+  
+      if (params.brand) {
+        paramsArray.push(`brand=${params.brand}`);
+      }
+  
+      if (params.manufacture) {
+        paramsArray.push(`manufacture=${params.manufacture}`);
+      }
+  
+      if (params.category) {
+        paramsArray.push(`category=${params.category}`);
+      }
+  
+      if (params.key) {
+        paramsArray.push(`key=${params.key}`);
+      }
+      
+      url += paramsArray.join('&');
 
-    if (params.mpn) {
-        url += `&mpn=${params.mpn}`;
-    }
-
-    if (params.title) {
-        url += `&title=${params.title}`;
-    }
-
-    if (params.category) {
-        url += `&category=${params.category}`;
-    }
-
-    if (params.manufacture) {
-        url += `&manufacture=${params.manufacture}`;
-    }
-
-    if (params.asin) {
-        url += `&asin=${params.asin}`;
-    }
-
-    if (params.brand) {
-        url += `&brand=${params.brand}`;
-    }
-
-    if (params.metadata && params.metadata.metadata) {
-        url += `&metadata=${params.metadata.metadata}`;
-    }
-
-    if (params.metadata && params.metadata.cursor) {
-        url += `&cursor=${params.metadata.cursor}`;
-    }
-
-    if (params.key) {
-        url += `&key=${params.key}`;
-    }
     return url;
 }
 

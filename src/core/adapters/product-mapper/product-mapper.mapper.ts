@@ -8,10 +8,10 @@ import { ProductModel } from "../../models/product.model";
 export class ProductMapper extends Mapper<ProductoEntity[], ProductModel[]> {
 
     mapTo(params: ProductoEntity[]): ProductModel[] {
-        // console.log(params)
-        if (!params || params.length === 0) {
-            throw new Error('Parameter is blank');
-        }
+        // // console.log(params)
+        // if (!params || params.length === 0) {
+        //     throw new Error('Parameter is blank');
+        // }
 
         return params.map(product => {
             return {
@@ -39,9 +39,9 @@ export class ProductMapper extends Mapper<ProductoEntity[], ProductModel[]> {
 export class ProductoMapperResponse extends MapperResultProductEntity<{ products: ProductoEntity[], metadata: Metadata }, { products: ProductModel[], metadata: Metadata }>{
 
     mapTo(params: { products: ProductoEntity[]; metadata: Metadata; }): { products: ProductModel[]; metadata: Metadata; } {
-        if (!params || params.products.length === 0) {
-            throw new Error('Parameter is blank');
-        }
+        // if (!params || params.products.length === 0) {
+        //     throw new Error('Parameter is blank');
+        // }
         const productsListTemp = params.products.map(product => {
             return {
                 barcode_number: product.barcode_number,

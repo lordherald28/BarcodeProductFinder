@@ -114,7 +114,7 @@ export class SidebarFilterComponent implements OnInit {
         mnpList: event
       }
     }
-    // this.cdr.markForCheck();
+    this.cdr.markForCheck();
   }
 
   onCheckClick(activar: boolean) {
@@ -122,10 +122,15 @@ export class SidebarFilterComponent implements OnInit {
   }
 
   applyFacetFilters() {
+    // console.log(this.filterSearchParamsList)
+
     this.emitFacetFiltersParams.emit(this.filterSearchParamsList);
     if (this.config_system.filterState.isMustClear) {
-      localStorage.removeItem(this.config_system.filterState.filterState)
+      localStorage.removeItem(this.config_system.filterState.filterState);
+      this.filterSearchParamsList = Object.assign({})
     }
+
+
     this.cdr.markForCheck();
   }
 

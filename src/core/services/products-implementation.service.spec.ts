@@ -7,9 +7,9 @@ import { ProductRepository } from '../repository/product-repository';
 
 import { of } from 'rxjs';
 
-import { SearchParams } from '../helpers/metadata-products';
-import { API_ProductBarcode } from 'src/environments/environment';
-import { mockFacetFilter, mockSearchParamsForsearchProductByKeyword, mockSearchParamsForsearchsearcProductByFacetFilter, mocksProductsEntity, mocksProductsModel } from '../helpers/mocks-objects';
+import { Metadata, SearchParams } from '../helpers/metadata-products';
+import { API_ProductBarcode, environment } from 'src/environments/environment';
+import { mockFacetFilter, mockProductsModelResponse, mockSearchParamsForsearchProductByKeyword, mockSearchParamsForsearchsearcProductByFacetFilter, mocksProductsEntity, mocksProductsModel } from '../helpers/mocks-objects';
 import { ProductMapper } from '../adapters/product-mapper/product-mapper.mapper';
 import { ProductModel } from '../models/product.model';
 import { IFilterFacetList } from '../models/filter-facet.models';
@@ -21,27 +21,33 @@ describe('Service: Products', () => {
   let httpMock: HttpTestingController;
   let url: string;
   let params: SearchParams;
+  let proxyUrlForCors: string;
+  let paramsArray: string[] = [];
+
 
   beforeAll(() => {
 
+
     params = {
-      barcode: '1234567890123',
-      title: 'Nike Red Running Shoes - Size 10',
-      mpn: 'AAAAAAA',
+      // barcode: '1234567890123',
+      title: 'PRIMERO Ancient Garden 7 Ft. 10 in. X 11 Ft. 2 in. 57120-3767 Rug - Chocolate/Ivory',
+      // category: 'Home & Garden > Decor > Rugs',
+      // mpn: 'AAAAAAA',
       metadata: {
         pages: 1,
         products: 0,
-        current_cursor: 'current_cursor=y',
-        next_cursor: 'next_cursor=y',
-      }
+        // current_cursor: 'y',
+        // next_cursor: 'y',
+      },
+      hasMetadata: 'y',
+      key: environment.AuthenticationKey.key
     };
 
-    let proxyUrlForCors: string = 'https://cors-anywhere.herokuapp.com/';
+    proxyUrlForCors = 'https://cors-anywhere.herokuapp.com/';
 
     // url = `https://api.barcodelookup.com/v3/products?${params.searchParameters}&formatted=y&${params.meta_data.current_cursor}&key=${environment.AuthenticationKey.key}`;
     url = proxyUrlForCors + API_ProductBarcode.searchKeyWord;
 
-    let paramsArray: string[] = [];
 
     if (params.barcode) {
       paramsArray.push(`barcode=${params.barcode}`);
@@ -63,8 +69,20 @@ describe('Service: Products', () => {
       paramsArray.push(`metadata=${params.hasMetadata}`);
     }
 
-    if (params.cursor) {
-      paramsArray.push(`cursor=${params.cursor}`);
+    if (params.asin) {
+      paramsArray.push(`asin=${params.asin}`);
+    }
+
+    if (params.brand) {
+      paramsArray.push(`brand=${params.brand}`);
+    }
+
+    if (params.manufacture) {
+      paramsArray.push(`manufacture=${params.manufacture}`);
+    }
+
+    if (params.category) {
+      paramsArray.push(`category=${params.category}`);
     }
 
     if (params.key) {
@@ -76,6 +94,8 @@ describe('Service: Products', () => {
   });
 
   afterAll(() => {
+    // params = Object.assign({});
+    // paramsArray = [];
     httpMock.verify();
   });
 
@@ -116,23 +136,112 @@ describe('Service: Products', () => {
   /**
    * Revisar esto 22-11-2023
    */
-  // it('should return a list of ProductModel when searching by keyword', (done) => {
+  it(`searchProductByKeyword with mapper product and metadata should return an array of { productsModelList: ProductModel[], metadata: Metadata }`, fakeAsync(() => {
 
-  //   const expectedResponse: ProductModel[] = new ProductMapper().mapTo(mocksProductsEntity);
-  //   // Act
-  //   service.searchProductByKeyword(params).subscribe((result) => {
-  //     // Assert
-  //     expect(result).toEqual(expectedResponse);
-  //     done(); // Call done to signal the completion of the test
-  //   });
+    let paramsArray: string[] = [];
 
-  //   // Expect a GET request to a specific URL based on your params
-  //   const req = httpMock.expectOne(url);
+    // Mock response matching IReponseProductsResult structure
+    const mockApiResultProductWithMetada: { products: ProductModel[], metadata: Metadata } = mockProductsModelResponse;
+    service.searchProductByKeyword(params).subscribe((response) => {
 
-  //   // Respond with a mock response
-  //   req.flush({ products: mocksProductsEntity });
+      service.page = mockSearchParamsForsearchProductByKeyword.metadata.pages as number; // Suponiendo que queremos probar la segunda página
+      const productsPerPage = 10; // Cantidad de productos por página
+      service.pageEnd = service.page * productsPerPage;
+      const startIndex = (service.page - 1) * productsPerPage;
+      const productsOnPage = response.products.slice(startIndex, service.pageEnd);
+      // Verifica que obtienes exactamente 10 productos en la segunda página
+      expect(productsOnPage.length).toEqual(10);
 
-  // });
+    });
+    // Simular respuesta HTTP
+    const expectedUrl = url;
+    console.log('https://cors-anywhere.herokuapp.com/https://api.barcodelookup.com/v3/products?')
+    const req = httpMock.expectOne(url);
+    expect(req.request.method).toBe('GET'); // Verifies the HTTP request method
+    req.flush(mockApiResultProductWithMetada);
+
+    // tick();
+  }));
+
+  // Testing the searcProductByFacetFilter method
+  it('should filter products by allowed parameters  with pagination', waitForAsync(() => {
+    // Pagination logic
+    const mockApiResultProductWithMetadata: { products: ProductModel[], metadata: Metadata } = mockProductsModelResponse;
+
+    const params = {
+      // barcode: '1234567890123',
+      title: 'PRIMERO Ancient Garden 7 Ft. 10 in. X 11 Ft. 2 in. 57120-3767 Rug - Chocolate/Ivory',
+      // category: 'Home & Garden > Decor > Rugs',
+      // mpn: 'AAAAAAA',
+      metadata: {
+        pages: 1,
+        products: 0,
+        // current_cursor: 'y',
+        // next_cursor: 'y',
+      },
+      hasMetadata: 'y',
+      key: environment.AuthenticationKey.key
+    };
+
+    paramsArray = [];
+
+    if (params.title) {
+      paramsArray.push(`title=${params.title.toLocaleLowerCase().trim()}`);
+    }
+
+    if (params.hasMetadata) {
+      paramsArray.push(`metadata=${params.hasMetadata}`);
+    }
+
+    // if (params.category) {
+    //   paramsArray.push(`category=${params.category}`);
+    // }
+
+    // Define search parameters with metadata and category
+    // const searchParams: SearchParams = {
+    //   metadata: { pages: 1, products: 0, cursor: 'cursor=y', metadata: 'y' },
+    //   category: 'Home & Garden'
+    // };
+
+    // console.log(params)
+    // console.log(url)
+
+    // Subscribe to the service method
+    service.searcProductByFacetFilter(params).subscribe((response) => {
+      // Create a response object with original products and metadata
+      let resp: { products: ProductModel[], metadata: Metadata } = {
+        products: response.products,
+        metadata: response.metadata
+      };
+
+      // console.log(response)
+      // Filter products in resp.products based on category
+      if (params.title) {
+        resp.products = response.products.filter(product => product.category.includes(params.title?.trim().toLocaleLowerCase().toString() as string));
+      }
+
+      // Pagination logic
+      service.page = params.metadata.pages as number; // Assuming we want to test the second page
+      const productsPerPage = 10; // Number of products per page
+      service.pageEnd = service.page * productsPerPage;
+      const startIndex = (service.page - 1) * productsPerPage;
+      let productsOnPage = resp.products.slice(startIndex, service.pageEnd);
+
+      // Check if the number of filtered products matches the expected value
+
+      // console.log('RESP:  ', resp.products.length);
+      // console.log('productsOnPage:  ', productsOnPage.length);
+
+      expect(resp.products.length).toEqual(productsOnPage.length);
+      expect(productsOnPage.length).toEqual(resp.products.length);
+    });
+    // `https://cors-anywhere.herokuapp.com/https://api.barcodelookup.com/v3/products?&category=Home & Garden
+    // ${searchParams.metadata.cursor}page=${searchParams.metadata.pages}`)
+    // Mock the HTTP request
+    const req = httpMock.expectOne(url);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockApiResultProductWithMetadata);
+  }));
 
   // Testing the searcProductByFacetFilter method
   // Revisar 22-11-2023

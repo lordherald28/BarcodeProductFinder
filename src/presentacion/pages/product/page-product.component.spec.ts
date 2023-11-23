@@ -6,7 +6,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ProductModel } from 'src/core/models/product.model';
 import { SearchParams } from 'src/core/helpers/metadata-products';
 import { of } from 'rxjs';
-import { mockFacetFilter, mockSearchParamsForsearchsearcProductByFacetFilter, mocksExpectedProductsModel, mocksProductsModel } from 'src/core/helpers/mocks-objects';
+import { mockFacetFilter, mockProductsModelResponse, mockSearchParamsForsearchsearcProductByFacetFilter, mocksExpectedProductsModel, mocksProductsModel } from 'src/core/helpers/mocks-objects';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from 'src/core/core.module';
 import { HeaderComponent } from 'src/shared/components/header/header.component';
@@ -57,38 +57,49 @@ describe('PageProductComponent', () => {
   });
 
   /**
-   * Revisa esto para refactorizacion:  22-11-2023
+   * Revisa esto para refactorizacion:  22-11-2023 OK
    */
 
-  // describe('getProductList', () => {
-  //   it('should call UseCaseSearchProducts.execute and update productsList', fakeAsync(() => {
-  //     const value = 'testValue';
-  //     const spyUseCaseSearchProducts = fixture.debugElement.injector.get(UseCaseSearchProducts);
-  //     spyOn(spyUseCaseSearchProducts, 'execute').and.returnValue(of(mocksExpectedProductsModel));
+  describe('getProductList', () => {
+    it('should call UseCaseSearchProducts.execute and update productsList', fakeAsync(() => {
 
-  //     component.getProductList(value);
+      const metadata = {
+        "pages": 3,
+        "products": 30,
+        "current_cursor": "y",
+        "next_cursor": "AoEpMTAwMDA4NTk1"
+      }
+      const value = 'testValue';
+      const spyUseCaseSearchProducts = fixture.debugElement.injector.get(UseCaseSearchProducts);
+      spyOn(spyUseCaseSearchProducts, 'execute').and.returnValue(of({ products: mocksExpectedProductsModel, metadata }));
 
-  //     fixture.whenStable().then(() => {
-  //       expect(component.productsList).toEqual(mocksProductsModel);
-  //     });
-  //   }));
-  // });
+      component.getProductList(value);
 
-  // Revisar 22-11-2023
-  // describe('UseCasesearcProductByFacetFilter(filterFacet: IFilterFacetList)', () => {
-  //   it('should call UseCasesearcProductByFacetFilter.execute and update productsList', fakeAsync(() => {
-  //     const paramFaceFilter = {
-  //       "categories": "Media > Books > Print Books"
-  //     };
-  //     const spyUseCasesearcProductByFacetFilter = fixture.debugElement.injector.get(UseCasesearcProductByFacetFilter);
-  //     spyOn(spyUseCasesearcProductByFacetFilter, 'execute').and.returnValue(of(mocksExpectedProductsModel));
+      fixture.whenStable().then(() => {
+        expect(component.productsList).toEqual(mocksProductsModel);
+      });
+    }));
+  });
 
-  //     component.getProductListByFacetFilters(paramFaceFilter as any);
-  //     fixture.whenStable().then(() => {
-  //       expect(spyUseCasesearcProductByFacetFilter.execute).toHaveBeenCalledWith(mockSearchParamsForsearchsearcProductByFacetFilter);
-  //       expect(component.productsList).toEqual(mocksExpectedProductsModel);
-  //     });
-  //   }));
-  // });
+  // Revisar 22-11-2023 OK
+  describe('UseCasesearcProductByFacetFilter(filterFacet: IFilterFacetList)', () => {
+    it('should call UseCasesearcProductByFacetFilter.execute and update productsList', fakeAsync(() => {
+      const paramFaceFilter = {
+        "categories": "Media > Books > Print Books"
+      };
+
+      const spyUseCasesearcProductByFacetFilter = fixture.debugElement.injector.get(UseCasesearcProductByFacetFilter);
+      spyOn(spyUseCasesearcProductByFacetFilter, 'execute').and.returnValue(of(mockProductsModelResponse));
+
+      component.getProductListByFacetFilters(paramFaceFilter as any);
+      fixture.whenStable().then(() => {
+        expect(spyUseCasesearcProductByFacetFilter.execute).toHaveBeenCalledWith({
+          metadata: { products: 0, pages: 1 }, category: 'Media > Books > Print Books',hasMetadata:'y'
+        });
+        expect(component.productsList.length).toEqual(mockProductsModelResponse.products.length);
+        expect(component.productsList).not.toBeNull()
+      });
+    }));
+  });
 
 });

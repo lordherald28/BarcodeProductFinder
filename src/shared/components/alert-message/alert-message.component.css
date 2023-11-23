@@ -1,0 +1,34 @@
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2; /* Suave color de fondo */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    border: 1px solid #ddd; /* Borde sutil */
+    transition: opacity 0.5s, transform 0.5s; /* Animaciones para mostrar y cerrar */
+    opacity: 0; /* Inicia oculto */
+    transform: translateY(-10px); /* Inicia ligeramente arriba */
+}
+
+.alert.open {
+    opacity: 1; /* Visible */
+    transform: translateY(0); /* En su posición normal */
+}
+
+.alert-message {
+    flex-grow: 1;
+    /* Agrega aquí más estilos para el mensaje si es necesario */
+}
+
+.alert-close {
+    cursor: pointer;
+    padding: 0 10px;
+    /* Agrega aquí más estilos para el botón cerrar si es necesario */
+}
+
+.alert-close:hover {
+    /* Estilos para hover en el botón cerrar */
+}

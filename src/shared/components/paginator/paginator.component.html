@@ -1,13 +1,15 @@
 <div class="pagination">
   <button (click)="firstPage()" [disabled]="disablePrevious" class="btn-icon" id="firstPage"><<</button>
-  <button (click)="previousPage()" [disabled]="disablePrevious" class="btn-icon"  id="previousPage"><</button>
-  <ng-container *ngFor="let pageNumber of getPageNumbers()">
-    <button (click)="goToPage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
-  </ng-container>
-  <button (click)="nextPage()" [disabled]="disableNext" class="btn-icon"  id="nextButton">></button>
-  <button (click)="lastPage()" [disabled]="disableLastPage" class="btn-icon"  id="lastPage">>></button>
+      <button (click)="previousPage()" [disabled]="disablePrevious" class="btn-icon" id="previousPage"><</button>
+          <ng-container *ngFor="let pageNumber of getPageNumbers()">
+            <button (click)="goToPage(pageNumber)" [class.active]="currentPage === pageNumber">{{ pageNumber }}</button>
+          </ng-container>
+          <button (click)="nextPage()" [disabled]="disableNext" class="btn-icon" id="nextButton">></button>
+          <button (click)="lastPage()" [disabled]="disableLastPage" class="btn-icon" id="lastPage">>></button>
 </div>
 <div class="container-info-pagination">
-  <span>Pages: {{totalPages}} </span>
-  <span>Products: {{totalRow}} </span>
+  <span>1 a 10 de {{totalRow}} resultados para "{{resultTextSearch}}"</span>
+
+  <!-- <span>Pages: {{totalPages}} </span> -->
+  <!-- <span>Products: {{totalRow}} </span> -->
 </div>

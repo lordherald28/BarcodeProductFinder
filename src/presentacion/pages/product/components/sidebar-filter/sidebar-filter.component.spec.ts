@@ -43,7 +43,7 @@ describe('SidebarFilterComponent', () => {
 
   it('should call applyFacetFilters on button click', () => {
     spyOn(component, 'applyFacetFilters');
-    const button = fixture.debugElement.query(By.css('.buy-now-btn')).nativeElement;
+    const button = fixture.debugElement.query(By.css('.btn-standar-primary')).nativeElement;
     button.click();
     expect(component.applyFacetFilters).toHaveBeenCalled();
   });

@@ -16,6 +16,7 @@ import { environment } from 'src/environments/environment';
 import { UseCasesearcProductByFacetFilter } from 'src/core/use-case/use-case-search-facet';
 import { PaginatorComponent } from 'src/shared/components/paginator/paginator.component';
 import { EventPage } from 'src/shared/models/paginator.models';
+import { AlertMessageComponent } from 'src/shared/components/alert-message/alert-message.component';
 
 
 @Component({
@@ -23,7 +24,8 @@ import { EventPage } from 'src/shared/models/paginator.models';
   templateUrl: './page-product.component.html',
   styleUrls: ['./page-product.component.css'],
   standalone: true,
-  imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, CardProductComponent, HeaderComponent, CoreModule, PaginatorComponent],
+  imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, AlertMessageComponent,
+    CardProductComponent, HeaderComponent, CoreModule, PaginatorComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PageProductComponent implements OnInit, OnDestroy {
@@ -47,13 +49,13 @@ export default class PageProductComponent implements OnInit, OnDestroy {
     metadata: {
       pages: 1,
       products: 0,
-      cursor: 'y',
-      metadata: 'y'
-    }
+    },
+    hasMetadata: 'y'
   }
   public productsList = new Array<ProductModel>();
   public totalPageNumber: number = 0;
   public currrentPageNumber: number = 1;
+  public lastValueSearch: string = '';
 
   ngOnInit() {
 
@@ -74,11 +76,15 @@ export default class PageProductComponent implements OnInit, OnDestroy {
     this.subs$.push(this.useCaseSearchProducts.execute(this.searchParams)
       .pipe(
         switchMap((result) => {
+          // console.log('switchMap: ', result)
           this.cdr.markForCheck();
           return of(result)
         })
       )
       .subscribe(({ products, metadata }) => {
+        // console.log('subscribe: ', products)
+        // console.log('subscribe metadata: ', metadata)
+
         this.productsList = products;
         this.metaDataState = metadata
         this.totalPageNumber = this.metaDataState.pages;
@@ -119,7 +125,8 @@ export default class PageProductComponent implements OnInit, OnDestroy {
     // console.log(this.searchParams)
 
     //Enviar la informacion 
-    this.searchParams.search = '';
+      // console.log(this.searchParams)
+    // this.searchParams.search = '';  23-11-2023
     this.subs$.push(
       this.useCaseSearchFacet.execute(this.searchParams).pipe(
         debounceTime(1000),
@@ -132,11 +139,11 @@ export default class PageProductComponent implements OnInit, OnDestroy {
         .subscribe((result) => {
           if (result && result.products.length > 0) {
             this.metaDataState = result.metadata;
-            this.totalPageNumber=result.metadata.pages
+            this.totalPageNumber = result.metadata.pages
             this.retetSearchParams();
             this.productsList = result.products;
           }
-          console.log(result)
+          // console.log(result)
           this.cdr.markForCheck();
         })
     );
@@ -159,7 +166,7 @@ export default class PageProductComponent implements OnInit, OnDestroy {
   OnEventPage(event: number): void {
     this.searchParams = {
       ...this.searchParams,
-      search: this.currentKeyValue,
+      // search: this.currentKeyValue,
       key: environment.AuthenticationKey.key,
       metadata: {
         ...this.metaDataState,

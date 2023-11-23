@@ -3308,13 +3308,13 @@ export const mockSearchParamsForsearchProductByKeyword: SearchParams = {
         cursor: 'cursor=y',
 
     },
-    search: 'chocolate'
+    search: 'primero'
 }
 
 export const mockSearchParamsForsearchsearcProductByFacetFilter: SearchParams = {
     metadata: {
         pages: 1,
-        products: 0,
+        products: 30,
         cursor: 'y',
         metadata: 'y'
     },

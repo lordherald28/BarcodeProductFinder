@@ -17,7 +17,7 @@ export class InterceptorError implements HttpInterceptor {
                 if (error.status === 403) {
                     return throwError(() => new Error(error.error === null ? error.statusText : error.error)); // Reenvía el error para manejarlos luego.                    
                 }
-                return throwError(() => new Error(error.error))
+                return throwError(() => error)
             })
         );
 
