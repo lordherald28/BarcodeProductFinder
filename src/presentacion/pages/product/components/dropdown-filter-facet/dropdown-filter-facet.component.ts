@@ -27,13 +27,17 @@ export class DropDownFilterFacetComponent implements OnInit,OnChanges {
   formSearch = this.fb.group({
     searchKeyWord: new FormControl({ value: '', disabled: false })
   });
+  isUserInput = false;
+
+
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['facetList'] && changes['facetList'].currentValue !== changes['facetList'].previousValue) {
-      // Actualiza filteredFacetList solo si facetList realmente ha cambiado
-      this.filteredFacetList = [...changes['facetList'].currentValue];
+    if (changes['facetList'] && !this.isUserInput) {
+      this.filteredFacetList = [...this.facetList];
       this.cdr.markForCheck();
     }
+    // Restablece la bandera después de manejar los cambios
+    this.isUserInput = false;
   }
   
   
@@ -94,11 +98,11 @@ export class DropDownFilterFacetComponent implements OnInit,OnChanges {
   }
 
   getValueChangeInput(_value: string): void {
-    // Filtra la lista original en función del valor de entrada modificado
-    this.filteredFacetList = this.facetList.filter(value => this.isMatch(value, _value));
-    // Registra para la depuración
-    console.log('Filtrado:', this.filteredFacetList);
-    // Marca el componente para la detección de cambios
+    // Establece la bandera a true para indicar que es una entrada del usuario
+    this.isUserInput = true;
+
+    // Tu lógica de filtrado existente
+    this.filteredFacetList = [...this.facetList.filter(value => this.isMatch(value, _value))];
     this.cdr.markForCheck();
   }
   
