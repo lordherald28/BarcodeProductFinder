@@ -1,16 +1,19 @@
 <!-- Header with logo and search box -->
 <app-header>
+    <h1>{{isSerachGeneral}}</h1>
     <app-search-box-general (emitValueChangeInput)="getValueChangeInput($event || '')" [setDebounceTime]="500" />
 </app-header>
 <div class="wrapper">
+
     <app-paginator (pageChange)="OnEventPage($event)" style="width: 50%; margin: 0 auto;"
         [totalRow]="metaDataState.products" [maxVisiblePages]="10" [totalPages]="metaDataState.pages"
+        [resetPagination]="hasResetPagination"
         [resultTextSearch]="currentKeyValue"></app-paginator>
     <!-- Main content -->
     <div class="main-content">
         <!-- Sidebar for filters -->
         <div class="sidebar">
-            <app-sidebar-filter *ngIf="productsList.length>0"
+            <app-sidebar-filter *ngIf="productsList.length>0" 
                 (emitFacetFiltersParams)="getProductListByFacetFilters($event)"></app-sidebar-filter>
         </div>
 
@@ -23,12 +26,12 @@
             <div class="divisor"></div>
         </div>
 
+
         <ng-template #noProductsList>
-            <app-alert-message></app-alert-message>
             <!-- <span>Aquí va un mensaje que no sé qué poner o poner texto</span> -->
         </ng-template>
-
     </div>
 
     <!-- <span>Total de productos: {{metaDataState.products}} </span> -->
 </div>
+<app-alert-message [message]="messages"></app-alert-message>

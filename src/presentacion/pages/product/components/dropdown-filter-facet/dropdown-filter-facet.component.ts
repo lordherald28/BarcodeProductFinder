@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ItemFilterSelection } from '../sidebar-filter/models/item-filter-selection';
 import { SearchBoxGeneralComponent } from 'src/shared/components/search-box-general/search-box-general.component';
@@ -14,7 +14,7 @@ import { SidebarFilterService } from '../sidebar-filter/services/sidebar-filter.
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [SidebarFilterService]
 })
-export class DropDownFilterFacetComponent implements OnInit {
+export class DropDownFilterFacetComponent implements OnInit,OnChanges {
 
   constructor(private readonly fb: FormBuilder, private readonly cdr: ChangeDetectorRef, private readonly serviceFacetFilters: SidebarFilterService) { }
 
@@ -28,12 +28,25 @@ export class DropDownFilterFacetComponent implements OnInit {
     searchKeyWord: new FormControl({ value: '', disabled: false })
   });
 
-  ngOnInit() {
-    // Initialize the filtered list with all elements from the facetList
-    this.filteredFacetList = [...this.facetList];
-
-    this.serviceFacetFilters.getStateFacetFilters().subscribe(facetFilterState => this.isItemActive = facetFilterState)
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['facetList'] && changes['facetList'].currentValue !== changes['facetList'].previousValue) {
+      // Actualiza filteredFacetList solo si facetList realmente ha cambiado
+      this.filteredFacetList = [...changes['facetList'].currentValue];
+      this.cdr.markForCheck();
+    }
   }
+  
+  
+  ngOnInit() {
+    this.filteredFacetList = [...this.facetList];
+  
+    this.serviceFacetFilters.getStateFacetFilters().subscribe(facetFilterState => {
+      // console.log(this.filteredFacetList)
+      this.isItemActive = facetFilterState;
+      this.cdr.markForCheck(); // Marca el componente para verificación de cambios
+    });
+  }
+  
 
   emitFacetFilterSelected(facetFilter: string) {
     // Emit filter selection based on multiple selection option
@@ -81,11 +94,14 @@ export class DropDownFilterFacetComponent implements OnInit {
   }
 
   getValueChangeInput(_value: string): void {
-    // Filter the original list based on the modified input
+    // Filtra la lista original en función del valor de entrada modificado
     this.filteredFacetList = this.facetList.filter(value => this.isMatch(value, _value));
-    // Mark the component for change detection
+    // Registra para la depuración
+    console.log('Filtrado:', this.filteredFacetList);
+    // Marca el componente para la detección de cambios
     this.cdr.markForCheck();
   }
+  
 
   itemActive(item: any) {
     // Check if the item is active
@@ -94,7 +110,7 @@ export class DropDownFilterFacetComponent implements OnInit {
 
   trackByIdFn(index: number, item: any) {
     // Function for tracking items by ID, useful for performance optimization
-    return item.id;
+    return item;
   }
 
 }

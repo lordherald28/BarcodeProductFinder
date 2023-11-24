@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { IMessages, eSeverity } from 'src/core/models/message-notify.models';
 
 @Component({
   selector: 'app-alert-message',
@@ -10,19 +11,25 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   imports: [CommonModule]
 
 })
-export class AlertMessageComponent implements OnInit {
+export class AlertMessageComponent implements OnInit, OnChanges {
 
   @Input() setMessageAlert: string = 'This is an alert message!';
-
-  ngOnInit(): void {
-    setTimeout(() => this.showAlert = true, 100); // Retraso para permitir animación de entrada
-
-  }
-
+  @Input() linkToCorsDemo: string = 'https://cors-anywhere.herokuapp.com/';
+  @Input() message: IMessages = {}
+  severity: eSeverity = this.message.severity as eSeverity
   @Input() showAlert: boolean = true;
   // message: string = 'This is an alert message!';
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.severity = this.message.severity as eSeverity
+  }
+
+  ngOnInit(): void {
+    setTimeout(() => this.showAlert = true, 100); // Retraso para permitir animación de entrada
+  }
+
+
   closeAlert() {
-    this.showAlert = false;
+    this.showAlert = this.message.isShow = false;
   }
 }

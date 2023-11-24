@@ -35,7 +35,7 @@ export class SearchProductsMocksService extends ProductRepository {
    */
   searchProductByKeyword(params: SearchParams): Observable<{ products: ProductModel[], metadata: Metadata }> {
 
-
+    // console.log(params)
     this.page = params.metadata.pages; // Suponiendo que queremos probar la segunda página
     const productsPerPage = 10; // Cantidad de productos por página
     this.pageEnd = this.page * productsPerPage;
@@ -73,6 +73,8 @@ export class SearchProductsMocksService extends ProductRepository {
    */
   searcProductByFacetFilter(params: SearchParams): Observable<{ products: ProductModel[], metadata: Metadata }> {
 
+    // console.log(params)
+
     this.page = params.metadata.pages; // Suponiendo que queremos probar la segunda página
     const productsPerPage = 10; // Cantidad de productos por página
     this.pageEnd = this.page * productsPerPage;
@@ -88,31 +90,64 @@ export class SearchProductsMocksService extends ProductRepository {
     return this.http.get<IReponseProductsResult>(url)
       .pipe(
         map((response) => {
+          let filteredProducts = response.products;
 
-          const productsOnPage = response.products.slice(startIndex, this.pageEnd);
-          this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(productsOnPage)));
-
-          let resp: { products: ProductModel[], metadata: Metadata } = {
-            products: response.products, // Puedes asignar un arreglo vacío aquí
-            metadata: response.metadata // Asigna la metadata de la respuesta original
-          };
-
+          // Aplicar filtros primero
           if (params.category) {
-            resp.products = this.searchByCategory(this.mapperProduct.mapTo(productsOnPage), params);
+            filteredProducts = this.searchByCategory(filteredProducts, params) as any;
           }
           if (params.barcode) {
-            resp.products = this.searchBybarcode(this.mapperProduct.mapTo(productsOnPage), params);
+            filteredProducts = this.searchBybarcode(filteredProducts, params) as any;
           }
-          return resp = {
-            ...resp,
+
+          // Calcular la paginación sobre el conjunto filtrado
+          const totalProducts = filteredProducts.length;
+          const totalPages = Math.ceil(totalProducts / productsPerPage);
+          const productsOnPage = filteredProducts.slice(startIndex, this.pageEnd);
+
+          // Crear la respuesta
+          let resp: { products: ProductModel[], metadata: Metadata } = {
+            products: productsOnPage,
             metadata: {
-              ...resp.metadata,
-              pages: Math.ceil(resp.products.length / productsPerPage),
-              products: resp.products.length
+              ...response.metadata,
+              pages: totalPages,
+              products: totalProducts
             }
           };
+
+          return resp;
         })
       )
+    // return this.http.get<IReponseProductsResult>(url)
+    //   .pipe(
+    //     map((response) => {
+
+    //       const productsOnPage = response.products.slice(startIndex, this.pageEnd);
+    //       this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(productsOnPage)));
+
+    //       let resp: { products: ProductModel[], metadata: Metadata } = {
+    //         products: response.products, // Puedes asignar un arreglo vacío aquí
+    //         metadata: response.metadata // Asigna la metadata de la respuesta original
+    //       };
+
+    //       if (params.category) {
+    //         resp.products = this.searchByCategory(this.mapperProduct.mapTo(productsOnPage), params);
+    //         console.log(resp)
+    //       }
+    //       if (params.barcode) {
+    //         resp.products = this.searchBybarcode(this.mapperProduct.mapTo(productsOnPage), params);
+    //       }
+
+    //       return resp = {
+    //         ...resp,
+    //         metadata: {
+    //           ...resp.metadata,
+    //           pages: Math.ceil(resp.products.length / productsPerPage),
+    //           products: resp.products.length
+    //         }
+    //       };
+    //     })
+    //   )
 
 
   }
@@ -144,7 +179,7 @@ export class SearchProductsMocksService extends ProductRepository {
 
 
   private searchByCategory(listProducts: ProductModel[], serachParams: SearchParams): ProductModel[] {
-    return listProducts.filter(product => product.category.includes(serachParams.category?.toString() as string));
+    return listProducts.filter(product => product.category.trim().toLocaleLowerCase().includes(serachParams.category?.trim().toLocaleLowerCase().toString() as string));
   }
 
   private searchBybarcode(listProducts: ProductModel[], serachParams: SearchParams): ProductModel[] {

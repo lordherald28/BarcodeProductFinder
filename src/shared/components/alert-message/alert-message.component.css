@@ -1,34 +1,70 @@
+/* alert.component.css */
+
+/* Estilos para el contenedor de la alerta */
 .alert {
+    width: 53%;
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    transform: translate(25%, 50%);
+    z-index: 9999;
     padding: 10px;
+    background-color: #f44336;
+    /* Color de fondo de la alerta */
+    color: white;
+    /* Color del texto */
     margin-bottom: 15px;
     border-radius: 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f2f2f2; /* Suave color de fondo */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    border: 1px solid #ddd; /* Borde sutil */
-    transition: opacity 0.5s, transform 0.5s; /* Animaciones para mostrar y cerrar */
-    opacity: 0; /* Inicia oculto */
-    transform: translateY(-10px); /* Inicia ligeramente arriba */
+
+
 }
 
-.alert.open {
-    opacity: 1; /* Visible */
-    transform: translateY(0); /* En su posición normal */
-}
-
+/* Estilos para el mensaje de la alerta */
 .alert-message {
     flex-grow: 1;
-    /* Agrega aquí más estilos para el mensaje si es necesario */
+    overflow: hidden;
+    /* Previene el desbordamiento del contenido */
+    white-space: nowrap;
+    /* Evita que el texto se envuelva en una nueva línea */
+    text-overflow: ellipsis;
+    /* Añade puntos suspensivos si el texto es demasiado largo */
 }
 
+/* Estilos para el botón de cierre de la alerta */
 .alert-close {
     cursor: pointer;
     padding: 0 10px;
-    /* Agrega aquí más estilos para el botón cerrar si es necesario */
 }
 
-.alert-close:hover {
-    /* Estilos para hover en el botón cerrar */
+.alert-close-danger:hover {
+    background-color: #d4352c;
+}
+
+/* Fondo rojo más oscuro para el botón de cierre al pasar el cursor */
+.alert-close-danger:hover {
+    background-color: #d4352c;
+}
+
+/* Clases para diferentes niveles de severidad */
+.info {
+    background-color: cadetblue;
+    color: #fff;
+}
+
+.warn {
+    background-color: goldenrod;
+    color: #fff;
+}
+
+.danger {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.success {
+    background-color: #0c6c7f;
+    color: #fff;
 }

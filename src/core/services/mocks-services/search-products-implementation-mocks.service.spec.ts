@@ -11,7 +11,7 @@ import { MapperResultProductEntity } from 'src/core/bases/mappers';
 describe('Service Mock: SearchProductsMocks', () => {
   let service: SearchProductsMocksService;
   let httpMock: HttpTestingController;
-  let mapperProductsResult: ProductoMapperResponse
+  // let mapperProductsResult: ProductoMapperResponse
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       providers: [SearchProductsMocksService,],
@@ -34,7 +34,7 @@ describe('Service Mock: SearchProductsMocks', () => {
   of { productsModelList: ProductModel[], metadata: Metadata }`, fakeAsync(() => {
     // Mock response matching IReponseProductsResult structure
     const mockApiResultProductWithMetada: { products: ProductModel[], metadata: Metadata } = mockProductsModelResponse;
-
+    
     service.searchProductByKeyword(mockSearchParamsForsearchProductByKeyword).subscribe((response) => {
       // Lógica de paginación
       service.page = mockSearchParamsForsearchProductByKeyword.metadata.pages as number; // Suponiendo que queremos probar la segunda página
@@ -93,6 +93,8 @@ describe('Service Mock: SearchProductsMocks', () => {
       expect(productsOnPage.length).toEqual(resp.products.length);
     });
 
+    //Verificar url real
+    // expect(url)
     // Mock the HTTP request
     const req = httpMock.expectOne('/assets/json/data.json');
     expect(req.request.method).toBe('GET');

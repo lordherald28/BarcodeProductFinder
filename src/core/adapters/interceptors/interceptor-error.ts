@@ -2,24 +2,37 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { UseCaseSetMessages } from 'src/core/use-case/use-case-set-messages';
+import { IMessages, eSeverity } from 'src/core/models/message-notify.models';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class InterceptorError implements HttpInterceptor {
 
+    constructor(private useCaseSetMessages: UseCaseSetMessages) { }
+
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-        // Comprueba si la URL de la solicitud contiene la base de la URL de la API de Flickr
-        // Por el momento se esta utilizando solamente un recurso: FlickrAPI-Service
         return next.handle(req).pipe(
+            // En InterceptorError
             catchError((error: HttpErrorResponse) => {
-                //imprimir un log, mostrar una notificación, etc.
-                // console.log('Error API BarCode', error.error === null ? error.statusText : error.error);
                 if (error.status === 403) {
-                    return throwError(() => new Error(error.error === null ? error.statusText : error.error)); // Reenvía el error para manejarlos luego.                    
+                    const message: IMessages = {
+                        detail: error.error,
+                        isShow: true,
+                        severity: eSeverity.WANR // Asegúrate de que la severidad sea correcta
+                    };
+                    this.useCaseSetMessages.execute(message);
                 }
-                return throwError(() => error)
+                if (error.status === 429) {
+                    const message: IMessages = {
+                        detail: 'Account off',
+                        isShow: true,
+                        severity: eSeverity.DANGER // Asegúrate de que la severidad sea correcta
+                    };
+                    this.useCaseSetMessages.execute(message);
+                }
+                return throwError(() => error); // Importante para re-lanzar el error
             })
-        );
 
+        );
     }
 }

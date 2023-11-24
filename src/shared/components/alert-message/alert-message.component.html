@@ -1,5 +1,7 @@
-<!-- alert.component.html -->
-<div *ngIf="showAlert" class="alert">
-  <span class="alert-message">{{ setMessageAlert }}</span>
+<div *ngIf="message.isShow" class="alert" [ngClass]="severity">
+  <span class="alert-message">
+    {{ message.detail }}
+    <a [href]="linkToCorsDemo" target="_blank">Click here for more details</a>
+  </span>
   <span class="alert-close" (click)="closeAlert()">X</span>
 </div>

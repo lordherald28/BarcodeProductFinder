@@ -8,8 +8,8 @@
           <button (click)="lastPage()" [disabled]="disableLastPage" class="btn-icon" id="lastPage">>></button>
 </div>
 <div class="container-info-pagination">
-  <span>1 a 10 de {{totalRow}} resultados para "{{resultTextSearch}}"</span>
+  <span> Son {{totalRow}} resultados para "{{resultTextSearch}}"</span>
 
-  <!-- <span>Pages: {{totalPages}} </span> -->
+  <!-- <span>Pages: {{totalPages}} {{lastRowNumberDetected}} a {{lastRowNumberDetected + 10}} de</span> -->
   <!-- <span>Products: {{totalRow}} </span> -->
 </div>

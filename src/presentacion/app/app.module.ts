@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { PROVIDERS_TOKENS, SYSTEM_CONFIG } from './../config/system.config';
+import { CoreModule } from 'src/core/core.module';
+import { AlertMessageComponent } from 'src/shared/components/alert-message/alert-message.component';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { PROVIDERS_TOKENS, SYSTEM_CONFIG } from './../config/system.config';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CoreModule,
+    AlertMessageComponent
   ],
   providers: [
     {

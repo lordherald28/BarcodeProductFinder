@@ -11,12 +11,14 @@ import { CoreModule } from 'src/core/core.module';
 import { Metadata, SearchParams } from 'src/core/helpers/metadata-products';
 
 import { catchError, debounceTime, switchMap } from 'rxjs/operators';
-import { EMPTY, Subscription, of } from 'rxjs';
+import { EMPTY, Subscription, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UseCasesearcProductByFacetFilter } from 'src/core/use-case/use-case-search-facet';
 import { PaginatorComponent } from 'src/shared/components/paginator/paginator.component';
 import { EventPage } from 'src/shared/models/paginator.models';
 import { AlertMessageComponent } from 'src/shared/components/alert-message/alert-message.component';
+import { IMessages } from 'src/core/models/message-notify.models';
+import { UseCaseGetMessages } from 'src/core/use-case/use-case-get-messages';
 
 
 @Component({
@@ -29,17 +31,22 @@ import { AlertMessageComponent } from 'src/shared/components/alert-message/alert
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PageProductComponent implements OnInit, OnDestroy {
+  hasResetPagination: boolean = false;
 
 
 
   constructor(
     private readonly useCaseSearchProducts: UseCaseSearchProducts,
     private readonly useCaseSearchFacet: UseCasesearcProductByFacetFilter,
+    private readonly useCaseGetMessages: UseCaseGetMessages,
     public cdr: ChangeDetectorRef
-  ) { }
+  ) {
+
+
+  }
 
   private subs$ = new Array<Subscription>();
-
+  messages: IMessages = {};
   metaDataState: Metadata = {
     pages: 0,
     products: 0
@@ -52,13 +59,21 @@ export default class PageProductComponent implements OnInit, OnDestroy {
     },
     hasMetadata: 'y'
   }
+  isSerachGeneral: boolean = false;
   public productsList = new Array<ProductModel>();
   public totalPageNumber: number = 0;
   public currrentPageNumber: number = 1;
   public lastValueSearch: string = '';
+  public messageNotify: IMessages = {}
+  public updateChild: boolean = false;
 
   ngOnInit() {
-
+    // En AppComponent
+    this.subs$.push(this.useCaseGetMessages.execute().subscribe(messages => {
+      this.messages = messages;
+      // console.log(messages)
+      this.cdr.detectChanges(); // Actualizar la vista
+    }));
   }
 
   getValueChangeInput(value: string): void {
@@ -73,26 +88,13 @@ export default class PageProductComponent implements OnInit, OnDestroy {
       key: environment.AuthenticationKey.key
     };
     this.currentKeyValue = value;
-    this.subs$.push(this.useCaseSearchProducts.execute(this.searchParams)
-      .pipe(
-        switchMap((result) => {
-          // console.log('switchMap: ', result)
-          this.cdr.markForCheck();
-          return of(result)
-        })
-      )
-      .subscribe(({ products, metadata }) => {
-        // console.log('subscribe: ', products)
-        // console.log('subscribe metadata: ', metadata)
-
-        this.productsList = products;
-        this.metaDataState = metadata
-        this.totalPageNumber = this.metaDataState.pages;
-        this.cdr.markForCheck();
-      }));
+    this.isSerachGeneral = true;
+    this.OnEventPage(1);
+    this.hasResetPagination = !this.hasResetPagination;
+    this.updateChild = true
+    this.cdr.markForCheck();
 
   }
-
 
   getProductListByFacetFilters(filterFacet: IFilterFacetList): void {
     // Aquii se crea los parametros de busqueda facetado
@@ -122,31 +124,19 @@ export default class PageProductComponent implements OnInit, OnDestroy {
     if (filterFacet.nameProductList) {
       this.searchParams.title = filterFacet.nameProductList as unknown as string
     }
-    // console.log(this.searchParams)
 
-    //Enviar la informacion 
-      // console.log(this.searchParams)
-    // this.searchParams.search = '';  23-11-2023
-    this.subs$.push(
-      this.useCaseSearchFacet.execute(this.searchParams).pipe(
-        debounceTime(1000),
-        switchMap((result) => {
-          this.cdr.markForCheck();
-          return of(result)
-        }),
-        catchError(async (error) => console.log(error))
-      )
-        .subscribe((result) => {
-          if (result && result.products.length > 0) {
-            this.metaDataState = result.metadata;
-            this.totalPageNumber = result.metadata.pages
-            this.retetSearchParams();
-            this.productsList = result.products;
-          }
-          // console.log(result)
-          this.cdr.markForCheck();
-        })
-    );
+    this.searchParams = {
+      ...this.searchParams,
+      search: '',
+      metadata: {
+        ...this.searchParams.metadata,
+        pages: 1
+      }
+    }
+    this.isSerachGeneral = false;
+    this.OnEventPage(1);
+    this.hasResetPagination = !this.hasResetPagination;
+    this.cdr.markForCheck();
   }
 
   retetSearchParams() {
@@ -164,17 +154,44 @@ export default class PageProductComponent implements OnInit, OnDestroy {
   }
 
   OnEventPage(event: number): void {
+
     this.searchParams = {
       ...this.searchParams,
-      // search: this.currentKeyValue,
       key: environment.AuthenticationKey.key,
       metadata: {
         ...this.metaDataState,
         pages: event,
       }
     }
-    this.subs$.push(this.useCaseSearchProducts.execute(this.searchParams)
+
+    // console.log('OnEventPage: ', this.searchParams)
+    if (this.isSerachGeneral) {
+      this.searchParams = {
+        ...this.searchParams,
+        search: this.currentKeyValue
+      }
+      this.subs$.push(this.useCaseSearchProducts.execute(this.searchParams)
+        .pipe(
+          switchMap((result) => {
+            this.cdr.markForCheck();
+            return of(result)
+          })
+        )
+        .subscribe(({ products, metadata }) => {
+          // console.log(products)
+          this.productsList = products;
+          this.metaDataState = metadata
+          this.totalPageNumber = metadata.pages;
+          this.cdr.markForCheck();
+        }));
+      // this.updateChild = false
+      return
+    }
+
+    // Como busqueda es facetada no necesitasmos general
+    this.subs$.push(this.useCaseSearchFacet.execute(this.searchParams)
       .pipe(
+        debounceTime(1000),
         switchMap((result) => {
           this.cdr.markForCheck();
           return of(result)
@@ -183,9 +200,13 @@ export default class PageProductComponent implements OnInit, OnDestroy {
       .subscribe(({ products, metadata }) => {
         this.productsList = products;
         this.metaDataState = metadata
-        this.totalPageNumber = metadata.pages
+        this.totalPageNumber = metadata.pages;
+        // alert(this.updateChild)
         this.cdr.markForCheck();
       }));
+
+    this.hasResetPagination = false;
+    // this.updateChild = false;
     this.cdr.markForCheck();
   }
 
@@ -196,4 +217,5 @@ export default class PageProductComponent implements OnInit, OnDestroy {
       }
     })
   }
+
 }

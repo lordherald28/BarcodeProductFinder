@@ -24,11 +24,11 @@ describe('TransformProductModelToFacetList', () => {
         const result = mapper.mapTo(productModels);
 
         // Verify that the result contains the correct categories, barcodes, ASIN, brands, and manufacturers
-        expect(result.categories.size).toBeGreaterThan(0);
-        expect(result.barcodeList.size).toBeGreaterThan(0);
-        expect(result.asinList.size).toBeGreaterThan(0);
-        expect(result.brandList.size).toBeGreaterThan(0);
-        expect(result.manufactureList.size).toBeGreaterThan(0);
+        expect(result.categories!.size).toBeGreaterThan(0);
+        expect(result.barcodeList!.size).toBeGreaterThan(0);
+        expect(result.asinList!.size).toBeGreaterThan(0);
+        expect(result.brandList!.size).toBeGreaterThan(0);
+        expect(result.manufactureList!.size).toBeGreaterThan(0);
     });
 
     it('should handle missing properties in ProductModel', () => {

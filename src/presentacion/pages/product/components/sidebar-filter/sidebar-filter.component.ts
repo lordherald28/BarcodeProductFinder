@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IAccordionItemModel } from './models/accordion.model';
 import { IFilterFacetList } from 'src/core/models/filter-facet.models';
@@ -10,6 +10,7 @@ import { CheckBoxComponent } from 'src/shared/components/check-box/check-box.com
 
 import { map } from 'rxjs/operators';
 import { PROVIDERS_TOKENS, SYSTEM_CONFIG, config_system } from 'src/presentacion/config/system.config';
+import { SidebarFilterService } from './services/sidebar-filter.service';
 
 @Component({
   selector: 'app-sidebar-filter',
@@ -25,7 +26,7 @@ import { PROVIDERS_TOKENS, SYSTEM_CONFIG, config_system } from 'src/presentacion
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SidebarFilterComponent implements OnInit {
+export class SidebarFilterComponent implements OnInit,OnChanges {
 
   hasCheckedMultipleSelection: boolean = false;
   // Todos los filtros seleccionados para la busqueda faceta el se usa para obtener los elementos y renderear el acordion item
@@ -39,13 +40,23 @@ export class SidebarFilterComponent implements OnInit {
   mpnList: string[] = [];
   filterSearchParamsList: IFilterFacetList = Object.assign({});
   @Output('emitFacetFiltersParams') emitFacetFiltersParams: EventEmitter<IFilterFacetList> = new EventEmitter();
+  @Input() eventPage: boolean = false;
 
   constructor(
     private useCaseFacetFilters: UseCaseGetFacetFilter,
     @Inject(PROVIDERS_TOKENS.CONFIG_SYSTEM) public config_system: config_system,
-    private readonly cdr: ChangeDetectorRef
+    private readonly cdr: ChangeDetectorRef,
+    private readonly sidebarFilterService: SidebarFilterService
   ) { }
 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log(this.eventPage)
+    // if(this.eventPage){
+    //   this.showFacetFiltersListByName(eNameFacetFilter.CATEGORY)
+    // }
+    // this.cdr.markForCheck()
+  }
   ngOnInit(): void {
 
     this.categories = []
@@ -66,7 +77,7 @@ export class SidebarFilterComponent implements OnInit {
 
   // Calcula la altura para cada sección del acordeón
   calculateHeight(isOpen: boolean): string {
-    return isOpen ? 'auto' : '0';
+    return this.sidebarFilterService.calculateHeight(isOpen)
   }
 
   /**
@@ -77,43 +88,8 @@ export class SidebarFilterComponent implements OnInit {
    * @param nameFacet 
    */
   getFilterFacet(event: any, nameFacet: string) {
-    if (nameFacet === eNameFacetFilter.BARCODE) {
-      // se crea el search params
-      this.filterSearchParamsList = {
-        ...this.filterSearchParamsList,
-        barcodeList: event
-      }
-    } else if (nameFacet === eNameFacetFilter.CATEGORY) {
-      this.filterSearchParamsList = {
-        ...this.filterSearchParamsList,
-        categories: event
-      }
-    } else if (nameFacet === eNameFacetFilter.MANUFACTURE) {
-      this.filterSearchParamsList = {
-        ...this.filterSearchParamsList,
-        manufactureList: event
-      }
-    } else if (nameFacet === eNameFacetFilter.BRAND) {
-      this.filterSearchParamsList = {
-        ...this.filterSearchParamsList,
-        brandList: event
-      }
-    } else if (nameFacet === eNameFacetFilter.NAME_PRODUCT) {
-      this.filterSearchParamsList = {
-        ...this.filterSearchParamsList,
-        nameProductList: event
-      }
-    } else if (nameFacet === eNameFacetFilter.ASIN) {
-      this.filterSearchParamsList = {
-        ...this.filterSearchParamsList,
-        asinList: event
-      }
-    } else if (nameFacet === eNameFacetFilter.MPN) {
-      this.filterSearchParamsList = {
-        ...this.filterSearchParamsList,
-        mnpList: event
-      }
-    }
+
+    this.filterSearchParamsList = this.sidebarFilterService.getFilterFacet(event, nameFacet) as IFilterFacetList
     this.cdr.markForCheck();
   }
 
@@ -122,15 +98,18 @@ export class SidebarFilterComponent implements OnInit {
   }
 
   applyFacetFilters() {
-    // console.log(this.filterSearchParamsList)
+    // console.log('antes:', this.filterSearchParamsList)
+    this.filterSearchParamsList = {
+      ...this.filterSearchParamsList,
 
+    }
     this.emitFacetFiltersParams.emit(this.filterSearchParamsList);
     if (this.config_system.filterState.isMustClear) {
       localStorage.removeItem(this.config_system.filterState.filterState);
-      this.filterSearchParamsList = Object.assign({})
+      this.filterSearchParamsList = Object.assign({});
+      // console.log('des[uess]:', this.filterSearchParamsList)
+      this.sidebarFilterService.deleteFilterFacet();
     }
-
-
     this.cdr.markForCheck();
   }
 
@@ -148,133 +127,211 @@ export class SidebarFilterComponent implements OnInit {
   }
 
   showFacetFiltersListByName(nameFacet: string): string[] {
-
-    if (nameFacet === eNameFacetFilter.BARCODE) {
-      this.barcodeList = [];
-      this.useCaseFacetFilters.execute()
-        .pipe(
-          map(response => {
-            if (response.barcodeList.size > this.barcodeList.length) {
-              return response.barcodeList
-            }
-            return
-          })
-        )
-        .subscribe(value => {
-          value?.forEach(value => {
-            this.barcodeList.push(value)
-          })
+    this.useCaseFacetFilters.execute()
+      .pipe(
+        map(response => {
+          switch (nameFacet) {
+            case eNameFacetFilter.BARCODE:
+              return Array.from(response.barcodeList || []);
+            case eNameFacetFilter.CATEGORY:
+              return Array.from(response.categories || []);
+            case eNameFacetFilter.MANUFACTURE:
+              return Array.from(response.manufactureList || []);
+            case eNameFacetFilter.BRAND:
+              return Array.from(response.brandList || []);
+            case eNameFacetFilter.NAME_PRODUCT:
+              return Array.from(response.nameProductList || []);
+            case eNameFacetFilter.ASIN:
+              return Array.from(response.asinList || []);
+            case eNameFacetFilter.MPN:
+              return Array.from(response.mnpList || []);
+            default:
+              return [];
+          }
         })
-      return this.barcodeList;
-    } else if (nameFacet === eNameFacetFilter.CATEGORY) {
-      this.categories = [];
-      this.useCaseFacetFilters.execute()
-        .pipe(
-          map(response => {
-            if (response.categories.size > this.categories.length) {
-              return response.categories
-            }
-            return
-          })
-        )
-        .subscribe(categories => {
-          categories?.forEach(categoria => {
-            this.categories.push(categoria)
-          })
-        })
+      )
+      .subscribe(list => {
+        switch (nameFacet) {
+          case eNameFacetFilter.BARCODE:
+            this.barcodeList = list;
+            break;
+          case eNameFacetFilter.CATEGORY:
+            // console.log(list)
+            this.categories = list;
+            break;
+          case eNameFacetFilter.MANUFACTURE:
+            this.manufactureList = list;
+            break;
+          case eNameFacetFilter.BRAND:
+            this.brandList = list;
+            break;
+          case eNameFacetFilter.NAME_PRODUCT:
+            this.nameProductList = list;
+            break;
+          case eNameFacetFilter.ASIN:
+            this.asinList = list;
+            break;
+          case eNameFacetFilter.MPN:
+            this.mpnList = list;
+            break;
+        }
+        this.cdr.markForCheck(); // Notificar a Angular para la detección de cambios
+      });
 
-      return this.categories;
-
-    } else if (nameFacet === eNameFacetFilter.MANUFACTURE) {
-      this.manufactureList = [];
-      this.useCaseFacetFilters.execute()
-        .pipe(
-          map(response => {
-            if (response.manufactureList.size > this.manufactureList.length) {
-              return response.manufactureList
-            }
-            return
-          })
-        )
-        .subscribe(value => {
-          value?.forEach(value => {
-            this.manufactureList.push(value)
-          })
-        })
-      return this.manufactureList;
-
-    } else if (nameFacet === eNameFacetFilter.BRAND) {
-      this.brandList = [];
-      this.useCaseFacetFilters.execute()
-        .pipe(
-          map(response => {
-            if (response.brandList.size > this.brandList.length) {
-              return response.brandList
-            }
-            return
-          })
-        )
-        .subscribe(value => {
-          value?.forEach(value => {
-            this.brandList.push(value)
-          })
-        })
-      return this.brandList;
-
-    } else if (nameFacet === eNameFacetFilter.NAME_PRODUCT) {
-      this.nameProductList = [];
-      this.useCaseFacetFilters.execute()
-        .pipe(
-          map(response => {
-            if (response.nameProductList.size > this.nameProductList.length) {
-              return response.nameProductList
-            }
-            return
-          })
-        )
-        .subscribe(value => {
-          value?.forEach(value => {
-            this.nameProductList.push(value)
-          })
-        })
-      return this.nameProductList;
-
-    } else if (nameFacet === eNameFacetFilter.ASIN) {
-      this.asinList = [];
-      this.useCaseFacetFilters.execute()
-        .pipe(
-          map(response => {
-            if (response.asinList.size > this.asinList.length) {
-              return response.asinList
-            }
-            return
-          })
-        )
-        .subscribe(value => {
-          value?.forEach(value => {
-            this.asinList.push(value)
-          })
-        })
-      return this.asinList;
-
-    } else {
-      this.mpnList = [];
-      this.useCaseFacetFilters.execute()
-        .pipe(
-          map(response => {
-            if (response.mnpList.size > this.mpnList.length) {
-              return response.mnpList
-            }
-            return
-          })
-        )
-        .subscribe(value => {
-          value?.forEach(value => {
-            this.mpnList.push(value)
-          })
-        })
-      return this.mpnList;
+    // Devuelve la lista correspondiente
+    switch (nameFacet) {
+      case eNameFacetFilter.BARCODE:
+        return this.barcodeList;
+      case eNameFacetFilter.CATEGORY:
+        return this.categories;
+      case eNameFacetFilter.MANUFACTURE:
+        return this.manufactureList;
+      case eNameFacetFilter.BRAND:
+        return this.brandList;
+      case eNameFacetFilter.NAME_PRODUCT:
+        return this.nameProductList;
+      case eNameFacetFilter.ASIN:
+        return this.asinList;
+      case eNameFacetFilter.MPN:
+        return this.mpnList;
+      default:
+        return [];
     }
   }
+
+  // showFacetFiltersListByName(nameFacet: string): string[] {
+
+  //   if (nameFacet === eNameFacetFilter.BARCODE) {
+  //     this.barcodeList = [];
+  //     this.useCaseFacetFilters.execute()
+  //       .pipe(
+  //         map(response => {
+  //           if (response.barcodeList!.size > this.barcodeList.length) {
+  //             // this.cdr.markForCheck();
+  //             return response.barcodeList
+  //           }
+  //           return
+  //         })
+  //       )
+  //       .subscribe(value => {
+  //         value?.forEach(value => {
+  //           // this.cdr.markForCheck();
+  //           this.barcodeList.push(value)
+  //         })
+  //       })
+  //     return this.barcodeList;
+  //   } else if (nameFacet === eNameFacetFilter.CATEGORY) {
+  //     this.categories = [];
+  //     this.useCaseFacetFilters.execute()
+  //       .pipe(
+  //         map(response => {
+  //           if (response.categories!.size > this.categories.length) {
+  //             // this.cdr.markForCheck();
+  //             return response.categories
+  //           }
+  //           return
+  //         })
+  //       )
+  //       .subscribe(categories => {
+  //         categories?.forEach(categoria => {
+  //           this.cdr.markForCheck();
+  //           this.categories.push(categoria)
+  //         })
+  //       })
+
+  //     return this.categories;
+
+  //   } else if (nameFacet === eNameFacetFilter.MANUFACTURE) {
+  //     this.manufactureList = [];
+  //     this.useCaseFacetFilters.execute()
+  //       .pipe(
+  //         map(response => {
+  //           if (response.manufactureList!.size > this.manufactureList.length) {
+  //             return response.manufactureList
+  //           }
+  //           return
+  //         })
+  //       )
+  //       .subscribe(value => {
+  //         value?.forEach(value => {
+  //           this.manufactureList.push(value)
+  //         })
+  //       })
+  //     return this.manufactureList;
+
+  //   } else if (nameFacet === eNameFacetFilter.BRAND) {
+  //     this.brandList = [];
+  //     this.useCaseFacetFilters.execute()
+  //       .pipe(
+  //         map(response => {
+  //           if (response.brandList!.size > this.brandList.length) {
+  //             return response.brandList
+  //           }
+  //           return
+  //         })
+  //       )
+  //       .subscribe(value => {
+  //         value?.forEach(value => {
+  //           this.brandList.push(value)
+  //         })
+  //       })
+  //     return this.brandList;
+
+  //   } else if (nameFacet === eNameFacetFilter.NAME_PRODUCT) {
+  //     this.nameProductList = [];
+  //     this.useCaseFacetFilters.execute()
+  //       .pipe(
+  //         map(response => {
+  //           if (response.nameProductList!.size > this.nameProductList.length) {
+  //             return response.nameProductList
+  //           }
+  //           return
+  //         })
+  //       )
+  //       .subscribe(value => {
+  //         value?.forEach(value => {
+  //           this.nameProductList.push(value)
+  //         })
+  //       })
+  //     return this.nameProductList;
+
+  //   } else if (nameFacet === eNameFacetFilter.ASIN) {
+  //     this.asinList = [];
+  //     this.useCaseFacetFilters.execute()
+  //       .pipe(
+  //         map(response => {
+  //           if (response.asinList!.size > this.asinList.length) {
+  //             return response.asinList
+  //           }
+  //           return
+  //         })
+  //       )
+  //       .subscribe(value => {
+  //         value?.forEach(value => {
+  //           this.asinList.push(value)
+  //         })
+  //       })
+  //     return this.asinList;
+
+  //   } else {
+  //     this.mpnList = [];
+  //     this.useCaseFacetFilters.execute()
+  //       .pipe(
+  //         map(response => {
+  //           if (response.mnpList!.size > this.mpnList.length) {
+  //             return response.mnpList
+  //           }
+  //           return
+  //         })
+  //       )
+  //       .subscribe(value => {
+  //         value?.forEach(value => {
+  //           this.mpnList.push(value)
+  //         })
+  //       })
+  //     return this.mpnList;
+
+  //   }
+  // }
 
 }

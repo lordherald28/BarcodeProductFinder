@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-paginator',
@@ -7,9 +7,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
   styleUrls: ['./paginator.component.css'],
   standalone: true,
   imports: [CommonModule],
-  // changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PaginatorComponent implements OnChanges {
+export class PaginatorComponent implements OnChanges, OnInit {
 
   constructor(private cdr: ChangeDetectorRef) { }
 
@@ -19,11 +19,20 @@ export class PaginatorComponent implements OnChanges {
   @Input() maxVisiblePages: number = 10;
   @Input() totalRow: number = 0;
   @Input() resultTextSearch: string = '';
+  @Input() resetPagination: boolean = false;
+  lastRowNumberDetected: number = 0;
+
 
   ngOnChanges(changes: SimpleChanges): void {
-
+    if (this.resetPagination) {
+      this.currentPage = 1;
+      this.cdr.markForCheck()
+    }
   }
 
+  ngOnInit(): void {
+    this.lastRowNumberDetected = this.currentPage;
+  }
   get disableNext(): boolean {
     return this.currentPage === this.totalPages || this.totalPages === 0;
   }
@@ -39,6 +48,8 @@ export class PaginatorComponent implements OnChanges {
   previousPage() {
     if (!this.disablePrevious) {
       this.currentPage--;
+      this.lastRowNumberDetected -= 9;
+
       this.emitPageChange();
     }
   }
@@ -46,6 +57,7 @@ export class PaginatorComponent implements OnChanges {
   nextPage() {
     if (!this.disableNext) {
       this.currentPage++;
+      this.lastRowNumberDetected += 9;
       this.emitPageChange();
     }
   }
@@ -67,6 +79,7 @@ export class PaginatorComponent implements OnChanges {
   goToPage(pageNumber: number) {
     if (pageNumber >= 1 && pageNumber <= this.totalPages) {
       this.currentPage = pageNumber;
+
       this.emitPageChange();
     }
   }
@@ -74,9 +87,7 @@ export class PaginatorComponent implements OnChanges {
   getPageNumbers(): number[] {
     const halfVisiblePages = Math.floor(this.maxVisiblePages / 2);
     const firstVisiblePage = Math.max(
-      Math.min(this.currentPage - halfVisiblePages, this.totalPages - this.maxVisiblePages + 1),
-      1
-    );
+      Math.min(this.currentPage - halfVisiblePages, this.totalPages - this.maxVisiblePages + 1), 1);
     const lastVisiblePage = Math.min(firstVisiblePage + this.maxVisiblePages - 1, this.totalPages);
     const visiblePages = [];
     for (let i = firstVisiblePage; i <= lastVisiblePage; i++) {
