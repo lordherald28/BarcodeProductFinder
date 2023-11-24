@@ -3,7 +3,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UseCaseSetMessages } from 'src/core/use-case/use-case-set-messages';
-import { IMessages, eSeverity } from 'src/core/models/message-notify.models';
+import { IMessages, eIcon, eSeverity } from 'src/core/models/message-notify.models';
 
 @Injectable({ providedIn: 'root' })
 export class InterceptorError implements HttpInterceptor {
@@ -18,7 +18,8 @@ export class InterceptorError implements HttpInterceptor {
                     const message: IMessages = {
                         detail: error.error,
                         isShow: true,
-                        severity: eSeverity.WANR // Asegúrate de que la severidad sea correcta
+                        severity: eSeverity.WANR,
+                        icon:eIcon.warning
                     };
                     this.useCaseSetMessages.execute(message);
                 }
@@ -26,7 +27,17 @@ export class InterceptorError implements HttpInterceptor {
                     const message: IMessages = {
                         detail: 'Account off',
                         isShow: true,
-                        severity: eSeverity.DANGER // Asegúrate de que la severidad sea correcta
+                        severity: eSeverity.DANGER,
+                        icon:eIcon.warning
+                    };
+                    this.useCaseSetMessages.execute(message);
+                }
+                if (error.status === 404) {
+                    const message: IMessages = {
+                        detail: 'Not Found',
+                        isShow: true,
+                        severity: eSeverity.WANR,
+                        icon:eIcon.warning
                     };
                     this.useCaseSetMessages.execute(message);
                 }

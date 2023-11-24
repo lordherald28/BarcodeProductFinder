@@ -10,7 +10,6 @@ import { FilterFacetKey, IFilterFacetList } from 'src/core/models/filter-facet.m
 export class SidebarFilterService {
   private readonly filterStateKey = 'filterState';
   private filterSearchParamsList: IFilterFacetList = Object.assign({});
-
   // BehaviorSubject to reactively handle state changes
   private stateFacetFilters$ = new BehaviorSubject<ItemFilterSelection>(this.getInitialFilterState());
 
@@ -104,6 +103,6 @@ export class SidebarFilterService {
 
   deleteFilterFacet(): void {
     this.stateFacetFilters$.next(this.getInitialFilterState());
-    this.getStateFacetFilters().subscribe(value => console.log('valor despues:  ', value))
+    // this.getStateFacetFilters().subscribe(value => console.log('valor despues:  ', value))
   }
 }

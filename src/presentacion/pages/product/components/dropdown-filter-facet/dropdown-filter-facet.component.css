@@ -37,9 +37,18 @@ li:hover {
   border: 1px solid #ddd;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   overflow: visible;
-  /* Asegúrate de que el contenido no esté oculto */
+
 }
 
+.w-input{
+  width: 40% !important;
+  margin: 0 auto;
+}
+
+:host::ng-deep  .g_wrap_list{
+  width: 90%;
+  margin: 0 auto 10px;
+}
 .dropdown-item {
   padding: 10px;
   cursor: pointer;

@@ -1,7 +1,18 @@
 <div *ngIf="message.isShow" class="alert" [ngClass]="severity">
+  <span class="material-symbols-outlined">
+    {{message.icon?.trim()}}
+    </span>
   <span class="alert-message">
-    {{ message.detail }}
-    <a [href]="linkToCorsDemo" target="_blank">Click here for more details</a>
+    <span id="messagesId">{{ message.detail }}</span>
+    <ng-container *ngIf="showLinkDemo">
+      <img src="../../../assets/icons/search_FILL0_wght400_GRAD0_opsz24.svg">
+      <a [href]="linkToCorsDemo" target="_blank">
+
+        Click here for more details</a>
+    </ng-container>
   </span>
-  <span class="alert-close" (click)="closeAlert()">X</span>
+  <span class="alert-close" (click)="closeAlert()">
+    <span class="material-symbols-outlined">
+      close
+    </span></span>
 </div>

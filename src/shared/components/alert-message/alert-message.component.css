@@ -2,7 +2,8 @@
 
 /* Estilos para el contenedor de la alerta */
 .alert {
-    width: 53%;
+    width: 100%;
+    max-width: 450px;
     position: absolute;
     top: 10%;
     left: 20%;
@@ -18,7 +19,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
 
 }
 
@@ -67,4 +67,16 @@
 .success {
     background-color: #0c6c7f;
     color: #fff;
+}
+
+svg {
+    height: 50px;
+    width: 50px;
+    fill: blue;
+    /* Cambia el color del icono */
+}
+
+.material-symbols-outlined{
+    margin-left: 3px;
+    margin-right: 12px;
 }

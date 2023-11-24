@@ -7,7 +7,7 @@
           id="inputSearch" class="w-full" />
       </span>
     </form> -->
-    <app-search-box-general (emitValueChangeInput)="getValueChangeInput($event)"
+    <app-search-box-general (emitValueChangeInput)="getValueChangeInput($event)" class="w-input"
       [setDebounceTime]="120"></app-search-box-general>
     <ul class="listbox">
       <li *ngFor="let facetFilter of filteredFacetList" class="item" (click)="emitFacetFilterSelected(facetFilter)"

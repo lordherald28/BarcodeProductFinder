@@ -1,6 +1,6 @@
 <div class="navbar-container">
 
- <!--   <div class="dropdown">
+  <!--   <div class="dropdown">
     <button class="dropbtn">All</button>
     <div class="dropdown-content">
       <a>All</a>
@@ -18,9 +18,12 @@
   </div> -->
 
   <form class="search-box-container" [formGroup]="formSearch">
-    <input type="text" class="search-box" [placeholder]="placeHolder" formControlName="searchKeyWord" >
+    <input type="text" class="search-box" [placeholder]="placeHolder" formControlName="searchKeyWord">
     <button class="search-button">
-      <i class="fa fa-search"></i> 
+      <!-- <i class="fa fa-search"></i>  -->
+      <span class="material-symbols-outlined">
+        search
+      </span>
     </button>
   </form>
 

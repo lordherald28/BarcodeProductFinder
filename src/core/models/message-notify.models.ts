@@ -3,7 +3,8 @@
 export interface IMessages {
     severity?: string; // Type message, like danger, info,wanr
     detail?: string;
-    isShow?:boolean
+    isShow?: boolean;
+    icon?: string;
 
 }
 
@@ -12,4 +13,12 @@ export enum eSeverity {
     INFO = 'info',
     WANR = 'warn',
     SUCCESS = 'success',
+}
+
+export enum eIcon {
+    warning = 'warning',
+    error = 'error',
+    success = 'done',
+    info = 'info',
+
 }

@@ -68,11 +68,10 @@ export default class PageProductComponent implements OnInit, OnDestroy {
   public updateChild: boolean = false;
 
   ngOnInit() {
-    // En AppComponent
+
     this.subs$.push(this.useCaseGetMessages.execute().subscribe(messages => {
       this.messages = messages;
-      // console.log(messages)
-      this.cdr.detectChanges(); // Actualizar la vista
+      this.cdr.detectChanges(); 
     }));
   }
 
@@ -82,11 +81,14 @@ export default class PageProductComponent implements OnInit, OnDestroy {
   }
 
   getProductList(value: string): void {
+    //limpiar parametros
+    this.retetSearchParams()
     this.searchParams = {
       ...this.searchParams,
       search: value,
       key: environment.AuthenticationKey.key
     };
+    console.log(this.searchParams)
     this.currentKeyValue = value;
     this.isSerachGeneral = true;
     this.OnEventPage(1);
@@ -97,6 +99,9 @@ export default class PageProductComponent implements OnInit, OnDestroy {
   }
 
   getProductListByFacetFilters(filterFacet: IFilterFacetList): void {
+
+    // Limpiar searchParams
+    this.retetSearchParams();
     // Aquii se crea los parametros de busqueda facetado
     if (filterFacet.categories) {
       this.searchParams.category = filterFacet.categories as unknown as string
@@ -127,12 +132,13 @@ export default class PageProductComponent implements OnInit, OnDestroy {
 
     this.searchParams = {
       ...this.searchParams,
-      search: '',
+      key: environment.AuthenticationKey.key,
       metadata: {
         ...this.searchParams.metadata,
         pages: 1
       }
     }
+    console.log(this.searchParams)
     this.isSerachGeneral = false;
     this.OnEventPage(1);
     this.hasResetPagination = !this.hasResetPagination;
@@ -164,7 +170,6 @@ export default class PageProductComponent implements OnInit, OnDestroy {
       }
     }
 
-    // console.log('OnEventPage: ', this.searchParams)
     if (this.isSerachGeneral) {
       this.searchParams = {
         ...this.searchParams,
@@ -178,13 +183,11 @@ export default class PageProductComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe(({ products, metadata }) => {
-          // console.log(products)
           this.productsList = products;
           this.metaDataState = metadata
           this.totalPageNumber = metadata.pages;
           this.cdr.markForCheck();
         }));
-      // this.updateChild = false
       return
     }
 
@@ -201,12 +204,10 @@ export default class PageProductComponent implements OnInit, OnDestroy {
         this.productsList = products;
         this.metaDataState = metadata
         this.totalPageNumber = metadata.pages;
-        // alert(this.updateChild)
         this.cdr.markForCheck();
       }));
 
     this.hasResetPagination = false;
-    // this.updateChild = false;
     this.cdr.markForCheck();
   }
 

@@ -70,7 +70,9 @@ describe('PaginatorComponent', () => {
     const nextButton = fixture.nativeElement.querySelector('button#nextButton');
     fixture.detectChanges();
 
-    // console.log(component.currentPage)
+    nextButton.click()
+    fixture.detectChanges();
+
     // Expect the "Next" button to be disabled when currentPage is at the maximum page
     expect(nextButton.disabled).toBe(true);
   });
@@ -99,19 +101,40 @@ describe('PaginatorComponent', () => {
   });
 
   it('should disable "Last page" button when total page is 0', () => {
-    const lastPageButton = fixture.nativeElement.querySelector('button#lastPage');
-
-    // Set totalPages to 0
+    // Set currentPage ang totalPages (in this case, 0)
+    component.currentPage = 0;
     component.totalPages = 0;
+
+    // Detect changes to update the view
     fixture.detectChanges();
 
-    // spy disableNext is true
-    const spyDisableNext = spyOnProperty(component, 'disableNext', 'get');
-    spyDisableNext.and.returnValue(true);
+    // Find the "last Page" button in the DOM
+    const nextLastPage = fixture.nativeElement.querySelector('button#lastPage');
     fixture.detectChanges();
 
-    expect(lastPageButton.disabled).toBe(true);
+    nextLastPage.click()
+    fixture.detectChanges();
+
+    // Expect the "last Page" button to be disabled when currentPage and totalPages is at 0
+    expect(nextLastPage.disabled).toBe(true);
   });
+
+  // it('should disable "Last page" button when total page is 0', () => {
+  //   const lastPageButton = fixture.nativeElement.querySelector('button#lastPage');
+
+  //   // Set totalPages to 0
+  //   component.totalPages = 0;
+  //   // component.currentPage = 0;
+  //   fixture.detectChanges();
+
+  //   console.log(component)
+  //   // spy disableNext is true
+  //   const spyDisableLastPage = spyOnProperty(component, 'disableLastPage', 'get');
+  //   spyDisableLastPage.and.returnValue(true);
+  //   fixture.detectChanges();
+
+  //   expect(lastPageButton.disabled).toBe(true);
+  // });
 
   it('should disable "First page" button when current page is 1', () => {
     const firstPageButton = fixture.nativeElement.querySelector('button#firstPage');
