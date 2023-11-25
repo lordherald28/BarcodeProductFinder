@@ -30,6 +30,7 @@
     padding: 10px;
     justify-content: flex-start;
     /* Aligns the products at the start of the container */
+    align-content: center;
 }
 
 .app-card-product {
@@ -47,6 +48,7 @@
     /* Specific bottom margin for the product item */
     /* margin-bottom: 2rem; */
     width: auto;
+    height: 507px;
 }
 
 @media (max-width: 768px) {
@@ -69,9 +71,17 @@
         align-items: center;
 
     }
-    .item-product{
+
+    .item-product {
         /* width: 80%; */
         margin: 0 auto;
+        height: auto;
     }
 
+}
+
+@media (max-width: 768px) {
+    .item-product {
+        width: 80%;
+    }
 }

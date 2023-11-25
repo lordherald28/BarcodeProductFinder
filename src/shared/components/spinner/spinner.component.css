@@ -1,0 +1,30 @@
+.container-spinner {
+    position: fixed; /* Cambiado de absolute a fixed */
+    top: 0;
+    left: 0; /* Asegúrate de que comience desde el borde izquierdo de la ventana */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw; /* Usar viewport width */
+    height: 100vh; /* Usar viewport height */
+    z-index: 99999;
+    background-color: #cacaca8c;
+}
+
+.spinner:not(:hover) {
+    width: 34px;
+    height: 34px;
+    border: 2px solid rgb(11, 37, 169);
+    border-radius: 50%;
+    border-bottom-color: rgb(255, 255, 255);
+    animation: spin 1.0s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

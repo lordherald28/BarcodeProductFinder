@@ -107,7 +107,7 @@
     .search-box-container {
         /* Both elements take 100% of the available space on mobile devices */
         flex: 0 0 100%;
-        width: 100%;
+        width: auto;
         /* Ensure they occupy all the available width */
     }
 

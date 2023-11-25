@@ -16,7 +16,7 @@
         </div>
 
         <!-- Product content -->
-        <div class="product-content" *ngIf="productsList.length > 0; else noProductsList">
+        <div class="product-content" *ngIf="productsList.length > 0">
             <!-- Aquí irían tus tarjetas de producto -->
             <ng-container *ngFor="let product of productsList">
                 <app-card-product class="item-product" [product]="product"></app-card-product>
@@ -24,12 +24,16 @@
             <div class="divisor"></div>
         </div>
 
+<!-- 
+        <ng-container #noProductsList *ngIf="productsList.length===0">
+            <div class="link-go-to">
+                <a href="https://cors-anywhere.herokuapp.com/"></a>
+            </div>
 
-        <ng-template #noProductsList>
-            <!-- <span>Aquí va un mensaje que no sé qué poner o poner texto</span> -->
-        </ng-template>
+        </ng-container> -->
     </div>
 
     <!-- <span>Total de productos: {{metaDataState.products}} </span> -->
 </div>
 <app-alert-message [message]="messages"></app-alert-message>
+<app-spinner [isLoading]="isLoading"></app-spinner>

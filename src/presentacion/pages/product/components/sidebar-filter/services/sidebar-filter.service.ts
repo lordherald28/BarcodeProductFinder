@@ -23,15 +23,15 @@ export class SidebarFilterService {
   private getInitialFilterState(): ItemFilterSelection {
     // Try to retrieve the state from localStorage or return an empty object
     const savedState = localStorage.getItem(this.filterStateKey);
-    // this.filterSearchParamsList = {
-    //   asinList: new Set<string>,
-    //   barcodeList: new Set<string>,
-    //   brandList: new Set<string>,
-    //   categories: new Set<string>,
-    //   manufactureList: new Set<string>,
-    //   mnpList: new Set<string>,
-    //   nameProductList: new Set<string>,
-    // }
+    this.filterSearchParamsList = {
+      // asinList: new Set<string>,
+      barcodeList: new Set<string>,
+      // brandList: new Set<string>,
+      // categories: new Set<string>,
+      // manufactureList: new Set<string>,
+      // mnpList: new Set<string>,
+      // nameProductList: new Set<string>,
+    }
     return savedState ? JSON.parse(savedState) : {};
   }
 

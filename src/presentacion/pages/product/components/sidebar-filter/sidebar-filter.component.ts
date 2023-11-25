@@ -14,6 +14,11 @@ import { PROVIDERS_TOKENS, SYSTEM_CONFIG, config_system } from 'src/presentacion
 import { SidebarFilterService } from './services/sidebar-filter.service';
 import { AlertMessageComponent } from 'src/shared/components/alert-message/alert-message.component';
 
+enum eExpandButtonIcon {
+  more = 'expand_more',
+  less = 'expand_less',
+}
+
 @Component({
   selector: 'app-sidebar-filter',
   templateUrl: './sidebar-filter.component.html',
@@ -30,7 +35,6 @@ import { AlertMessageComponent } from 'src/shared/components/alert-message/alert
 })
 export class SidebarFilterComponent implements OnInit, OnChanges {
   messagesAlert: IMessages = {};
-
   hasCheckedMultipleSelection: boolean = false;
   // Todos los filtros seleccionados para la busqueda faceta el se usa para obtener los elementos y renderear el acordion item
   accordionsItemsModel: IAccordionItemModel[] = [];
@@ -46,6 +50,7 @@ export class SidebarFilterComponent implements OnInit, OnChanges {
   @Input() eventPage: boolean = false;
   isAnyFilterSelected: boolean = false;
 
+
   constructor(
     private useCaseFacetFilters: UseCaseGetFacetFilter,
     @Inject(PROVIDERS_TOKENS.CONFIG_SYSTEM) public config_system: config_system,
@@ -53,7 +58,7 @@ export class SidebarFilterComponent implements OnInit, OnChanges {
     private readonly sidebarFilterService: SidebarFilterService
   ) { }
 
-
+  expandButtonIcon: string = eExpandButtonIcon.less;
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(this.eventPage)
     // if(this.eventPage){
@@ -75,10 +80,16 @@ export class SidebarFilterComponent implements OnInit, OnChanges {
     ]
   }
 
-  toggleAccordion(accordionName: string): void {
+  toggleAccordion(accordionName: string, expands: string): void {
     this.updateListAccordionItems(accordionName);
+    console.log(expands);
+    if (expands.toLocaleLowerCase().trim() === eExpandButtonIcon.less.toLocaleLowerCase().trim()) {
+      this.expandButtonIcon = eExpandButtonIcon.more;
+    } else {
+      this.expandButtonIcon = eExpandButtonIcon.less;
+    }
   }
-
+  
   // Calcula la altura para cada sección del acordeón
   calculateHeight(isOpen: boolean): string {
     return this.sidebarFilterService.calculateHeight(isOpen)
@@ -91,37 +102,40 @@ export class SidebarFilterComponent implements OnInit, OnChanges {
    * @param event 
    * @param nameFacet 
    */
-
   getFilterFacet(event: any, nameFacet: string) {
-
     this.filterSearchParamsList = this.sidebarFilterService.getFilterFacet(event, nameFacet) as IFilterFacetList
     this.cdr.markForCheck();
   }
-
 
   onCheckClick(activar: boolean) {
     this.hasCheckedMultipleSelection = activar
   }
 
   applyFacetFilters() {
-    console.log(this.filterSearchParamsList)
-    // console.log(Object.values(this.filterSearchParamsList).length)
-    if (Object.values(this.filterSearchParamsList).length ===  0) {
-      this.messagesAlert = { detail: 'Al menos debe seleccionar un filtro', severity: eSeverity.DANGER, isShow: true ,icon:eIcon.warning};
+
+    if (Object.values(this.filterSearchParamsList).length === 0) {
+      this.messagesAlert = {
+        detail: 'Al menos debe seleccionar un filtro',
+        severity: eSeverity.DANGER,
+        isShow: true,
+        icon: eIcon.warning
+      };
       return;
     }
 
-
-    // console.log('antes:', this.filterSearchParamsList)
     this.filterSearchParamsList = {
       ...this.filterSearchParamsList,
-
     }
+
+    // Emitir los parámetros de filtro
     this.emitFacetFiltersParams.emit(this.filterSearchParamsList);
+
+    // Resetear o limpiar el valor de barcodeList después de emitir los datos
+    this.barcodeList = [];
+
     if (this.config_system.filterState.isMustClear) {
       localStorage.removeItem(this.config_system.filterState.filterState);
       this.filterSearchParamsList = Object.assign({});
-      // console.log('des[uess]:', this.filterSearchParamsList)
       this.sidebarFilterService.deleteFilterFacet();
     }
     this.cdr.markForCheck();

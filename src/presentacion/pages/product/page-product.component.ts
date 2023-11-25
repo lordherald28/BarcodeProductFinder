@@ -10,15 +10,16 @@ import { UseCaseSearchProducts } from 'src/core/use-case/use-case-search-product
 import { CoreModule } from 'src/core/core.module';
 import { Metadata, SearchParams } from 'src/core/helpers/metadata-products';
 
-import { catchError, debounceTime, switchMap } from 'rxjs/operators';
-import { EMPTY, Subscription, of, throwError } from 'rxjs';
+import { catchError, debounceTime, delay, finalize, switchMap } from 'rxjs/operators';
+import { Subscription, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UseCasesearcProductByFacetFilter } from 'src/core/use-case/use-case-search-facet';
 import { PaginatorComponent } from 'src/shared/components/paginator/paginator.component';
-import { EventPage } from 'src/shared/models/paginator.models';
 import { AlertMessageComponent } from 'src/shared/components/alert-message/alert-message.component';
-import { IMessages } from 'src/core/models/message-notify.models';
+import { IMessages, eIcon, eSeverity } from 'src/core/models/message-notify.models';
 import { UseCaseGetMessages } from 'src/core/use-case/use-case-get-messages';
+import { SpinnerComponent } from '../../../shared/components/spinner/spinner.component';
+
 
 
 @Component({
@@ -26,7 +27,7 @@ import { UseCaseGetMessages } from 'src/core/use-case/use-case-get-messages';
   templateUrl: './page-product.component.html',
   styleUrls: ['./page-product.component.css'],
   standalone: true,
-  imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, AlertMessageComponent,
+  imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, AlertMessageComponent, SpinnerComponent,
     CardProductComponent, HeaderComponent, CoreModule, PaginatorComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -34,10 +35,9 @@ export default class PageProductComponent implements OnInit, OnDestroy {
   hasResetPagination: boolean = false;
 
 
-
   constructor(
-    private readonly useCaseSearchProducts: UseCaseSearchProducts,
-    private readonly useCaseSearchFacet: UseCasesearcProductByFacetFilter,
+    public readonly useCaseSearchProducts: UseCaseSearchProducts,
+    public readonly useCaseSearchFacet: UseCasesearcProductByFacetFilter,
     private readonly useCaseGetMessages: UseCaseGetMessages,
     public cdr: ChangeDetectorRef
   ) {
@@ -45,6 +45,7 @@ export default class PageProductComponent implements OnInit, OnDestroy {
 
   }
 
+  public isLoading: boolean = false;
   private subs$ = new Array<Subscription>();
   messages: IMessages = {};
   metaDataState: Metadata = {
@@ -64,31 +65,26 @@ export default class PageProductComponent implements OnInit, OnDestroy {
   public totalPageNumber: number = 0;
   public currrentPageNumber: number = 1;
   public lastValueSearch: string = '';
-  public messageNotify: IMessages = {}
+  // public messageNotify: IMessages = {}
   public updateChild: boolean = false;
 
   ngOnInit() {
 
     this.subs$.push(this.useCaseGetMessages.execute().subscribe(messages => {
       this.messages = messages;
-      this.cdr.detectChanges(); 
+      this.cdr.detectChanges();
     }));
   }
 
   getValueChangeInput(value: string): void {
     this.getProductList(value);
+
     this.cdr.markForCheck();
   }
 
   getProductList(value: string): void {
     //limpiar parametros
     this.retetSearchParams()
-    this.searchParams = {
-      ...this.searchParams,
-      search: value,
-      key: environment.AuthenticationKey.key
-    };
-    console.log(this.searchParams)
     this.currentKeyValue = value;
     this.isSerachGeneral = true;
     this.OnEventPage(1);
@@ -132,11 +128,11 @@ export default class PageProductComponent implements OnInit, OnDestroy {
 
     this.searchParams = {
       ...this.searchParams,
-      key: environment.AuthenticationKey.key,
-      metadata: {
-        ...this.searchParams.metadata,
-        pages: 1
-      }
+      // key: environment.AuthenticationKey.key,
+      // metadata: {
+      //   ...this.searchParams.metadata,
+      //   pages: 1
+      // }
     }
     console.log(this.searchParams)
     this.isSerachGeneral = false;
@@ -161,6 +157,9 @@ export default class PageProductComponent implements OnInit, OnDestroy {
 
   OnEventPage(event: number): void {
 
+    this.isLoading = true;
+    this.cdr.markForCheck();
+
     this.searchParams = {
       ...this.searchParams,
       key: environment.AuthenticationKey.key,
@@ -169,46 +168,47 @@ export default class PageProductComponent implements OnInit, OnDestroy {
         pages: event,
       }
     }
-
     if (this.isSerachGeneral) {
       this.searchParams = {
         ...this.searchParams,
         search: this.currentKeyValue
       }
-      this.subs$.push(this.useCaseSearchProducts.execute(this.searchParams)
-        .pipe(
-          switchMap((result) => {
-            this.cdr.markForCheck();
-            return of(result)
-          })
-        )
-        .subscribe(({ products, metadata }) => {
-          this.productsList = products;
-          this.metaDataState = metadata
-          this.totalPageNumber = metadata.pages;
-          this.cdr.markForCheck();
-        }));
-      return
+    } else {
+      this.searchParams = {
+        ...this.searchParams,
+        search: ''
+      }
     }
-
-    // Como busqueda es facetada no necesitasmos general
-    this.subs$.push(this.useCaseSearchFacet.execute(this.searchParams)
+    const subscription = (this.isSerachGeneral ? this.useCaseSearchProducts.execute(this.searchParams) : this.useCaseSearchFacet.execute(this.searchParams))
       .pipe(
-        debounceTime(1000),
-        switchMap((result) => {
+        debounceTime(1500),
+        // ... cualquier operador necesario
+        switchMap((result) => of(result)),
+        catchError(error => {
+          this.isLoading = false;
+          return throwError(() => error);
+        }),
+        delay(3500),
+        finalize(() => {
+          this.isLoading = false;
           this.cdr.markForCheck();
-          return of(result)
         })
       )
       .subscribe(({ products, metadata }) => {
+        if (products.length === 0) {
+          this.messages = { detail: 'Not found', icon: eIcon.info, isShow: true, severity: eSeverity.INFO }
+          this.cdr.markForCheck();
+        }
         this.productsList = products;
-        this.metaDataState = metadata
+        this.metaDataState = metadata;
         this.totalPageNumber = metadata.pages;
+        // this.isLoading = false;
+        this.hasResetPagination = false;
         this.cdr.markForCheck();
-      }));
+      });
+    // console.log(this.isLoading)
 
-    this.hasResetPagination = false;
-    this.cdr.markForCheck();
+    this.subs$.push(subscription);
   }
 
   ngOnDestroy(): void {

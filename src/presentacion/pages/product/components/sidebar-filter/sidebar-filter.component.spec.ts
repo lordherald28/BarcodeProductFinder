@@ -33,11 +33,11 @@ describe('SidebarFilterComponent', () => {
 
     // Let's assume that the component has an initialized array 'accordionsItemsModel'.
     const itemName = component.accordionsItemsModel[0].name;
-    component.toggleAccordion(itemName);
+    component.toggleAccordion(itemName,'');
     expect(component.accordionsItemsModel[0].isOpen).toBeTrue();
 
     // Toggle again to close
-    component.toggleAccordion(itemName);
+    component.toggleAccordion(itemName,'');
     expect(component.accordionsItemsModel[0].isOpen).toBeFalse();
   });
 

@@ -25,7 +25,7 @@ export class InterceptorError implements HttpInterceptor {
                 }
                 if (error.status === 429) {
                     const message: IMessages = {
-                        detail: 'Account off',
+                        detail: 'This account has reached its limit',
                         isShow: true,
                         severity: eSeverity.DANGER,
                         icon:eIcon.warning
