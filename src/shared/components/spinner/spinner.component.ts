@@ -9,14 +9,15 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleCha
   standalone: true,
   imports: [CommonModule]
 })
-export class SpinnerComponent implements OnInit,OnChanges {
+export class SpinnerComponent implements OnInit, OnChanges {
 
   @Input() isLoading: boolean = true;
-
+  @Input() cancelLoadingSpinner: boolean = false;
+  
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
+   
   }
   ngOnInit() {
   }

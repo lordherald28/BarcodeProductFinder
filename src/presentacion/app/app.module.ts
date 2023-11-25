@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +21,7 @@ import { AlertMessageComponent } from 'src/shared/components/alert-message/alert
   ],
   providers: [
     {
-      provide: PROVIDERS_TOKENS.CONFIG_SYSTEM,
+      provide:  PROVIDERS_TOKENS.CONFIG_SYSTEM,
       useValue: SYSTEM_CONFIG
     }
   ],

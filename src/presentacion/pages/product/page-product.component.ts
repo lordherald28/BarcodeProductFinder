@@ -134,7 +134,6 @@ export default class PageProductComponent implements OnInit, OnDestroy {
       //   pages: 1
       // }
     }
-    console.log(this.searchParams)
     this.isSerachGeneral = false;
     this.OnEventPage(1);
     this.hasResetPagination = !this.hasResetPagination;
@@ -158,6 +157,7 @@ export default class PageProductComponent implements OnInit, OnDestroy {
   OnEventPage(event: number): void {
 
     this.isLoading = true;
+    this.messages = {}
     this.cdr.markForCheck();
 
     this.searchParams = {
@@ -188,7 +188,7 @@ export default class PageProductComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           return throwError(() => error);
         }),
-        delay(3500),
+        delay(100),
         finalize(() => {
           this.isLoading = false;
           this.cdr.markForCheck();

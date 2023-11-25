@@ -10,6 +10,8 @@ import { SearchBoxGeneralComponent } from 'src/shared/components/search-box-gene
 import { CardProductComponent } from './components/card-product/card-product.component';
 import { SidebarFilterComponent } from './components/sidebar-filter/sidebar-filter.component';
 import { IFilterFacetList } from 'src/core/models/filter-facet.models';
+import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PageProductComponent', () => {
   let component: PageProductComponent;
@@ -23,7 +25,7 @@ describe('PageProductComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
 
-      imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, CardProductComponent, HeaderComponent, CoreModule],
+      imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, CardProductComponent, HeaderComponent, CoreModule,RouterTestingModule],
       providers: [
         { provide: UseCaseSearchProducts, useValue: mockUseCaseSearchProducts },
         { provide: UseCasesearcProductByFacetFilter, useValue: mockUseCaseSearchFacet },

@@ -15,8 +15,9 @@ import { UseCaseGetMessages } from '../use-case/use-case-get-messages';
 import { SystemRepository } from '../repository/system-repository';
 import { UseCaseSetMessages } from '../use-case/use-case-set-messages';
 import { SystemService } from '../services/system-services/system.service';
+import { InjectionToken } from '@angular/core';
 
-
+InjectionToken
 const productFactoryUseCaseSearchProducts = (repo: ProductRepository) => new UseCaseSearchProducts(repo);
  const productFactoryUseCaseGetFacetFilters = (repo: ProductRepository) => new UseCaseGetFacetFilter(repo);
 const productFactoryUseCaseSearchFacetFilters = (repo: ProductRepository) => new UseCasesearcProductByFacetFilter(repo);

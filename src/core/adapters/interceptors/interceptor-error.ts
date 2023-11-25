@@ -41,6 +41,15 @@ export class InterceptorError implements HttpInterceptor {
                     };
                     this.useCaseSetMessages.execute(message);
                 }
+                if (error.status === 0) {
+                    const message: IMessages = {
+                        detail: 'No have internet',
+                        isShow: true,
+                        severity: eSeverity.DANGER,
+                        icon:eIcon.error
+                    };
+                    this.useCaseSetMessages.execute(message);
+                }
                 return throwError(() => error); // Importante para re-lanzar el error
             })
 

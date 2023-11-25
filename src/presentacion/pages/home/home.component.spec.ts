@@ -4,6 +4,7 @@ import { DebugElement } from '@angular/core';
 
 // Importing the HomeComponent for testing.
 import HomeComponent from './home.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 // Commencing the test suite for HomeComponent.
 describe('HomeComponent', () => {
@@ -14,6 +15,7 @@ describe('HomeComponent', () => {
   // Setting up the TestBed configuration asynchronously before each test.
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      imports:[RouterTestingModule]
       // Providing the necessary declarations and imports for the test module.
       // declarations: [ HomeComponent ] // Uncomment this line if HomeComponent needs to be declared.
     })

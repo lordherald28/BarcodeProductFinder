@@ -1,3 +1,5 @@
+import { InjectionToken } from "@angular/core";
+
 export type config_system = {
     url_logo: string;
     filterState: {
@@ -9,6 +11,7 @@ export type config_system = {
 
 
 export enum PROVIDERS_TOKENS {
+    // CONFIG_SYSTEM = new InjectionToken<number>('CONFIG_SYSTEM')
     CONFIG_SYSTEM = 'CONFIG_SYSTEM'
 }
 

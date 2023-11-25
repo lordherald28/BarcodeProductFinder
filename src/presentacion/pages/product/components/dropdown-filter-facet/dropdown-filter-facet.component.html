@@ -1,12 +1,5 @@
 <ng-container>
   <section class="g_wrap_list">
-    <!-- <form [formGroup]="formSearch">
-      <span class="p-input-icon-left w-full">
-        <i class="pi pi-search"></i>
-        <input type="search" pInputText formControlName="searchKeyWord" #inputSearch placeholder="Buscar..."
-          id="inputSearch" class="w-full" />
-      </span>
-    </form> -->
     <app-search-box-general (emitValueChangeInput)="getValueChangeInput($event)" class="w-input"
       [setDebounceTime]="120"></app-search-box-general>
     <ul class="listbox">

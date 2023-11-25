@@ -40,15 +40,17 @@ li:hover {
 
 }
 
-.w-input{
+.w-input {
   width: 40% !important;
   margin: 0 auto;
 }
 
-:host::ng-deep  .g_wrap_list{
+:host::ng-deep .g_wrap_list {
   width: 90%;
   margin: 0 auto 10px;
+  border: none !important;
 }
+
 .dropdown-item {
   padding: 10px;
   cursor: pointer;

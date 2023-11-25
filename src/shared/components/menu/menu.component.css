@@ -1,0 +1,43 @@
+/* General styles for the navigation menu */
+.menu ul {
+    list-style-type: none;
+    /* Remove default list styling */
+    margin: 0;
+    /* Remove default margin */
+    padding: 0;
+    /* Remove default padding */
+    overflow: hidden;
+    /* Clear floats */
+    background-color: #333;
+    /* Dark background for the menu bar */
+}
+
+.menu li {
+    float: left;
+    /* Align menu items horizontally */
+}
+
+.menu li a {
+    display: block;
+    /* Make the entire area clickable */
+    color: white;
+    /* Text color for menu items */
+    text-align: center;
+    /* Center the text */
+    padding: 14px 16px;
+    /* Add some padding */
+    text-decoration: none;
+    /* Remove underlines from links */
+}
+
+/* Style changes for menu items on mouse-over */
+.menu li a:hover {
+    background-color: #111;
+    /* Darker background on hover */
+}
+
+/* Style for the active menu item */
+.active {
+    background-color: #4CAF50;
+    /* Green background for the active link */
+}

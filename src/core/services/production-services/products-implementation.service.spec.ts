@@ -135,8 +135,6 @@ describe('Service: Products', () => {
 
     });
     // Simular respuesta HTTP
-    const expectedUrl = url;
-    console.log('https://cors-anywhere.herokuapp.com/https://api.barcodelookup.com/v3/products?')
     const req = httpMock.expectOne(url);
     expect(req.request.method).toBe('GET'); // Verifies the HTTP request method
     req.flush(mockApiResultProductWithMetada);
@@ -150,8 +148,7 @@ describe('Service: Products', () => {
     const mockApiResultProductWithMetadata: { products: ProductModel[], metadata: Metadata } = mockProductsModelResponse;
 
     // Subscribe to the service method
-    console.log(url)
-    service.searcProductByFacetFilter(params).subscribe((response) => {
+      service.searcProductByFacetFilter(params).subscribe((response) => {
       // Create a response object with original products and metadata
       let resp: { products: ProductModel[], metadata: Metadata } = {
         products: response.products,
@@ -166,10 +163,6 @@ describe('Service: Products', () => {
       let productsOnPage = resp.products.slice(startIndex, service.pageEnd);
 
       // Check if the number of filtered products matches the expected value
-
-      console.log('RESP:  ', resp.products.length);
-      console.log('productsOnPage:  ', productsOnPage.length);
-
       expect(productsPerPage).toEqual(productsOnPage.length);
       // expect(productsOnPage.length).toEqual(resp.products.length);
     });

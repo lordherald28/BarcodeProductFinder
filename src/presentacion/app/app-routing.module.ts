@@ -1,30 +1,18 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
+import HomeComponent from './../pages/home/home.component'; // Import your HomeComponent
+import ProductFinderComponent from './../pages/product/page-product.component'; // Import your ProductFinderComponent
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    loadComponent: () => import('../pages/home/home.component'),
-    title: 'Home'
-  },
-  {
-    path: 'product-finder',
-    title: 'Products',
-    loadComponent: () => import('../pages/product/page-product.component')
-  },
-  {
-    path: '**',
-    redirectTo: 'home'
-  }
+  { path: 'home', component: HomeComponent },
+  { path: 'product-finder', component: ProductFinderComponent },
+  // ... other routes ...
+  { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default redirection to 'home'
+  { path: '**', redirectTo: '/home' } // Wildcard route for a 404 page
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash:true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

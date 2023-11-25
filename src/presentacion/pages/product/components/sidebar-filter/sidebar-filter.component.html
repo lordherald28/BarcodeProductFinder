@@ -10,7 +10,7 @@
         {{expandButtonIcon}}
       </span>
     </button>
-    <!-- [facetList]="showFacetFiltersListByName(accordionItem.name)" -->
+
     <div class="accordion-content" [style.height]="calculateHeight(accordionItem.isOpen)">
       <app-dropdown-filter-facet (emitSelectedFilter)="getFilterFacet($event,accordionItem.name)"
         [facetList]="showFacetFiltersListByName(accordionItem.name)"

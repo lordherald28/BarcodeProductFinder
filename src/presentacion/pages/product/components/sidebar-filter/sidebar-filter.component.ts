@@ -82,14 +82,13 @@ export class SidebarFilterComponent implements OnInit, OnChanges {
 
   toggleAccordion(accordionName: string, expands: string): void {
     this.updateListAccordionItems(accordionName);
-    console.log(expands);
     if (expands.toLocaleLowerCase().trim() === eExpandButtonIcon.less.toLocaleLowerCase().trim()) {
       this.expandButtonIcon = eExpandButtonIcon.more;
     } else {
       this.expandButtonIcon = eExpandButtonIcon.less;
     }
   }
-  
+
   // Calcula la altura para cada sección del acordeón
   calculateHeight(isOpen: boolean): string {
     return this.sidebarFilterService.calculateHeight(isOpen)
