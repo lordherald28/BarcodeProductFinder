@@ -16,11 +16,15 @@ const routes: Routes = [
     path: 'product-finder',
     title: 'Products',
     loadComponent: () => import('../pages/product/page-product.component')
+  },
+  {
+    path: '**',
+    redirectTo: 'home'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{useHash:true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

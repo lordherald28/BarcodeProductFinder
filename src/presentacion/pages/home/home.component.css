@@ -10,4 +10,45 @@ a {
     font-weight: 700;
     text-align: center;
     vertical-align: middle;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+a:hover {
+    cursor: pointer;
+    color: rgb(45, 164, 39);
+}
+
+.content-href-title {
+    width: 100%;
+    display: grid;
+    gap: 10px;
+    place-content: center;
+}
+
+.g-title {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+a>span {
+    color: crimson;
+}
+
+
+@media (max-width:786px) {
+    a {
+        width: 92%;
+        margin: 0 auto;
+        font-size: 16px;
+        padding: 1rem;
+    }
+    .g-title{
+        font-size: 18px;
+        font-weight: 700;
+
+    }
 }

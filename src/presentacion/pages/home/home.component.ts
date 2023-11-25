@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy,  Component, OnInit } from '@angular/core';
 import { HeaderComponent } from 'src/shared/components/header/header.component';
 
 @Component({
@@ -11,11 +11,10 @@ import { HeaderComponent } from 'src/shared/components/header/header.component';
 })
 export  default class HomeComponent implements OnInit {
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor() { }
 
   ngOnInit() {
     
-    this.cdr.markForCheck();
   }
 
 }
