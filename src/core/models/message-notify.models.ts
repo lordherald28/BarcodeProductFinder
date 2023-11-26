@@ -5,6 +5,7 @@ export interface IMessages {
     detail?: string;
     isShow?: boolean;
     icon?: string;
+    hasLinkCors?:boolean;
 
 }
 

@@ -1,19 +1,24 @@
-<!-- Header with logo and search box -->
+<!-- Header with logo and search box  -->
 <app-header>
     <app-search-box-general (emitValueChangeInput)="getValueChangeInput($event || '')" [setDebounceTime]="500" />
 </app-header>
 <div class="wrapper">
 
-    <app-paginator (pageChange)="OnEventPage($event)" style="width: 50%; margin: 0 auto;" *ngIf="productsList.length>0"
-        [totalRow]="metaDataState.products" [maxVisiblePages]="10" [totalPages]="metaDataState.pages"
-        [resetPagination]="hasResetPagination" [resultTextSearch]="currentKeyValue"></app-paginator>
+
     <!-- Main content -->
     <div class="main-content">
         <!-- Sidebar for filters -->
-        <div class="sidebar">
-            <app-sidebar-filter *ngIf="productsList.length>0"
-                (emitFacetFiltersParams)="getProductListByFacetFilters($event)"></app-sidebar-filter>
-        </div>
+        <app-sidebar class="sidebar" [visible]="productsList.length!==0">
+            <div class="center-content p-2">
+                <button class="btn-standar-primary" (click)="applyFacetFilters()">Apply Filters</button>
+            </div>
+            <app-accordion *ngFor="let accordion of accordionFilterList trackBy:trackByIdFn"
+                [accordionsItemsModel]="accordion">
+                <app-drop-down (OnClick)="OnClickElementDropDown($event)" [cleanSelectionFacet]="cleanSelectionFilters"
+                    [value]="getValuesForDropDown(accordion.name)" [nameElement]="accordion.name"
+                    [selectionMultiple]="accordion.hasSelectionMultiple"></app-drop-down>
+            </app-accordion>
+        </app-sidebar>
 
         <!-- Product content -->
         <div class="product-content" *ngIf="productsList.length > 0">
@@ -22,18 +27,12 @@
                 <app-card-product class="item-product" [product]="product"></app-card-product>
             </ng-container>
             <div class="divisor"></div>
+            <app-paginator (pageChange)="OnEventPage($event)" style="width: 100%; margin: 0 auto;"
+                *ngIf="productsList.length>0" [totalRow]="metaDataState.products" [maxVisiblePages]="10"
+                [totalPages]="metaDataState.pages" [resetPagination]="hasResetPagination"
+                [resultTextSearch]="currentKeyValue"></app-paginator>
         </div>
-
-<!-- 
-        <ng-container #noProductsList *ngIf="productsList.length===0">
-            <div class="link-go-to">
-                <a href="https://cors-anywhere.herokuapp.com/"></a>
-            </div>
-
-        </ng-container> -->
     </div>
-
-    <!-- <span>Total de productos: {{metaDataState.products}} </span> -->
 </div>
-<app-alert-message [message]="messages"></app-alert-message>
-<app-spinner [isLoading]="isLoading"></app-spinner>
+<app-alert-message [message]="messages" [showLinkDemo]="true"></app-alert-message>
+<app-spinner [isLoading]="isLoading" (cancelLoadingSpinner)="cancelGetData($event)"></app-spinner>

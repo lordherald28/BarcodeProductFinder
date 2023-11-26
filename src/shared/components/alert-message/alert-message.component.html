@@ -1,13 +1,11 @@
 <div *ngIf="message.isShow" class="alert" [ngClass]="severity">
   <span class="material-symbols-outlined">
     {{message.icon?.trim()}}
-    </span>
+  </span>
   <span class="alert-message">
     <span id="messagesId">{{ message.detail }}</span>
-    <ng-container *ngIf="showLinkDemo">
-      <img src="../../../assets/icons/search_FILL0_wght400_GRAD0_opsz24.svg">
-      <a [href]="linkToCorsDemo" target="_blank">
-
+    <ng-container *ngIf="message.hasLinkCors">
+      <a [href]="linkToCorsDemo+'corsdemo/'" target="_blank">
         Click here for more details</a>
     </ng-container>
   </span>

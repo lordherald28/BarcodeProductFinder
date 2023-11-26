@@ -3,6 +3,7 @@
     top: 0;
     left: 0; /* Asegúrate de que comience desde el borde izquierdo de la ventana */
     display: flex;
+    flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
     width: 100vw; /* Usar viewport width */
@@ -11,6 +12,9 @@
     background-color: #cacaca8c;
 }
 
+:host::ng-deep .btn-standar-primary {
+    margin: 8px;
+}
 .spinner:not(:hover) {
     width: 34px;
     height: 34px;

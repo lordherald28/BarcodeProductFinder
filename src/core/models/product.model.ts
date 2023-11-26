@@ -2,6 +2,8 @@ import { Availability, Condition, CurrencySymbol, SalePrice } from "./conditions
 
 
 export interface ProductModel {
+    [key: string]: any; 
+
     barcode_number:          string;
     barcode_formats:         string;
     mpn:                     string;

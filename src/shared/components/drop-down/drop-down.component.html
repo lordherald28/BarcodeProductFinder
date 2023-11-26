@@ -1,0 +1,12 @@
+<ng-container *ngIf="visible">
+  <section class="g_wrap_list">
+    <app-search-box-general class="w-input" [setDebounceTime]="200" (emitValueChangeInput)="getValueChangeInput($event)"
+      [placeHolder]="'Search by '+ nameElement"></app-search-box-general>
+    <ul class="listbox">
+      <li *ngFor="let facetFilter of listFiltersFacet | filter:searchTerm" class="item"
+        (click)="emitFacetFilterSelected(nameElement,facetFilter)" [class.active]="isItemActive[facetFilter]">
+        {{facetFilter}}
+      </li>
+    </ul>
+  </section>
+</ng-container>

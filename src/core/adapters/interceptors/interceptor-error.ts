@@ -19,7 +19,8 @@ export class InterceptorError implements HttpInterceptor {
                         detail: error.error,
                         isShow: true,
                         severity: eSeverity.WANR,
-                        icon:eIcon.warning
+                        icon: eIcon.warning,
+                        hasLinkCors:true
                     };
                     this.useCaseSetMessages.execute(message);
                 }
@@ -28,7 +29,8 @@ export class InterceptorError implements HttpInterceptor {
                         detail: 'This account has reached its limit',
                         isShow: true,
                         severity: eSeverity.DANGER,
-                        icon:eIcon.warning
+                        icon: eIcon.warning,
+                        hasLinkCors: false
                     };
                     this.useCaseSetMessages.execute(message);
                 }
@@ -37,7 +39,8 @@ export class InterceptorError implements HttpInterceptor {
                         detail: 'Not Found',
                         isShow: true,
                         severity: eSeverity.WANR,
-                        icon:eIcon.warning
+                        icon: eIcon.warning,
+                        hasLinkCors: false
                     };
                     this.useCaseSetMessages.execute(message);
                 }
@@ -46,7 +49,8 @@ export class InterceptorError implements HttpInterceptor {
                         detail: 'No have internet',
                         isShow: true,
                         severity: eSeverity.DANGER,
-                        icon:eIcon.error
+                        icon: eIcon.error,
+                        hasLinkCors:false
                     };
                     this.useCaseSetMessages.execute(message);
                 }

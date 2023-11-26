@@ -73,7 +73,7 @@ export class SidebarFilterComponent implements OnInit, OnChanges {
       { description: 'Barcode', hasSelectionMultiple: true, isOpen: false, name: eNameFacetFilter.BARCODE },
       { description: 'Category', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.CATEGORY },
       { description: 'Brand', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.BRAND },
-      { description: 'Manufacture', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.MANUFACTURE },
+      { description: 'Manufacturer', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.MANUFACTURE },
       { description: 'Asin', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.ASIN },
       { description: 'Title (Name)', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.NAME_PRODUCT },
       { description: 'MNP  ', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.MPN },

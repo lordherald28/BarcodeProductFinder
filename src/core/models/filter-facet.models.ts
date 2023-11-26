@@ -23,3 +23,8 @@ export interface IFilterFacetList {
     mnpList?: Set<string>;
     asinList?: Set<string>;
 }
+
+export interface IFilterFacetListV2 {
+    key?: Set<string>;
+
+}

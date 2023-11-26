@@ -15,79 +15,19 @@
   body{
     width: 100%;
     height: 100%;
+    background-color: #0000000f;
   }
   html{
     width: 100%;
     height: 100%;
     box-sizing: content-box;
   }
-
-.listbox {
-    position: relative;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    /* height: calc(560px - 1rem); */
-    margin: 0;
-    padding: 0;
-    overflow-y: scroll;
-    overflow-x: auto;
-    z-index: 1;
+.bcp-content{
+    width: 80%;
+    margin: 25%  auto;
 }
+  
 
-.listbox li.item {
-    width: 100%;
-    height: calc(81px - 1rem);
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    list-style: none;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    border-top: 1px solid #0000000f;
-    transition: all;
-    /* z-index: 2; */
-}
-
-.listbox li.item:hover {
-    cursor: pointer;
-    color: #16724f;
-    background-color: rgba(211, 211, 211, 0.6);
-}
-
-.listbox li.item .item-name {
-    font-size: 0.9rem;
-    margin-left: 1rem;
-    /* Añade espacio entre la imagen y el nombre */
-    /* white-space: nowrap; */
-    /* overflow: hidden; */
-    /* text-overflow: ellipsis; */
-    width: 100%;
-    /* max-width: 177px; */
-    padding-right: 0.3em;
-
-}
-
-.image {
-    width: 54px;
-    height: 54px;
-    object-fit: cover;
-}
-
-.g_wrap_list {
-    width: 100%;
-    /* min-height: 590px; */
-    height: 580px;
-    display: flex;
-    border: 0.1rem solid #0000000f;
-    border-radius: 2%;
-    padding: 1rem;
-    flex-flow: column nowrap;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
 
 form {
     margin-bottom: 1rem;
@@ -137,7 +77,7 @@ form {
 /*** Estilos para botones **/
 
 .btn-standar-primary {
-    background-color: #008cba;
+    background-color: #4CAF50;
     /* Color del botón */
     color: white;
     border: none;

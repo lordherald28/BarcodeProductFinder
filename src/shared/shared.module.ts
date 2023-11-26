@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DefaultImagePipe } from './pipes/url-img-not-found.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 
 
 @NgModule({
@@ -9,7 +10,7 @@ import { DefaultImagePipe } from './pipes/url-img-not-found.pipe';
     CommonModule,
     
   ],
-  declarations: [DefaultImagePipe],
-  exports: [DefaultImagePipe]
+  declarations: [DefaultImagePipe,FilterPipe],
+  exports: [DefaultImagePipe,FilterPipe]
 })
 export class SharedModule { }

@@ -1,0 +1,24 @@
+<ng-container *ngIf="visible">
+  <div class="accordion">
+
+    <ng-container>
+      <div class="accordion-item">
+        <button class="accordion-button" type="button" (click)="toggleAccordion(expand.innerHTML)">
+          <div class="container-header-accorion-button">
+            <span>{{accordionsItemsModel.description}} </span>
+          </div>
+          <span class="material-symbols-outlined" #expand>
+            {{expandButtonIcon}}
+          </span>
+        </button>
+        <div class="accordion-content" [ngClass]="{'collapse':!calculateHeight(),'expands':calculateHeight()===true}">
+          <ng-content> </ng-content>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- <div class="center-content p-2">
+    <button class="btn-standar-primary" (click)="who()">Apply Filters</button>
+  </div> -->
+  </div>
+</ng-container>

@@ -1,0 +1,82 @@
+/* Estilos para el componente de acordeón */
+
+.accordion {
+  width: 100%;
+  /* Ancho del acordeón principal */
+}
+
+.accordion-item {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  /* Borde inferior para separar elementos */
+}
+
+.accordion-item.active {
+  background-color: aqua;
+  /* Fondo de elementos activos */
+}
+
+.accordion-button {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #f6f4f4;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  /* Transición suave para los botones */
+}
+
+.accordion-button:hover {
+  background-color: #b8b8b8;
+}
+
+.accordion-content {
+  width: auto;
+  padding: 0 10px;
+  height: 0;
+  /* Altura inicial a 0 para ocultar el contenido */
+  overflow: hidden;
+  /* Ocultar el contenido que excede la altura */
+  transition: height 0.3s ease-out;
+  /* Transición suave para la altura */
+}
+
+.accordion-button.active+.accordion-content {
+  max-height: 200px;
+  /* Altura máxima para el contenido abierto (ajusta según sea necesario) */
+}
+
+.container-header-accordion-button {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expands {
+  height: 600px;
+  overflow:hidden;
+  transition: height 0.3s ease-in-out;
+}
+
+.collapse {
+  height: 0px;
+  overflow: hidden;
+  transition: height 0.3s ease-in;
+}
+
+/* Estilos para dispositivos móviles (máximo ancho de 768px) */
+@media (max-width: 768px) {
+  .accordion {
+    margin: auto;
+    width: 100%;
+    /* Ancho completo en dispositivos móviles */
+  }
+}
