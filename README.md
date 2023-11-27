@@ -81,7 +81,7 @@ This Angular project demonstrates an innovative approach to integrating general 
 3. **Image Repository**:
    
     ```
-    link image project: https://hub.docker.com/repository/docker/gerastark/docker-angular/general
+    `https://hub.docker.com/repository/docker/gerastark/docker-angular/general`
     ```
     With this command, they create a container based on the image you uploaded. The port 4200 inside 
     the container is mapped to port 4200 on your local machine so you can access the application through a web browser.  
