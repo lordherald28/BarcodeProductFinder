@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   AuthenticationKey: {
-    key: 'yv4hsi0dbzo0qxvp4tfs35khl2s9yo' //barcodeuno7  //5whl0cj9iw7u7onrzyxqps8kl4rvoz
+    key: 'j6rswb72uiscjsgsy275b0zbhhz9g6',//barcodeuno7  //yv4hsi0dbzo0qxvp4tfs35khl2s9yo  Llave con datos
+    keyv2: 'j6rswb72uiscjsgsy275b0zbhhz9g6' // Otra key con 50 consultas
   }
 };
 
