@@ -4,6 +4,32 @@
 
 ![Alt text](LOGO.png)
 
+# Índice
+
+- [BarcodeProductFinder](#barcodeproductfinder)
+- [Índice](#índice)
+- [Author](#author)
+- [Link hosting Vercel](#link-hosting-vercel)
+  - [https://barcode-product-finder-9oy59eqb8-lordherald28.vercel.app/#/product-finder](#httpsbarcode-product-finder-9oy59eqb8-lordherald28vercelappproduct-finder)
+- [Docker](#docker)
+  - [docker build -t docker-angular .](#docker-build--t-docker-angular-)
+  - [docker run --rm -p 3000:4200 docker-angular](#docker-run---rm--p-30004200-docker-angular)
+  - [Development server](#development-server)
+  - [Code scaffolding](#code-scaffolding)
+  - [Build](#build)
+  - [Running unit tests](#running-unit-tests)
+  - [Running end-to-end tests](#running-end-to-end-tests)
+  - [Further help](#further-help)
+
+...
+
+# Author
+
+**Gerardo Luis Cardenas**
+
+- Rol: Aspirante
+- Contacto: [lordherald28@gmail.com](mailto:lordherald28@gmail.com)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.
 
 Barcode Lookup Integration and Faceted Search Functionality in Angular
@@ -19,7 +45,7 @@ Search Strategy: Employs a two-stage search and filtering mechanism to optimize 
 Clean Architecture & SOLID Principles: The project adheres to clean architecture standards and SOLID principles, ensuring a modular, maintainable, and scalable codebase.
 Implementation Details
 Initial Data Collection: Retrieves a comprehensive set of results within the API's query limit.
-Local Faceted Filtering: Conducts post-processing of results for facet-based categorization, such as brand, category, and price range.
+Local Faceted Filtering: Conducts post-processing of results for facet-based categorization, such as brand, category.
 Performance Optimization
 Efficient Algorithms: Implements algorithms to minimize API calls while maximizing data relevance.
 Error Handling: Robust error management to maintain stability during search operations.
@@ -34,8 +60,9 @@ This Angular project demonstrates an innovative approach to integrating general 
 
 # Docker
 
-## Install:  docker build -t productfinder
-## Run:      docker run --rm -d -p 3000:4200 productfinder
+## docker build -t docker-angular .
+## docker run --rm -p 3000:4200 docker-angular
+
 
 ## Development server
 
