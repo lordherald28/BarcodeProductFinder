@@ -34,11 +34,7 @@ export class GeraInfinityScrollDirective implements OnInit {
     // Verificar que ya se ha llegado al final del elemento y no hay mas 
     if (target.scrollTop + target.clientHeight > target.scrollHeight - 20) {
       this.onScrollDown.emit();
-      console.log('emit')
 
-      // if (!this.hasReachedBottom(target)){
-      //   this.onScrollDown.emit();
-      // }
     }
 
   }

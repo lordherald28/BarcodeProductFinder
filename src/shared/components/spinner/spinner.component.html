@@ -1,4 +1,6 @@
-<div class="container-spinner" *ngIf="isLoading">
-  <span class="spinner" ></span>
-  <button class="btn-standar-primary" (click)="onCancelLoading()">Cancel</button> 
-</div>
+<ng-container *ngIf="isLoading">
+  <div class="container-spinner">
+    <span class="spinner"></span>
+    <button class="btn-standar-primary" (click)="onCancelLoading()">Cancel</button>
+  </div>
+</ng-container>

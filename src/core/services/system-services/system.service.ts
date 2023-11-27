@@ -10,11 +10,9 @@ export class SystemService extends SystemRepository {
   constructor() { super()}
 
   setMessages(params: IMessages): void {
-    // console.log(params)
     this.messageSource$.next(params);
   }
   getMessages(): Observable<IMessages> {
-    // console.log('params getMessages:  ', params)
     return this.messageSource$.asObservable();
   }
 

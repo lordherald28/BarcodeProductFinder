@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DropDownService } from './service/drop-down.service';
 import { SharedModule } from 'src/shared/shared.module';
-import { ItemFilterSelection } from 'src/presentacion/pages/product/components/sidebar-filter/models/item-filter-selection';
+import { ItemFilterSelection } from './../../models/item-filter-selection';
 
 
 @Component({
@@ -47,17 +47,15 @@ export class DropDownComponent extends IBaseComponets implements OnInit, OnChang
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     if (changes['value'] && changes['value'].currentValue) {
-      // console.log(this.value)
       this.listFiltersFacet = changes['value'].currentValue
     }
+
     if (changes['cleanSelectionFacet'] && changes['cleanSelectionFacet'].currentValue) {
-      // console.log('Limpieza de selecciones activada');
       this.cleanSelectionFacetFilters();
     }
-    if (changes['visible'] && changes['visible'].currentValue) {
-      // console.log(this.visible)
-    } 
+
   }
 
   ngOnInit() { }
@@ -66,6 +64,12 @@ export class DropDownComponent extends IBaseComponets implements OnInit, OnChang
     this.searchTerm = value; // Actualizar el término de búsqueda cuando el usuario escribe
   }
 
+  /**
+   * Handles the selection logic for dropdown items and emits the current selections.
+   * If multiple selection is enabled, toggles the active state of the selected facet filter.
+   * Otherwise, deactivates all other selections and activates the current one.
+   * Finally, it updates the dropdown service with the new selection and triggers change detection.
+   */
   emitFacetFilterSelected(key: string, facetFilter: string) {
     if (this.selectionMultiple) {
       this.isItemActive[facetFilter] = !this.isItemActive[facetFilter];
@@ -76,33 +80,39 @@ export class DropDownComponent extends IBaseComponets implements OnInit, OnChang
       this.isItemActive[facetFilter] = true;
     }
 
-    this.dropDownService.toggleSelection(key, facetFilter);
-    this.OnClick.emit(this.dropDownService.getSelections())
+    this.dropDownService.toggleSelection(key, facetFilter, this.selectionMultiple);
+    this.OnClick.emit(this.dropDownService.getSelections());
     this.changeDetectorRef.markForCheck();
   }
 
-  isMatch(facetValue: string, inputValue: string): boolean {
-    const normalizedInputValue = inputValue.toLowerCase().replace('&', 'and');
-    const normalizedFacetValue = facetValue.toLowerCase().replace('&', 'and');
-    const categories = normalizedInputValue.split('>').map(s => s.trim());
-    return categories.some(category => normalizedFacetValue.includes(category));
-  }
-
+  /**
+   * A tracking function used to optimize performance in ngFor.
+   * It returns the item itself as a unique identifier.
+   */
   trackByIdFn(index: number, item: any) {
     return item;
   }
 
+  /**
+   * Clears all selections in the dropdown if the 'cleanSelectionFacet' is true.
+   * Resets the 'isItemActive' object and updates the dropdown service.
+   * Also triggers a change detection cycle.
+   */
   cleanSelectionFacetFilters() {
     if (this.cleanSelectionFacet) {
       this.isItemActive = {};
-      this.dropDownService.clearSelections(); // Suponiendo que esta función existe en el servicio
-      console.log(this.dropDownService.getSelections())
+      this.dropDownService.clearSelections();
       this.changeDetectorRef.markForCheck();
     }
   }
 
+  /**
+   * Checks if a given facet name is included in the 'marketListFilterFacet'.
+   * Returns true if the name is found, false otherwise.
+   */
   getStateFilterByName(nameFacet: string): boolean {
     return this.marketListFilterFacet.includes(nameFacet);
   }
+
 
 }

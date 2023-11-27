@@ -7,5 +7,6 @@ export enum eNameFacetFilter {
     MPN = 'mpn',
     BRAND = 'brand',
     MANUFACTURE = 'manufacturer',
-    ASIN = 'asin'
+    ASIN = 'asin',
+    GEO = 'geo',
 }

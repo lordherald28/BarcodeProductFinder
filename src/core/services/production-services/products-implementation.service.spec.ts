@@ -13,7 +13,7 @@ import { mockFacetFilter, mockProductsModelResponse, mockSearchParamsForsearchPr
 import { ProductMapper } from '../../adapters/product-mapper/product-mapper.mapper';
 import { ProductModel } from '../../models/product.model';
 import { IFilterFacetList } from '../../models/filter-facet.models';
-import { TransformProductModelToFacetList } from '../../adapters/product-facet-filters/functions-for-searchImplementations.service';
+// import { TransformProductModelToFacetList } from '../../adapters/product-facet-filters/functions-for-searchImplementations.service';
 
 describe('Service: Products', () => {
 

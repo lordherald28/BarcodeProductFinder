@@ -8,28 +8,36 @@ import { CoreModule } from 'src/core/core.module';
 import { HeaderComponent } from 'src/shared/components/header/header.component';
 import { SearchBoxGeneralComponent } from 'src/shared/components/search-box-general/search-box-general.component';
 import { CardProductComponent } from './components/card-product/card-product.component';
-import { SidebarFilterComponent } from './components/sidebar-filter/sidebar-filter.component';
+import { SidebarComponent } from './../../../shared/components/sidebar/sidebar.component';
 import { IFilterFacetList } from 'src/core/models/filter-facet.models';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { eIcon, eSeverity } from 'src/core/models/message-notify.models';
+import { mockSearchParamsForsearchProductByKeyword, mockSearchParamsForsearchsearcProductByFacetFilter } from 'src/core/helpers/mocks-objects';
+import { DropDownComponent } from 'src/shared/components/drop-down/drop-down.component';
 
 describe('PageProductComponent', () => {
   let component: PageProductComponent;
   let fixture: ComponentFixture<PageProductComponent>;
+  let dropDownComponent: DropDownComponent; // Mocked DropDownComponent
 
   // Mock services and ChangeDetectorRef
   const mockUseCaseSearchProducts = jasmine.createSpyObj('UseCaseSearchProducts', ['execute']);
   const mockUseCaseSearchFacet = jasmine.createSpyObj('UseCasesearcProductByFacetFilter', ['execute']);
   const mockChangeDetectorRef = jasmine.createSpyObj('ChangeDetectorRef', ['markForCheck']);
+  const dropDownComponentSpy = jasmine.createSpyObj('DropDownComponent', ['cleanSelectionFacetFilters']);
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
 
-      imports: [CommonModule, SearchBoxGeneralComponent, SidebarFilterComponent, CardProductComponent, HeaderComponent, CoreModule,RouterTestingModule],
+      imports: [CommonModule, SearchBoxGeneralComponent, SidebarComponent, CardProductComponent, HeaderComponent, CoreModule, RouterTestingModule],
       providers: [
         { provide: UseCaseSearchProducts, useValue: mockUseCaseSearchProducts },
         { provide: UseCasesearcProductByFacetFilter, useValue: mockUseCaseSearchFacet },
         { provide: ChangeDetectorRef, useValue: mockChangeDetectorRef },
+        // Provide the mock DropDownComponent
+        { provide: DropDownComponent, useValue: dropDownComponentSpy },
+
       ],
     });
 
@@ -40,6 +48,7 @@ describe('PageProductComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 
   describe('getValueChangeInput', () => {
     it('should call getProductList and markForCheck', () => {
@@ -54,54 +63,15 @@ describe('PageProductComponent', () => {
     });
   });
 
-  // describe('getProductList', () => {
-  //   it('should call UseCaseSearchProducts.execute and update productsList', fakeAsync(() => {
-
-  //     const metadata: Metadata = {
-  //       pages: 1,
-  //       products: 0,
-  //     };
-
-  //     let searchParams: SearchParams = {
-  //       metadata: { pages: 1, products: 0 },
-
-  //     }
-  //     searchParams = {
-  //       metadata: { pages: 1, products: 0 },
-  //       hasMetadata: 'y',
-  //       asin: '',
-  //       barcode: '',
-  //       brand: '',
-  //       category: '',
-  //       manufacture: '',
-  //       mpn: '',
-  //       title: '',
-  //       search: 'testValue',
-  //       key: '5whl0cj9iw7u7onrzyxqps8kl4rvoz'
-  //     };
-
-  //     const value = 'testValue';
-  //     const spyUseCaseSearchProducts = fixture.debugElement.injector.get(UseCaseSearchProducts);
-  //     spyOn(spyUseCaseSearchProducts, 'execute').and.returnValue(of({ products: mocksExpectedProductsModel, metadata }));
-  //     component.getProductList(value);
-
-  //     fixture.whenStable().then(() => {
-  //       expect(component.productsList).toEqual(mocksProductsModel);
-  //       // Ajusta la expectativa para que coincida con los argumentos reales
-  //       expect(spyUseCaseSearchProducts.execute).toHaveBeenCalledWith(searchParams);
-  //     });
-  //   }));
-  // });
   describe('PageProductComponent', () => {
     describe('getProductList', () => {
       it('should update component state and call OnEventPage', () => {
         const value = 'testValue';
-  
+
         // Espiar el método OnEventPage para verificar su llamada
         spyOn(component, 'OnEventPage').and.callThrough();
-  
         component.getProductList(value);
-  
+
         // Verificar que OnEventPage se haya llamado con el argumento correcto
         expect(component.OnEventPage).toHaveBeenCalledWith(1);
         // Verificar que el estado del componente se haya actualizado correctamente
@@ -112,41 +82,44 @@ describe('PageProductComponent', () => {
       });
     });
   });
-  
-// Test suite for PageProductComponent
-describe('PageProductComponent', () => {
 
-  // Test group for getProductListByFacetFilters method
-  describe('getProductListByFacetFilters', () => {
 
-    // Test case to verify that getProductListByFacetFilters sets search parameters correctly
-    // and calls OnEventPage method
-    it('should properly set search parameters and call OnEventPage', waitForAsync(() => {
-      const paramFaceFilter: IFilterFacetList = {
-        categories: "Media > Books > Print Books" as any,
-        // Add other filter properties if needed
-      };
+  describe('applyFacetFilters', () => {
+    it('should display an error message when no filters are selected', () => {
+      // Arrange
+      spyOn(component.cdr, 'markForCheck'); // Espiamos la función markForCheck en el ChangeDetectorRef
+      spyOn(component['serviceProduct'], 'verifyisAnyFilterSelected').and.returnValue(false); // Usamos ['serviceProduct'] para acceder a la propiedad privada
 
-      // Spy on OnEventPage method to track its invocation and arguments
-      spyOn(component, 'OnEventPage').and.callThrough();
+      // Act
+      component.applyFacetFilters();
 
-      // Call getProductListByFacetFilters with the facet filter parameters
-      component.getProductListByFacetFilters(paramFaceFilter);
+      // Assert
+      expect(component.messages).toEqual({
+        detail: 'At least one filter must be selected to apply.',
+        severity: eSeverity.DANGER,
+        isShow: true,
+        icon: eIcon.warning
+      }); // Verificamos que se muestre el mensaje de error esperado
+      expect(component.cdr.markForCheck).toHaveBeenCalled(); // Verificamos que markForCheck se llama
+    });
 
-      // Verify that OnEventPage is called with the correct argument
-      expect(component.OnEventPage).toHaveBeenCalledWith(1);
+    it('should apply facet filters when at least one filter is selected', () => {
+      // Arrange
+      spyOn(component.cdr, 'markForCheck'); // Espiamos la función markForCheck en el ChangeDetectorRef
+      spyOn(component['serviceProduct'], 'verifyisAnyFilterSelected').and.returnValue(true); // Usamos ['serviceProduct'] para acceder a la propiedad privada
 
-      // Assert that the component's searchParams are updated based on the facet filter
-      expect(component.searchParams.category).toEqual(paramFaceFilter.categories as any);
-      // Add additional assertions for other searchParams properties as needed
+      // Act
+      component.applyFacetFilters();
 
-      // Check the component's internal state changes
-      expect(component.isSerachGeneral).toBeFalse();
-      expect(component.hasResetPagination).toBeTrue();
-
-    }));
+      // Assert
+      expect(component.isSerachGeneral).toBeFalse(); // Verificamos que isSerachGeneral se establece en false
+      expect(component.hasResetPagination).toBeTrue(); // Verificamos que hasResetPagination se establece en true
+      expect(component.cleanSelectionFilters).toBeTrue(); // Verificamos que cleanSelectionFilters se establece en true
+      expect(component.cdr.markForCheck).toHaveBeenCalled(); // Verificamos que markForCheck se llama
+    });
   });
 
-});
+
+
 
 });

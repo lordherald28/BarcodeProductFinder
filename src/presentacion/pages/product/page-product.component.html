@@ -1,16 +1,21 @@
-<!-- Header with logo and search box  -->
 <app-header>
     <app-search-box-general (emitValueChangeInput)="getValueChangeInput($event || '')" [setDebounceTime]="500" />
 </app-header>
 <div class="wrapper">
-
-
     <!-- Main content -->
     <div class="main-content">
-        <!-- Sidebar for filters -->
         <app-sidebar class="sidebar" [visible]="productsList.length!==0">
-            <div class="center-content p-2">
-                <button class="btn-standar-primary" (click)="applyFacetFilters()">Apply Filters</button>
+            <div class="center-content ">
+                <button class="btn-standar-primary" (click)="applyFacetFilters()">
+                    <span class="material-symbols-outlined">
+                        filter_alt
+                    </span>
+                    Apply</button>
+                <button class="btn-standar-primary" (click)="clearFIlters()">
+                    <span class="material-symbols-outlined">
+                        filter_alt_off
+                    </span>
+                    Remove</button>
             </div>
             <app-accordion *ngFor="let accordion of accordionFilterList trackBy:trackByIdFn"
                 [accordionsItemsModel]="accordion">
@@ -20,9 +25,7 @@
             </app-accordion>
         </app-sidebar>
 
-        <!-- Product content -->
         <div class="product-content" *ngIf="productsList.length > 0">
-            <!-- Aquí irían tus tarjetas de producto -->
             <ng-container *ngFor="let product of productsList">
                 <app-card-product class="item-product" [product]="product"></app-card-product>
             </ng-container>
@@ -35,4 +38,4 @@
     </div>
 </div>
 <app-alert-message [message]="messages" [showLinkDemo]="true"></app-alert-message>
-<app-spinner [isLoading]="isLoading" (cancelLoadingSpinner)="cancelGetData($event)"></app-spinner>
+<app-spinner [isLoading]="isLoading"></app-spinner>

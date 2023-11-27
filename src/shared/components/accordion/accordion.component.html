@@ -3,6 +3,8 @@
 
     <ng-container>
       <div class="accordion-item">
+        <!-- <app-check-box (OnClick)="onCheckClick($event)" *ngIf="accordionsItemsModel.hasSelectionMultiple"
+          [id]="accordionsItemsModel.name"></app-check-box> -->
         <button class="accordion-button" type="button" (click)="toggleAccordion(expand.innerHTML)">
           <div class="container-header-accorion-button">
             <span>{{accordionsItemsModel.description}} </span>
@@ -16,9 +18,5 @@
         </div>
       </div>
     </ng-container>
-
-    <!-- <div class="center-content p-2">
-    <button class="btn-standar-primary" (click)="who()">Apply Filters</button>
-  </div> -->
   </div>
 </ng-container>

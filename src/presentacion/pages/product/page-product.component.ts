@@ -1,17 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SearchBoxGeneralComponent } from 'src/shared/components/search-box-general/search-box-general.component';
-import { SidebarFilterComponent } from './components/sidebar-filter/sidebar-filter.component';
 import { CardProductComponent } from './components/card-product/card-product.component';
 import { ProductModel } from 'src/core/models/product.model';
 import { HeaderComponent } from 'src/shared/components/header/header.component';
-import { IFilterFacetList } from 'src/core/models/filter-facet.models';
 import { UseCaseSearchProducts } from 'src/core/use-case/use-case-search-products';
 import { CoreModule } from 'src/core/core.module';
 import { Metadata, SearchParams } from 'src/core/helpers/metadata-products';
-
-import { catchError, debounceTime, delay, finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, ReplaySubject, Subject, Subscription, interval, of, throwError } from 'rxjs';
+import { catchError, debounceTime, delay, finalize, switchMap, } from 'rxjs/operators';
+import { Observable, ReplaySubject, Subscription, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UseCasesearcProductByFacetFilter } from 'src/core/use-case/use-case-search-facet';
 import { PaginatorComponent } from 'src/shared/components/paginator/paginator.component';
@@ -23,14 +20,14 @@ import { SidebarComponent } from 'src/shared/components/sidebar/sidebar.componen
 import { AccordionComponent } from 'src/shared/components/accordion/accordion.component';
 import { DropDownComponent } from 'src/shared/components/drop-down/drop-down.component';
 import { IAccordionItemModel } from 'src/shared/models/accordion.model';
-import { UseCaseGetFacetFilter } from 'src/core/use-case/use-case-get-facet-filter';
 import { ProductServiceComponent } from './service/product.service';
 import { FormsModule } from '@angular/forms';
 import { eNameFacetFilter } from 'src/shared/models/facet-filter-name';
 
 type SearchParamsKeys = keyof SearchParams;
-type SearchParamKeys = keyof SearchParams;
-
+const stringKeys: Set<keyof SearchParams> = new Set([
+  'search', 'barcode', 'mpn', 'title', 'manufacture', 'brand', 'asin', 'category', 'hasMetadata', 'cursor', 'key'
+]);
 const filterToParamMap: Record<string, SearchParamsKeys> = {
   barcode_number: 'barcode',
   category: 'category',
@@ -39,19 +36,15 @@ const filterToParamMap: Record<string, SearchParamsKeys> = {
   asin: 'asin',
   title: 'title',
   mpn: 'mpn',
-  // ... otros mapeos
-};
-const stringKeys: Set<keyof SearchParams> = new Set([
-  'search', 'barcode', 'mpn', 'title', 'manufacture', 'brand', 'asin', 'category', 'hasMetadata', 'cursor', 'key'
-]);
 
+};
 
 @Component({
   selector: 'app-product',
   templateUrl: './page-product.component.html',
   styleUrls: ['./page-product.component.css'],
   standalone: true,
-  imports: [CommonModule, SearchBoxGeneralComponent, /* SidebarFilterComponent */ AlertMessageComponent, SpinnerComponent, SidebarComponent,
+  imports: [CommonModule, SearchBoxGeneralComponent, AlertMessageComponent, SpinnerComponent, SidebarComponent,
     CardProductComponent, HeaderComponent, CoreModule, PaginatorComponent, AccordionComponent, DropDownComponent, FormsModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -69,6 +62,8 @@ export default class PageProductComponent implements OnInit, OnDestroy {
 
 
   }
+  // En tu componente padre
+  @ViewChild(DropDownComponent) dropdownComponentInstance!: DropDownComponent;
 
   public isLoading: boolean = false;
   private subs$ = new Array<Subscription>();
@@ -96,7 +91,7 @@ export default class PageProductComponent implements OnInit, OnDestroy {
   public accordionForMenuMovil: IAccordionItemModel = { name: 'filters', description: 'Filters', hasSelectionMultiple: false, isOpen: false }
   cleanSelectionFilters: boolean = false;
   private cancelGetData$ = new Observable<boolean>()
-  // private cancelGetData$ = new BehaviorSubject<boolean>(false)
+
 
 
   ngOnInit() {
@@ -113,32 +108,93 @@ export default class PageProductComponent implements OnInit, OnDestroy {
         { description: 'Asin', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.ASIN },
         { description: 'Title (Name)', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.NAME_PRODUCT },
         { description: 'MNP  ', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.MPN },
+        { description: 'GEO - GeoLocation  ', hasSelectionMultiple: false, isOpen: false, name: eNameFacetFilter.GEO },
 
 
       ]
     }));
   }
 
-  getValueChangeInput(value: string): void {
-    this.getProductList(value);
-
-    this.cdr.markForCheck();
+  // Add this method in your PageProductComponent
+  public verifyIfAnyFilterSelected(searchParams: SearchParams): boolean {
+    return this.serviceProduct.verifyisAnyFilterSelected(searchParams);
   }
 
-  getProductList(value: string): void {
-    // this.cancelGetData$.next(true)
 
-    //limpiar parametros
-    this.retetSearchParams()
+  // This function retrieves the product list based on the provided value.
+  // It clears search parameters, sets the current search value, and triggers a page event.
+  // It also updates some component properties and marks for change detection.
+  getProductList(value: string): void {
+    // Clear any previous data or parameters
+    // this.cancelGetData$.next(true)
+    this.retetSearchParams();
     this.currentKeyValue = value;
     this.isSerachGeneral = true;
     this.OnEventPage(1);
     this.hasResetPagination = !this.hasResetPagination;
-    this.updateChild = true
+    this.updateChild = true;
     this.cdr.markForCheck();
-
   }
 
+  // This function is responsible for clearing filters.
+  // It resets search parameters, cleans selection filters, and displays a success message.
+  clearFIlters() {
+
+    if (this.serviceProduct.verifyisAnyFilterSelected(this.searchParams)) {
+      console.log(this.searchParams)
+      this.retetSearchParams();
+      this.cleanSelectionFilters = true;
+      //  this.serviceProduct.removeCollectedValues()
+      this.dropdownComponentInstance.cleanSelectionFacetFilters();
+      this.cdr.markForCheck();
+      this.messages = { detail: 'Filters delete success', icon: eIcon.success, isShow: true, severity: eSeverity.SUCCESS }
+    }
+
+  }
+  // This function is called when the input value changes.
+  // It triggers the product list retrieval and marks for change detection.
+  getValueChangeInput(value: string): void {
+    this.getProductList(value);
+    this.cdr.markForCheck();
+  }
+
+
+  // This function is called when an element in the dropdown is clicked.
+  // It updates the search parameters based on the selected value.
+  OnClickElementDropDown(value: any) {
+    this.updateSearchParams(value);
+  }
+
+  // This function is responsible for applying facet filters.
+  // It checks if any filters are selected and displays an error message if none are selected.
+  // If filters are selected, it triggers a page event, clears filters, and updates component properties.
+  applyFacetFilters() {
+    if (!this.serviceProduct.verifyisAnyFilterSelected(this.searchParams)) {
+      // No filters are selected, display an error message
+      this.messages = {
+        detail: 'At least one filter must be selected to apply.',
+        severity: eSeverity.DANGER,
+        isShow: true,
+        icon: eIcon.warning
+      };
+      this.cdr.markForCheck();
+      return;
+    }
+
+    // At least one filter is selected, proceed with applying filters
+    this.isSerachGeneral = false;
+    this.OnEventPage(1);
+    this.hasResetPagination = !this.hasResetPagination;
+    this.cleanSelectionFilters = true;
+    this.cdr.markForCheck();
+  }
+
+  // This function updates the search parameters based on the selected filter facet.
+  updateSearchParams(filterFacet: any): void {
+    this.searchParams = this.serviceProduct.transformSelectionsToSearchParams(filterFacet, this.searchParams);
+  }
+
+  // This function resets search parameters to their initial state.
   retetSearchParams() {
     this.searchParams = {
       ...this.searchParams,
@@ -149,14 +205,14 @@ export default class PageProductComponent implements OnInit, OnDestroy {
       manufacture: '',
       mpn: '',
       title: '',
-
-    }
+    };
   }
 
+  // This function is called when a page event occurs (e.g., changing to a different page).
+  // It handles the loading state, updates search parameters, and retrieves product data.
   OnEventPage(event: number): void {
-
     this.isLoading = true;
-    this.messages = {}
+    this.messages = {};
     this.cdr.markForCheck();
 
     this.searchParams = {
@@ -165,66 +221,63 @@ export default class PageProductComponent implements OnInit, OnDestroy {
       metadata: {
         ...this.metaDataState,
         pages: event,
-      }
-    }
+      },
+    };
+
     if (this.isSerachGeneral) {
       this.searchParams = {
         ...this.searchParams,
         search: this.currentKeyValue
-      }
+      };
     } else {
       this.searchParams = {
         ...this.searchParams,
         search: ''
-      }
+      };
     }
+
+    // Perform the product search and handle the results
     const subscription = (this.isSerachGeneral ? this.useCaseSearchProducts.execute(this.searchParams) : this.useCaseSearchFacet.execute(this.searchParams))
       .pipe(
-        debounceTime(1500),
+        debounceTime(500),
         switchMap((result) => of(result)),
         catchError(error => {
           this.isLoading = false;
           return throwError(() => error);
         }),
-        delay(4000),
+        delay(500),
         finalize(() => {
-          // console.log('Finalizado')
           this.isLoading = false;
           this.cdr.markForCheck();
         })
       )
       .subscribe(({ products, metadata }) => {
         if (products.length === 0) {
-          this.messages = { detail: 'Not found', icon: eIcon.info, isShow: true, severity: eSeverity.INFO }
+          this.messages = { detail: 'Not found', icon: eIcon.info, isShow: true, severity: eSeverity.INFO };
           this.cdr.markForCheck();
         }
         this.productsList = products;
         this.metaDataState = metadata;
         this.totalPageNumber = metadata.pages;
-        // this.isLoading = false;
         this.hasResetPagination = false;
-        this.cleanSelectionFilters = false;
 
+        // Update dropdown values based on the product list
         this.accordionFilterList.forEach(accordion => {
-          this.serviceProduct.updateDropDownValues(accordion.name, this.productsList)
-        })
-        this.retetSearchParams();
+          this.serviceProduct.updateDropDownValues(accordion.name, this.productsList);
+        });
 
         this.cdr.markForCheck();
       });
 
-    // this.retetSearchParams()
+    // Push the subscription to the list of subscriptions
     this.subs$.push(subscription);
   }
 
-  testObservable() {
-    const test$ = interval(1000).pipe(takeUntil(this.cancelGetData$));
-    test$.subscribe(value => console.log(value));
+  // This function gets values for a dropdown based on its accordion name.
+  getValuesForDropDown(accordionName: string) {
+    return this.serviceProduct.getValuesForDropDown(accordionName);
   }
 
-  getValuesForDropDown(accordionName: string) {
-    return this.serviceProduct.getValuesForDropDown(accordionName)
-  }
 
   trackByIdFn(index: number, item: any) { return item; }
 
@@ -234,84 +287,6 @@ export default class PageProductComponent implements OnInit, OnDestroy {
         sub.unsubscribe();
       }
     })
-  }
-
-  OnClickElementDropDown(value: any) {
-    console.log(value)
-    this.updateSearchParams(value);
-  }
-
-  applyFacetFilters() {
-    // Limpiar searchParams
-
-    this.searchParams = {
-      ...this.searchParams,
-    }
-    this.isSerachGeneral = false;
-    this.OnEventPage(1);
-    this.hasResetPagination = !this.hasResetPagination;
-    this.cleanSelectionFilters = true;
-    this.cdr.markForCheck();
-  }
-
-  // updateSearchParams(filterFacet: any): void {
-  //   console.log(filterFacet)
-  //   if (filterFacet.barcode_number && filterFacet.barcode_number.length > 0) {
-  //     this.searchParams.barcode = filterFacet.barcode_number.join(',');
-  //   }
-
-  //   if (filterFacet.category && filterFacet.category.length > 0) {
-  //     this.searchParams.category = encodeURIComponent(filterFacet.category[0]); // Tomar el primer elemento
-  //   }
-
-  //   if (filterFacet.brand && filterFacet.brand.length > 0) {
-  //     this.searchParams.brand = encodeURIComponent(filterFacet.brand[0]); // Tomar el primer elemento
-  //   }
-
-  //   if (filterFacet[eNameFacetFilter.MANUFACTURE] && filterFacet.manufacturer.length > 0) {
-  //     this.searchParams.manufacture = encodeURIComponent(filterFacet.brand[0]); // Tomar el primer elemento
-  //   }
-
-  //   if (filterFacet[eNameFacetFilter.ASIN] && filterFacet.asin.length > 0) {
-  //     this.searchParams.manufacture = encodeURIComponent(filterFacet.asin[0]); // Tomar el primer elemento
-  //   }
-
-  //   if (filterFacet[eNameFacetFilter.MPN] && filterFacet.mpn.length > 0) {
-  //     this.searchParams.mpn = encodeURIComponent(filterFacet.mpn[0]); // Tomar el primer elemento
-  //   }
-
-  //   if (filterFacet[eNameFacetFilter.NAME_PRODUCT] && filterFacet.title.length > 0) {
-  //     this.searchParams.title = encodeURIComponent(filterFacet.title[0]); // Tomar el primer elemento
-  //   }
-  // }
-  updateSearchParams(filterFacet: any): void {
-    for (const filterKey in filterFacet) {
-      if (filterFacet.hasOwnProperty(filterKey) && filterFacet[filterKey].length > 0) {
-        const searchParamKey = filterToParamMap[filterKey];
-  
-        if (searchParamKey && stringKeys.has(searchParamKey)) {
-          // this.searchParams[searchParamKey] = encodeURIComponent(filterFacet[filterKey][0]);
-        }
-      }
-    }
-  }
-  
-
-
-
-  cancelGetData(event: boolean) {
-
-    this.cancelGetData$.subscribe({
-      next: (value) => {
-        console.log(value)
-        // value = true
-      }
-    }) // Emite true para cancelar la operación
-    // Opcional: restablecer para futuras operaciones
-    // setTimeout(() => this.cancelGetData$.next(!event), 0);
-
-    this.cdr.markForCheck()
-
   }
 
 

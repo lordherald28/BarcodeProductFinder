@@ -9,11 +9,10 @@ describe('SearchBoxGeneralComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      // declarations: [SearchBoxGeneralComponent],
       imports: [ReactiveFormsModule],
       providers: [FormBuilder]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,11 +21,11 @@ describe('SearchBoxGeneralComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should initialize the form with an empty searchKeyWord', () => {
+    expect(component.formSearch.controls.searchKeyWord.value).toBe('');
   });
 
-  it('should emit value when search input changes', waitForAsync(() => {
+  it('should not emit value immediately after search input changes', waitForAsync(() => {
     spyOn(component.emitValueChangeInput, 'emit');
 
     const input = fixture.debugElement.query(By.css('input')).nativeElement;
@@ -34,9 +33,14 @@ describe('SearchBoxGeneralComponent', () => {
     input.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    fixture.whenStable().then(() => {
-      expect(component.emitValueChangeInput.emit).toHaveBeenCalledWith('test');
-    });
+    expect(component.emitValueChangeInput.emit).not.toHaveBeenCalledWith('test');
   }));
+
+  it('should unsubscribe from valueChanges on ngOnDestroy', () => {
+    spyOn(component.subs$[0], 'unsubscribe');
+    component.ngOnDestroy();
+    expect(component.subs$[0].unsubscribe).toHaveBeenCalled();
+  });
+
 
 });

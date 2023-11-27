@@ -22,9 +22,6 @@ describe('ProductMapper', () => {
         const params: ProductoEntity[] = mocksProductsEntity
 
         expect(params).toBeInstanceOf(Array<ProductoEntity>);
-
-        // expect(() => productMapper.mapTo([])).toThrow(new Error('Parameter is blank'));
-
         const result = productMapper.mapTo(params);
 
         expect(result).toEqual(mocksProductsModel);
@@ -51,7 +48,6 @@ describe('ProductMapper', () => {
 
         it('should map each property in {ProductEntity[],Metadata} to {products:ProductModel[],metadata:Metadada}', () => {
 
-            // const params: ProductoEntity[] = mocksProductsEntity;
             const mocksExpectedProductsModel: {products:ProductModel[],metadata:Metadata} = {
                 products: mocksProductsModel,
                 metadata: {
@@ -61,9 +57,7 @@ describe('ProductMapper', () => {
                     next_cursor: "AoEpMTAwMDA4NTk1"
                 }
             }
-                
 
-            
             const params: { params: { productsEntityList: ProductoEntity[]; metadata: Metadata; } } = {
                 params: {
                     productsEntityList: mocksProductsEntity,
@@ -77,9 +71,7 @@ describe('ProductMapper', () => {
             }
 
             expect(params.params.productsEntityList).toBeInstanceOf(Array<ProductoEntity>);
-            // expect(() => productoMapperResponse.mapTo({ products: [], metadata: { pages: 0, products: 0 } })).toThrow(new Error('Parameter is blank'));
             const result = productoMapperResponse.mapTo({ products: params.params.productsEntityList, metadata: params.params.metadata });
-
 
             expect(result).toEqual(mocksExpectedProductsModel);
             expect(result.products[0].barcode_number).toEqual(mocksProductsModel[0].barcode_number);

@@ -1,21 +1,33 @@
-
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
-import { ItemFilterSelection } from "src/presentacion/pages/product/components/sidebar-filter/models/item-filter-selection";
 
-
+/**
+ * Injectable service to manage selections for dropdown components.
+ * It maintains a record of selections across different dropdown instances.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class DropDownService {
-  private readonly filterStateKey = 'filterState';
+
+  // Holds the selections for different dropdowns, keyed by a unique identifier.
   private selections: { [key: string]: Set<string> } = {};
 
   constructor() { }
 
-  toggleSelection(key: string, item: string): void {
+  /**
+   * Toggles the selection of an item for a given key in the dropdown.
+   * If multiple selections are not allowed, it clears previous selections.
+   * 
+   * @param key - The unique identifier for the dropdown.
+   * @param item - The item to be selected or deselected.
+   * @param isMultiple - Flag indicating if multiple selections are allowed.
+   */
+  toggleSelection(key: string, item: string, isMultiple: boolean): void {
     if (!this.selections[key]) {
       this.selections[key] = new Set();
+    }
+    if (!isMultiple) {
+      this.selections[key].clear();
     }
     if (this.selections[key].has(item)) {
       this.selections[key].delete(item);
@@ -24,6 +36,12 @@ export class DropDownService {
     }
   }
 
+  /**
+   * Retrieves the current selections as an object where keys are dropdown identifiers
+   * and values are arrays of selected items.
+   * 
+   * @returns An object representing the current selections.
+   */
   getSelections(): { [key: string]: string[] } {
     let selectionsObj: { [key: string]: string[] } = {};
     for (const key in this.selections) {
@@ -32,10 +50,18 @@ export class DropDownService {
     return selectionsObj;
   }
 
-  // Método para limpiar todas las selecciones del facetFiltersList
+  /**
+   * Clears all selections across all dropdowns.
+   * Resets the selections object to a new object with no prototype properties.
+   */
   clearSelections(): void {
-    this.selections = {}; // O la estructura inicial adecuada
-
+    let filteredObject: { [key: string]: any } = {};
+    for (let key in this.selections) {
+      if (this.selections[key]) {
+        filteredObject[key] = '';
+      }
+    }
+    this.selections = Object.create(null);
   }
-
+  
 }

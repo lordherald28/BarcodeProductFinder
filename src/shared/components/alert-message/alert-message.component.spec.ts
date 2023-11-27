@@ -25,53 +25,44 @@ describe('AlertMessageComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    //24-11-2023 revisar
-    // it('should display a message', waitForAsync(() => {
+    // it('should display a message', fakeAsync(() => {
     //     component.message = {
     //         detail: 'This is an alert message!',
     //         icon: eIcon.info,
     //         isShow: true,
     //         severity: eSeverity.INFO
     //     };
+    //     fixture.detectChanges();
+    //     // let messageElement :HTMLElement | any
+    //    const messageElement = compiled.querySelector('.ng-container#content-message') as HTMLElement;
+    //     // fixture.detectChanges();
+    //     messageElement.innerText = component.message.detail as string
+    //     fixture.detectChanges();
 
-    //     // Detecta los cambios para actualizar la vista
-    //     fixture.detectChanges(); 
-
-    //     // Espera a que el fixture se estabilice después de los cambios detectados
-    //     fixture.whenStable().then(() => {
-    //         // Utiliza el selector para encontrar el mensaje en el DOM
-    //         const messageElement = compiled.querySelector('span#messagesId') as HTMLElement;
-    //         const classMessageContent = compiled.querySelector('.alert') as HTMLElement;
-    //         messageElement.innerHTML='This is an alert message!'
-    //         console.log("messageElement:    ",messageElement.innerHTML)
-    //         console.log("classMessageContent:    ",messageElement)
-    //         fixture.detectChanges();
-    //         // Verifica que el elemento exista y que contenga el texto esperado
-    //         expect(messageElement).toBeTruthy(); 
-    //         expect(messageElement.innerHTML).toContain('This is an alert message!');
-    //     });
+    //     // fixture.whenStable().then(() => {
+    //         expect(messageElement).toBeTruthy();
+    //     // });
+    //     expect(messageElement.innerHTML).toContain('This is an alert message!');
+    //     tick(3000)
     // }));
 
-    // it('should hide the alert when close button is clicked', waitForAsync(() => {
-    //     console.log(component.message)
-    //     component.message = {
-    //         ...component.message,
-    //         isShow: true
-    //     };
-    //     fixture.detectChanges(); // Actualiza el DOM con los nuevos datos
-    //     console.log(component.message)
+    it('should hide the alert when close button is clicked', fakeAsync(() => {
 
-    //     fixture.whenStable().then(() => {
-    //         expect(compiled.querySelector('.alert')).not.toBeNull(); // Verifica que el alerta se muestre inicialmente
+        component.message = {
+            ...component.message,
+            isShow: true
+        };
+        fixture.detectChanges();
 
-    //         // Simula un clic en el botón de cierre
-    //         (compiled.querySelector('.alert-close') as HTMLElement)?.click();
-    //         fixture.detectChanges(); // Actualiza el DOM después del clic
+        fixture.whenStable().then(() => {
+            expect(compiled.querySelector('.ng-container#content-alert')).not.toBeNull();
 
-    //         // Verifica que el alerta se haya ocultado
-    //         expect(compiled.querySelector('.alert')).toBeNull();
-
-    //     })
-    // }));
+            (compiled.querySelector('.ng-container#alert-close') as HTMLElement)?.click();
+            fixture.detectChanges();
+            
+        })
+        expect(compiled.querySelector('.alert')).toBeNull();
+        tick(3000)
+    }));
 
 });

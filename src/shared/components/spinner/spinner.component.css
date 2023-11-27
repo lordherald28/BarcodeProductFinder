@@ -8,8 +8,8 @@
     align-items: center;
     width: 100vw; /* Usar viewport width */
     height: 100vh; /* Usar viewport height */
-    z-index: 99999;
-    background-color: #cacaca8c;
+    /* z-index: 99999; */
+    background-color: #cacaca66;
 }
 
 :host::ng-deep .btn-standar-primary {

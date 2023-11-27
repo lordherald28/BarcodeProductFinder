@@ -56,7 +56,7 @@ const useCaseSearchFacetFilter = {
 }
 
 export const _providers = [
-    { provide: ProductRepository, useClass: SearchProductsMocksService },
+    { provide: ProductRepository, useClass: ProductsService },
     { provide: SystemRepository, useClass: SystemService },
     useCaseSearchProducts,
     useCaseGetFacetFilter,

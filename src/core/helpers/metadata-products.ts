@@ -10,6 +10,8 @@ export interface Metadata {
 }
 
 export interface SearchParams {
+    [key: string]: unknown; // Añade esto si hay claves dinámicas en SearchParams
+
     metadata: Metadata;
     search?: string;
     barcode?: string | string[];
@@ -22,4 +24,5 @@ export interface SearchParams {
     hasMetadata?: string;
     cursor?: string;
     key?: string;
+
 }

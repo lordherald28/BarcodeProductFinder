@@ -119,22 +119,6 @@ describe('PaginatorComponent', () => {
     expect(nextLastPage.disabled).toBe(true);
   });
 
-  // it('should disable "Last page" button when total page is 0', () => {
-  //   const lastPageButton = fixture.nativeElement.querySelector('button#lastPage');
-
-  //   // Set totalPages to 0
-  //   component.totalPages = 0;
-  //   // component.currentPage = 0;
-  //   fixture.detectChanges();
-
-  //   console.log(component)
-  //   // spy disableNext is true
-  //   const spyDisableLastPage = spyOnProperty(component, 'disableLastPage', 'get');
-  //   spyDisableLastPage.and.returnValue(true);
-  //   fixture.detectChanges();
-
-  //   expect(lastPageButton.disabled).toBe(true);
-  // });
 
   it('should disable "First page" button when current page is 1', () => {
     const firstPageButton = fixture.nativeElement.querySelector('button#firstPage');

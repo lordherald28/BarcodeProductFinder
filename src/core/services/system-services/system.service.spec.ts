@@ -29,7 +29,6 @@ describe('Service: System', () => {
     service.setMessages(testMessage);
     
     service.getMessages().subscribe(message => {
-      // console.log(message)
       expect(message).toEqual(testMessage);
       done();
     });

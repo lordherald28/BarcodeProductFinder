@@ -68,6 +68,14 @@
   margin: 8px 0;
 }
 
+.product-category {
+  white-space: nowrap;
+  margin-top: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: justify;
+
+}
 
 @media (max-width: 768px) {
   .product-card {

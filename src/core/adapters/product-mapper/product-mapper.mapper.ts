@@ -25,8 +25,8 @@ export class ProductMapper extends Mapper<ProductoEntity[], ProductModel[]> {
                 manufacturer: product.manufacturer,
                 brand: product.brand,
                 description: product.description,
-                images: product.images
-            }
+                images: product.images,
+                }
         });
     }
 
@@ -54,7 +54,7 @@ export class ProductoMapperResponse extends MapperResultProductEntity<{ products
                 manufacturer: product.manufacturer,
                 brand: product.brand,
                 description: product.description,
-                images: product.images
+                images: product.images,
             }
         });
 

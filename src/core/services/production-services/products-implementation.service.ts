@@ -11,7 +11,7 @@ import { IReponseProductsResult, ProductoEntity } from '../../entities/producto-
 import { API_ProductBarcode, environment } from 'src/environments/environment';
 import { ProductMapper, ProductoMapperResponse } from '../../adapters/product-mapper/product-mapper.mapper';
 import { IFilterFacetList } from '../../models/filter-facet.models';
-import { contructionParams, TransformProductModelToFacetList } from '../../adapters/product-facet-filters/functions-for-searchImplementations.service';
+import { contructionParams } from '../../adapters/product-facet-filters/functions-for-searchImplementations.service';
 import { IMessages } from 'src/core/models/message-notify.models';
 
 @Injectable({
@@ -21,9 +21,7 @@ export class ProductsService extends ProductRepository {
 
   constructor(private readonly http: HttpClient) { super() }
 
-  private mapperProduct = new ProductMapper();
   private mapperProductsResult = new ProductoMapperResponse();
-  private transformProductListToFacet = new TransformProductModelToFacetList();
   private paramsArray: string[] = [];
   private facetFilter$ = new BehaviorSubject<IFilterFacetList>(Object.assign({}));
   private metaData$ = new BehaviorSubject<Metadata>(Object.assign({}));
@@ -56,7 +54,6 @@ export class ProductsService extends ProductRepository {
     return this.http.get<IReponseProductsResult>(url)
       .pipe(
         map((response) => {
-          this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(response.products)));
           this.metaData$.next(response.metadata);
           return this.mapperProductsResult.mapTo(response)
         })
@@ -70,17 +67,15 @@ export class ProductsService extends ProductRepository {
 
   searcProductByFacetFilter(params: SearchParams): Observable<{ products: ProductModel[], metadata: Metadata }> {
 
-
     let proxyUrlForCors: string = 'https://cors-anywhere.herokuapp.com/';
     let url: string = proxyUrlForCors + 'https://api.barcodelookup.com/v3/products?';
-
+    
     url = contructionParams(params, url);
 
     return this.http.get<IReponseProductsResult>(url)
       .pipe(
         map((response: IReponseProductsResult | {products:ProductoEntity[]}) => {
 
-          // Se realiza esta condicion debido a la respues de la api que no es homogenea en sus respuestas cuando es search por barcode
           if (params.barcode) {
 
             this.metadata = {
@@ -92,17 +87,15 @@ export class ProductsService extends ProductRepository {
               products: response.products as unknown as ProductoEntity[],
               metadata: this.metadata
             }
-            // console.log(this.responseForWithBarcode);
-            this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(this.responseForWithBarcode.products)));
+
             return this.mapperProductsResult.mapTo(this.responseForWithBarcode)
 
           } else {
 
             this.responseForWithoutBarcode = {
-              products: (response as IReponseProductsResult).products, // Puedes asignar un arreglo vacío aquí
-              metadata: (response as IReponseProductsResult).metadata // Asigna la metadata de la respuesta original
+              products: (response as IReponseProductsResult).products, 
+              metadata: (response as IReponseProductsResult).metadata 
             };
-            this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(this.responseForWithoutBarcode.products)));
             return this.mapperProductsResult.mapTo(this.responseForWithoutBarcode)
           }
 

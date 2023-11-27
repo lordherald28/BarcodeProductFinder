@@ -6,7 +6,7 @@ import { map, tap } from 'rxjs/operators';
 
 import { ProductMapper, ProductoMapperResponse } from 'src/core/adapters/product-mapper/product-mapper.mapper';
 import { IReponseProductsResult, ProductoEntity } from 'src/core/entities/producto-entity';
-import { TransformProductModelToFacetList, contructionParams } from 'src/core/adapters/product-facet-filters/functions-for-searchImplementations.service';
+import {  contructionParams } from 'src/core/adapters/product-facet-filters/functions-for-searchImplementations.service';
 import { Metadata, SearchParams } from 'src/core/helpers/metadata-products';
 import { IFilterFacetList } from 'src/core/models/filter-facet.models';
 import { ProductModel } from 'src/core/models/product.model';
@@ -21,7 +21,7 @@ export class SearchProductsMocksService extends ProductRepository {
 
   private mapperProduct = new ProductMapper();
   private mapperProductsResult = new ProductoMapperResponse();
-  private transformProductListToFacet = new TransformProductModelToFacetList();
+  // private transformProductListToFacet = new TransformProductModelToFacetList();
   private facetFilter$ = new BehaviorSubject<IFilterFacetList>(Object.assign({}));
   private metaData$ = new BehaviorSubject<Metadata>(Object.assign({}));
   page: number = 1;
@@ -45,15 +45,12 @@ export class SearchProductsMocksService extends ProductRepository {
     return this.http.get<IReponseProductsResult>(url)
       .pipe(
         map((response) => {
-          // console.log(params.search)
-          // response.products.filter(product => product.title..includes(params.search?.toLocaleLowerCase().trim()?.toString() as string))
-
           let resp = {
             ...response,
             products: response.products.filter(product => product.title.toLocaleLowerCase().trim().includes(params.search?.toLocaleLowerCase().trim()?.toString() as string))
           }
           const productsOnPage = resp.products.slice(startIndex, this.pageEnd);
-          this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(productsOnPage)));
+          // this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(productsOnPage)));
           this.metaData$.next(resp.metadata);
           return this.mapperProductsResult.mapTo({
             products: productsOnPage, metadata: {
@@ -73,9 +70,7 @@ export class SearchProductsMocksService extends ProductRepository {
    */
   searcProductByFacetFilter(params: SearchParams): Observable<{ products: ProductModel[], metadata: Metadata }> {
 
-    // console.log(params)
-
-    this.page = params.metadata.pages; // Suponiendo que queremos probar la segunda página
+    this.page = params.metadata.pages;
     const productsPerPage = 10; // Cantidad de productos por página
     this.pageEnd = this.page * productsPerPage;
     const startIndex = (this.page - 1) * productsPerPage;
@@ -92,20 +87,22 @@ export class SearchProductsMocksService extends ProductRepository {
         map((response) => {
           let filteredProducts = response.products;
 
-          // Aplicar filtros primero
+    
           if (params.category) {
+            let decoderUrlCategory = decodeURIComponent(params.category)
+            params = {
+              ...params,
+              category: decoderUrlCategory
+            }
             filteredProducts = this.searchByCategory(filteredProducts, params) as any;
           }
           if (params.barcode) {
             filteredProducts = this.searchBybarcode(filteredProducts, params) as any;
           }
-
-          // Calcular la paginación sobre el conjunto filtrado
-          const totalProducts = filteredProducts.length;
+            const totalProducts = filteredProducts.length;
           const totalPages = Math.ceil(totalProducts / productsPerPage);
           const productsOnPage = filteredProducts.slice(startIndex, this.pageEnd);
 
-          // Crear la respuesta
           let resp: { products: ProductModel[], metadata: Metadata } = {
             products: productsOnPage,
             metadata: {
@@ -118,37 +115,6 @@ export class SearchProductsMocksService extends ProductRepository {
           return resp;
         })
       )
-    // return this.http.get<IReponseProductsResult>(url)
-    //   .pipe(
-    //     map((response) => {
-
-    //       const productsOnPage = response.products.slice(startIndex, this.pageEnd);
-    //       this.facetFilter$.next(this.transformProductListToFacet.mapTo(this.mapperProduct.mapTo(productsOnPage)));
-
-    //       let resp: { products: ProductModel[], metadata: Metadata } = {
-    //         products: response.products, // Puedes asignar un arreglo vacío aquí
-    //         metadata: response.metadata // Asigna la metadata de la respuesta original
-    //       };
-
-    //       if (params.category) {
-    //         resp.products = this.searchByCategory(this.mapperProduct.mapTo(productsOnPage), params);
-    //         console.log(resp)
-    //       }
-    //       if (params.barcode) {
-    //         resp.products = this.searchBybarcode(this.mapperProduct.mapTo(productsOnPage), params);
-    //       }
-
-    //       return resp = {
-    //         ...resp,
-    //         metadata: {
-    //           ...resp.metadata,
-    //           pages: Math.ceil(resp.products.length / productsPerPage),
-    //           products: resp.products.length
-    //         }
-    //       };
-    //     })
-    //   )
-
 
   }
 
