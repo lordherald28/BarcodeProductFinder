@@ -1,11 +1,10 @@
-FROM node:lts-alpine
-ENV NODE_ENV=production
+FROM node:19.8.1
+#ENV NODE_ENV=production
 WORKDIR /usr/src/app
-COPY  .   /usr/src/app
-#COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install -g @angular/cli
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install --silent
-
+COPY . /usr/src/app
 EXPOSE 4200
-CMD ng serve --host 0.0.0.0
-
+#RUN chown -R node /usr/src/app
+#USER node
+CMD ["npm", "start"]
