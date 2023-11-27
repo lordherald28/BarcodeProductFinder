@@ -78,7 +78,7 @@ This Angular project demonstrates an innovative approach to integrating general 
    docker run -d -p 4200:4200 gerasstark/barcodeproductfinder:latest
    ```
 
-3. **Accessing the Application**:
+3. **Image Repository**:
    
     ```
     link image project: https://hub.docker.com/repository/docker/gerastark/docker-angular/general
