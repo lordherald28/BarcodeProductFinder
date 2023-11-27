@@ -78,7 +78,13 @@ This Angular project demonstrates an innovative approach to integrating general 
    docker run -d -p 4200:4200 gerasstark/barcodeproductfinder:latest
    ```
 
-   Con este comando, crean un contenedor basado en la imagen que subiste. El puerto 4200 dentro del contenedor se mapea al puerto 4200 en su máquina local para que puedan acceder a la aplicación a través de un navegador web.
+3. **Accessing the Application**:
+   
+    ```
+    link image project: https://hub.docker.com/repository/docker/gerastark/docker-angular/general
+    ```
+    With this command, they create a container based on the image you uploaded. The port 4200 inside 
+    the container is mapped to port 4200 on your local machine so you can access the application through a web browser.  
 
 ## Development server
 
