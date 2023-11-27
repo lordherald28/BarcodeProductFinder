@@ -14,6 +14,7 @@
 - [Docker](#docker)
   - [docker build -t docker-angular .](#docker-build--t-docker-angular-)
   - [docker run --rm -p 3000:4200 docker-angular](#docker-run---rm--p-30004200-docker-angular)
+  - [Image Docker Hub](#image-docker-hub)
   - [Development server](#development-server)
   - [Code scaffolding](#code-scaffolding)
   - [Build](#build)
@@ -63,6 +64,21 @@ This Angular project demonstrates an innovative approach to integrating general 
 ## docker build -t docker-angular .
 ## docker run --rm -p 3000:4200 docker-angular
 
+## Image Docker Hub
+
+1. **Download Image from Docker Hub**:
+
+   ```bash
+   docker pull gerasstark/barcodeproductfinder:latest
+   ```
+
+2. **Run a Container From Image**:
+
+   ```bash
+   docker run -d -p 4200:4200 gerasstark/barcodeproductfinder:latest
+   ```
+
+   Con este comando, crean un contenedor basado en la imagen que subiste. El puerto 4200 dentro del contenedor se mapea al puerto 4200 en su máquina local para que puedan acceder a la aplicación a través de un navegador web.
 
 ## Development server
 
